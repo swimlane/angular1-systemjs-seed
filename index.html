@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-framework="angularjs">
+<head>
+    <meta charset=" utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+    <meta name="apple-mobile-web-app-title" content="Demo App">
+    <title>Demo App</title>
+</head>
+<body ng-class="controller" ng-app="swimlane">
+    <section class="content-area" ui-view></div>
+
+    <script src="bower_components/traceur/traceur-runtime.js"></script>
+    <script src="bower_components/es6-module-loader/dist/es6-module-loader.js"></script>
+    <script src="bower_components/system.js/dist/system.js"></script>
+    <script>
+      // Identical to writing System.baseURL = ...
+      System.config({
+
+        // set all requires to "lib" for library code
+        //baseURL: '/lib/',
+
+        // set "app" as an exception for our application code
+        //paths: {
+        //  'app/*': '/app/*.js'
+        //}
+      });
+
+      System.import('app/app')
+    </script>
+</body>
+</html>

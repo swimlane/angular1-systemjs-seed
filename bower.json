@@ -1,0 +1,14 @@
+{
+  "name": "systemjs-test",
+  "version": "1.0.0",
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "1.3.x",
+    "angular-ui-router": "0.2.13",
+    "system.js": "0.11.1",
+    "es6-module-loader": "0.11.1"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "systemjs-test",
+  "version": "1.0.0",
+  "devDependencies": {
+    "traceur": "0.0.79"
+  },
+  "dependencies": {}
+}
