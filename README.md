@@ -8,6 +8,8 @@ Testing SystemJS with AngularJS.
 - npm install
 - bower install
 
+then navigate to `index.html` via a webserver.
+
 
 ### Investigate
 
