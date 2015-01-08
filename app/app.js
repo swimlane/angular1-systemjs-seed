@@ -1,15 +1,18 @@
 import angular from 'angular';
 import 'angular-ui-router';
-import {loginModule} from 'app/login/login'
+import {routes} from 'app/routes'
 
-var module = angular.module('swimlane', ['ui.router', loginModule.name]);
+var module = angular.module('swimlane', ['ui.router', routes.name]);
 
-module.config(function ($urlRouterProvider, $locationProvider, $stateProvider) {
-    //$locationProvider.html5Mode(true);
+module.config(function ($urlRouterProvider, $locationProvider, $stateProvider, $httpProvider) {
+    $locationProvider.html5Mode(true);
+    $httpProvider.useApplyAsync(true);
 });
 
 module.run(function($state){
-    $state.go('login');
+    console.log('main')
+
+    //$state.go('login');
 });
 
 //angular.element(document).ready(function() {

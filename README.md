@@ -5,6 +5,7 @@ Testing SystemJS with AngularJS.
 ### Install
 
 - npm install -g grunt-cli
+- npm install -g assetgraph-builder
 - npm install
 - bower install
 

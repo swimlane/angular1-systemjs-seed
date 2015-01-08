@@ -6,6 +6,7 @@ System.config({
     //'bower_components/angular-aria/angular-aria/angular-aria': { deps: ['angular'] },
     //'bower_components/angular-messages/angular-messages': { deps: ['angular'] },
     'bower_components/angular-ui-router/release/angular-ui-router': { deps: ['angular'] },
+    'bower_components/ocLazyLoad/dist/ocLazyLoad': { deps: ['angular'] }
   },
   map: {
     'angular': 'bower_components/angular/angular',
@@ -14,5 +15,6 @@ System.config({
     //'angular-aria': 'components/angular-aria/angular-aria',
     //'angular-messages': 'components/angular-messages/angular-messages',
     'angular-ui-router': 'bower_components/angular-ui-router/release/angular-ui-router',
+    'ocLazyLoad': 'bower_components/ocLazyLoad/dist/ocLazyLoad'
   }
 });

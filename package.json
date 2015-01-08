@@ -4,6 +4,7 @@
   "devDependencies": {
     "grunt-6to5": "^2.0.0",
     "ng-annotate": "^0.14.1",
+    "systemjs-builder": "^0.5.2",
     "traceur": "0.0.79"
   },
   "dependencies": {}
