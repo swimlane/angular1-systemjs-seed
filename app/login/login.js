@@ -1,0 +1,2 @@
+var angular = require('angular');
+

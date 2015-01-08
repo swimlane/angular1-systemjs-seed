@@ -1,5 +1,14 @@
 # SystemJS Module Loader
 
+### Install
+
+- npm install -g grunt-cli
+- npm install
+- bower install
+
+
+### Resources
+
 - https://github.com/systemjs/systemjs
 - https://github.com/guybedford/assetgraph
 - https://github.com/assetgraph/assetgraph-builder
