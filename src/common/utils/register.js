@@ -1,13 +1,13 @@
 import angular from 'angular';
 
-export function route(module, src){
+export function route(obj){
   var $inject = ['$q'];
 
   var Route = function ($q) {
     var def = $q.defer();
 
-    System.import(src).then(loaded => { 
-      module.register(loaded.loginModule)
+    System.import(obj.src).then(loaded => {
+      obj.parent.register(loaded[obj.name])
       def.resolve();
     });
 

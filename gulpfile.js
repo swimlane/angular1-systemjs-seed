@@ -11,6 +11,7 @@ var stylish = require('jshint-stylish');
 var assign = Object.assign || require('object.assign');
 var sourcemaps = require("gulp-sourcemaps");
 var ngHtml2Js = require("gulp-ng-html2js");
+var htmlMin = require('gulp-minify-html');
 
 var compilerOptions = {
   filename: '',
@@ -41,8 +42,8 @@ var compilerOptions = {
 var path = {
   source:'src/**/*.js',
   html:'**/*.html',
-  output:'dist/',
-  doc:'./doc'
+  templates: 'src/**/*.html',
+  output:'dist/'
 };
 
 var jshintConfig = {esnext:true};
@@ -50,6 +51,31 @@ var jshintConfig = {esnext:true};
 gulp.task('clean', function() {
  return gulp.src([path.output])
     .pipe(vinylPaths(del));
+});
+
+gulp.task('build-html', function () {
+  return gulp.src(path.templates)
+    .pipe(plumber())
+    .pipe(changed(path.output, {extension: '.html'}))
+    .pipe(htmlMin({
+      empty: true,
+      spare: true,
+      quotes: true
+    }))
+    /*.pipe(ngHtml2Js({
+      moduleName: function (file) {
+        console.log(file)
+        var path = file.split('/'),
+            folder = path[path.length - 2];
+
+        return folder.replace(/-[a-z]/g, function (match) {
+          return match.substr(1).toUpperCase();
+        });
+      }
+    }))*/
+    .pipe(ngHtml2Js())
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('build-system', function () {
@@ -66,7 +92,7 @@ gulp.task('build-system', function () {
 gulp.task('build', function(callback) {
   return runSequence(
     'clean',
-    ['build-system'],
+    ['build-html', 'build-system'],
     callback
   );
 });
@@ -97,3 +123,6 @@ gulp.task('watch', ['serve'], function() {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 });
+
+// todo:
+// gulp.task('build', []);
