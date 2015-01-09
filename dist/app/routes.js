@@ -18,7 +18,13 @@ System.register(["angular", "src/common/utils/register"], function (_export) {
             resolve: {
               async: function ($q) {
                 var def = $q.defer();
-                def.resolve(function () {});
+                def.resolve(function () {
+                  console.log("trying");
+                  System["import"](src / app / login / login).then(function (loginModule) {
+                    console.log("loaded");
+                    module.register(loginModule);
+                  });
+                });
                 return def.promise;
               }
             }

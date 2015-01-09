@@ -14,6 +14,11 @@ export var routes = function(module){
           async: function($q){
             var def = $q.defer();
             def.resolve(function(){
+              console.log('trying')
+              System.import(src/app/login/login).then(loginModule => { 
+                console.log('loaded')
+                module.register(loginModule)
+              });
               //import {loginModule} from 'src/app/login/login';
               //module.register(loginModule);
             })
