@@ -38,7 +38,7 @@ var compilerOptions = {
 };
 
 var path = {
-  source:'app/**/*.js',
+  source:'src/**/*.js',
   html:'**/*.html',
   output:'dist/',
   doc:'./doc'

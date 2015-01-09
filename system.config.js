@@ -1,4 +1,5 @@
 System.config({
+  baseUrl: 'dist',
   meta: {
     'bower_components/angular/angular': { format: 'global', exports: 'angular' },
     //'bower_components/angular-touch/angular-touch': { deps: ['angular'] },
@@ -8,7 +9,6 @@ System.config({
     'bower_components/angular-ui-router/release/angular-ui-router': { deps: ['angular'] }
   },
   map: {
-    'app': 'dist',
     'angular': 'bower_components/angular/angular',
     //'angular-touch': 'components/angular-touch/angular-touch',
     //'angular-animate': 'components/angular-animate/angular-animate',

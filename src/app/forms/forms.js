@@ -1,5 +1,5 @@
 import angular from 'angular';
-import selectModule from 'app/common/components/select';
+import selectModule from 'src/app/common/components/select';
 
 export var loginModule = angular.module('forms', [selectModule.name]);
 
