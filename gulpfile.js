@@ -10,6 +10,7 @@ var del = require('del');
 var stylish = require('jshint-stylish');
 var assign = Object.assign || require('object.assign');
 var sourcemaps = require("gulp-sourcemaps");
+var ngHtml2Js = require("gulp-ng-html2js");
 
 var compilerOptions = {
   filename: '',

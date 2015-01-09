@@ -9,10 +9,9 @@ module.config(register(module));
 module.config(routes(module));
 
 module.config(function ($urlRouterProvider, $locationProvider, $stateProvider, $httpProvider) {
-  $locationProvider.html5Mode(true);
+  //$locationProvider.html5Mode(true);
   $httpProvider.useApplyAsync(true);
 });
-
 
 module.run(function($state){
   console.log('main')

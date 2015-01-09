@@ -9,6 +9,7 @@ System.config({
     'bower_components/angular-ui-router/release/angular-ui-router': { deps: ['angular'] }
   },
   map: {
+    'text': 'bower_components/plugin-text/text',
     'angular': 'bower_components/angular/angular',
     //'angular-touch': 'components/angular-touch/angular-touch',
     //'angular-animate': 'components/angular-animate/angular-animate',

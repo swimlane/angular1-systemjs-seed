@@ -1,6 +1,6 @@
 # SystemJS Module Loader
 
-Testing SystemJS with AngularJS.
+Testing SystemJS & ES6 modules with AngularJS using 6to5.
 
 ![](http://media.giphy.com/media/EldfH1VJdbrwY/giphy.gif)
 
@@ -13,6 +13,9 @@ Testing SystemJS with AngularJS.
 5. `gulp watch serve`
 6. Browse to `http://localhost:9000`
 
+### Tooling
+
+- Install [EditorConfig](http://editorconfig.org/)
 
 ### Best Practices
 
@@ -20,9 +23,9 @@ Testing SystemJS with AngularJS.
 - https://github.com/gocardless/angularjs-style-guide
 - http://sett.ociweb.com/sett/settApr2014.html
 
-
 ### Research
 
+- https://github.com/marcj/angular-es6-annotations
 - https://github.com/Munter/grunt-reduce
 - https://github.com/guybedford/assetgraph
 - https://github.com/assetgraph/assetgraph-builder

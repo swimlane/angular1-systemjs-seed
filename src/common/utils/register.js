@@ -1,22 +1,23 @@
 import angular from 'angular';
 
-export function route(entry, resolve){
-  console.log(entry)
-  return {
-    //template: '<' + entry + '></' + entry + '>',
-    url: '/' + entry,
-    templateUrl: 'src/app/' + entry + '/' + entry + '.tpl.html',
-    controller: entry + 'Controller',
-    resolve: {
-      async: ['$q', function ($q) {
-        console.log('async')
-        var defer = $q.defer();
-        resolve(defer.resolve);
-        return defer.promise;
-      }]
-    }
+export function route(module, src){
+  var $inject = ['$q'];
+
+  var Route = function ($q) {
+    var def = $q.defer();
+
+    System.import(src).then(loaded => { 
+      module.register(loaded.loginModule)
+      def.resolve();
+    });
+
+    return def.promise;
   };
-}
+
+  Route.$inject = $inject;
+
+  return Route;
+};
 
 export function register(app){
   var $inject = ['$controllerProvider', '$provide', '$compileProvider', '$filterProvider'];
