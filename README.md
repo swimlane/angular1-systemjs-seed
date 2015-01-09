@@ -12,7 +12,7 @@ Testing SystemJS with AngularJS.
 6. Browse to `http://localhost:9000`
 
 
-## Best Practices
+### Best Practices
 
 - https://github.com/johnpapa/angularjs-styleguide
 - https://github.com/gocardless/angularjs-style-guide
