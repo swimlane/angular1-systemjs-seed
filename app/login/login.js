@@ -1,8 +1,10 @@
 import angular from 'angular';
-import {selectModule} from 'common/components/select';
+import {selectModule} from 'app/common/components/select';
 
-export var loginModule = angular.module('app.login', [selectModule.name]);
+export var loginModule = angular.module('login', [selectModule.name]);
 
-loginModule.controller('LoginCtrl', function($scope){
-	$scope.loggedin = false;
+loginModule.controller('LoginCtrl', $scope => {
+
+  $scope.loggedin = false;
+ 
 });

@@ -8,15 +8,23 @@
     <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
     <meta name="apple-mobile-web-app-title" content="Demo App">
     <title>Demo App</title>
-    <base href="/systemjs/">
+    <base href="/">
 </head>
-<body ng-class="controller" ng-app="swimlane">
-    <section class="content-area" ui-view></div>
+<body data-main-app ng-cloak>
 
-    <script src="bower_components/traceur/traceur.js"></script>
-    <script src="bower_components/es6-module-loader/dist/es6-module-loader.js"></script>
-    <script src="bower_components/system.js/dist/system.js"></script>
+    <noscript>
+        <div class="u-padding-Am deprecation-warning">
+          <h1>Please enable Javascript</h1>
+          <p>GoCardless requires your browser to have Javascript enabled.
+          <a href="http://enable-javascript.com" target="_blank">Learn more</a></p>
+        </div>
+    </noscript>
+
+    <ui-view class="content-area" ></ui-view>
+
+    <script src="jspm_packages/system.js"></script>
     <script src="system.config.js"></script>
+
     <script>
         System.import('app/app');
     </script>

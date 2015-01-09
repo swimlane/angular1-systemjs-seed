@@ -15,6 +15,8 @@ module.run(function($state){
     //$state.go('login');
 });
 
-//angular.element(document).ready(function() {
-//	angular.bootstrap(document, [module.name]);
-//});
+angular.element(document).ready(function() {
+	angular.bootstrap(document.querySelector('[data-main-app]'), [ module.name ], {
+		// strictDi: true // turning off for now
+	});
+});

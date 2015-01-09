@@ -7,9 +7,6 @@
   ],
   "dependencies": {
     "angular": "1.3.x",
-    "angular-ui-router": "0.2.13",
-    "system.js": "0.11.1",
-    "es6-module-loader": "0.11.1",
-    "ocLazyLoad": "~0.5.2"
+    "angular-ui-router": "0.2.13"
   }
 }
