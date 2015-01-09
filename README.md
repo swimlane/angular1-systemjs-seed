@@ -1,6 +1,6 @@
 # SystemJS Module Loader
 
-Testing SystemJS & ES6 modules with AngularJS using 6to5.
+Testing SystemJS & ES6 modules that lazy-load with AngularJS using 6to5.
 
 ![](http://media.giphy.com/media/EldfH1VJdbrwY/giphy.gif)
 
