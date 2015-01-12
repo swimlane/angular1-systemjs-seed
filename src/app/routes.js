@@ -1,8 +1,4 @@
 import angular from 'angular';
-import {route} from 'src/common/utils/register';
-//import 'dist/app/login/login.tpl';
-
-// import template from './site-header.template.html!text';
 
 export var routes = function(module){
 
@@ -26,6 +22,13 @@ export var routes = function(module){
       'urlPrefix': '/login',
       'type': 'load',
       'src': 'src/app/login/login'
+    });
+
+    $futureStateProvider.futureState({
+      'stateName': 'dashboards',
+      'urlPrefix': '/dashboards',
+      'type': 'load',
+      'src': 'src/app/dashboard/dashboard'
     });
 
   };

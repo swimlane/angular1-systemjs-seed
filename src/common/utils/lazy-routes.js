@@ -173,8 +173,8 @@ futureStateModule.provider('$futureState',
               // Config loaded.  Asynchronously lazy-load state definition from URL fragment, if mapped.
               lazyLoadState($injector, futureState).then(function lazyLoadedStateCallback(states) {
                 states.forEach(function (state) {
-                  if (state && (!$state.get(state) || (state.name && !$state.get(state.name))))
-                    $stateProvider.state(state);
+                  if (!$state.get(futureState.name))
+                    $stateProvider.state(futureState);
                 });
                 resyncing = true;
                 $urlRouter.sync();
