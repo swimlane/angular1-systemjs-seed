@@ -225,13 +225,6 @@ futureStateModule.provider('$futureState',
 
               var promise = lazyLoadState($injector, futureState);
               promise.then(function (modules) {
-
-                modules.forEach(function(module){
-                  module.states.forEach(function (state) {
-                    if (state && (!$state.get(state) || (state.name && !$state.get(state.name))))
-                      $stateProvider.state(state);
-                  });
-                });
                 $state.go(unfoundState.to, unfoundState.toParams);
                 transitionPending = false;
               }, function (error) {
