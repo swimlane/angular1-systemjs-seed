@@ -1,4 +1,5 @@
 import angular from 'angular';
+import futureRoutes from './routes.json!json';
 
 export var routes = function(module){
 
@@ -17,20 +18,10 @@ export var routes = function(module){
       return def.promise;
     });
 
-    $futureStateProvider.futureState({
-      'stateName': 'login',
-      'urlPrefix': '/login',
-      'type': 'load',
-      'src': 'src/app/login/login'
+    futureRoutes.forEach(function(r){
+      $futureStateProvider.futureState(r);
     });
-
-    $futureStateProvider.futureState({
-      'stateName': 'dashboards',
-      'urlPrefix': '/dashboards',
-      'type': 'load',
-      'src': 'src/app/dashboard/dashboard'
-    });
-
+    
   };
 
   RouterConfig.$inject = $inject;

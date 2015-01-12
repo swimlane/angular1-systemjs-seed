@@ -6,6 +6,7 @@ System.config({
     'bower_components/ocLazyLoad/dist/ocLazyLoad': { deps: ['angular'] }
   },
   map: {
+    'json': 'src/common/utils/json',
     'angular': 'bower_components/angular/angular',
     'angular-ui-router': 'bower_components/angular-ui-router/release/angular-ui-router',
     'ocLazyLoad': 'bower_components/ocLazyLoad/dist/ocLazyLoad'

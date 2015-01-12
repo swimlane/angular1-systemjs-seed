@@ -1,0 +1,14 @@
+[
+  {
+    "stateName": "login",
+    "urlPrefix": "/login",
+    "type": "load",
+    "src": "src/app/login/login"
+  },
+  {
+    "stateName": "dashboards",
+    "urlPrefix": "/dashboards",
+    "type": "load",
+    "src": "src/app/dashboard/dashboard"
+  }
+]
