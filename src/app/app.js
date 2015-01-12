@@ -1,9 +1,10 @@
 import angular from 'angular';
 import 'angular-ui-router';
 import {register} from 'src/common/utils/register';
+import {futureStateModule} from 'src/common/utils/lazy';
 import {routes} from './routes';
 
-var module = angular.module('swimlane', ['ui.router']);
+var module = angular.module('swimlane', ['ui.router', futureStateModule.name ]);
 
 module.config(register(module));
 module.config(routes(module));

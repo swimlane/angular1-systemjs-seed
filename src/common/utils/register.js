@@ -1,24 +1,5 @@
 import angular from 'angular';
 
-export function route(obj){
-  var $inject = ['$q'];
-
-  var Route = function ($q) {
-    var def = $q.defer();
-
-    System.import(obj.src).then(loaded => {
-      obj.parent.register(loaded[obj.name])
-      def.resolve();
-    });
-
-    return def.promise;
-  };
-
-  Route.$inject = $inject;
-
-  return Route;
-};
-
 export function register(app){
   var $inject = ['$controllerProvider', '$provide', '$compileProvider', '$filterProvider'];
 

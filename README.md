@@ -31,6 +31,7 @@ Testing SystemJS & ES6 modules that lazy-load with AngularJS using 6to5.
 - https://github.com/assetgraph/assetgraph-builder
 - https://github.com/aurelia/dependency-injection
 - https://docs.google.com/document/d/1uhs-a41dp2z0NLs-QiXYY-rqLGhgjmTf4iwBad2myzY/edit#heading=h.qbaubqkoiqds
+- http://christopherthielen.github.io/ui-router-extras/#/future
 
 ### Build Stuff
 
