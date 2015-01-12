@@ -10,5 +10,17 @@
     "urlPrefix": "/dashboards",
     "type": "load",
     "src": "src/app/dashboard/dashboard"
+  },
+  {
+    "stateName": "admin",
+    "urlPrefix": "/admin",
+    "type": "load",
+    "src": "src/app/admin/admin"
+  },
+  {
+    "stateName": "forms",
+    "urlPrefix": "/forms",
+    "type": "load",
+    "src": "src/app/forms/forms"
   }
 ]
