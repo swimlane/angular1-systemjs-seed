@@ -1,12 +1,11 @@
 import angular from 'angular';
 import 'angular-ui-router';
-import {register} from 'src/common/utils/register';
-import {futureStateModule} from 'src/common/utils/lazy';
+import 'ocLazyLoad';
+import {futureStateModule} from 'src/common/utils/lazy-routes';
 import {routes} from './routes';
 
-var module = angular.module('swimlane', ['ui.router', futureStateModule.name ]);
+var module = angular.module('swimlane', ['ui.router', 'oc.lazyLoad', futureStateModule.name ]);
 
-module.config(register(module));
 module.config(routes(module));
 
 module.config(function ($urlRouterProvider, $locationProvider, $stateProvider, $httpProvider) {
@@ -15,7 +14,6 @@ module.config(function ($urlRouterProvider, $locationProvider, $stateProvider, $
 });
 
 module.run(function($state){
-  console.log('main')
   $state.go('login');
 });
 

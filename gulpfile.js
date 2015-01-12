@@ -73,7 +73,9 @@ gulp.task('build-html', function () {
         });
       }
     }))*/
-    .pipe(ngHtml2Js())
+    .pipe(ngHtml2Js({
+      moduleName: 'templates'
+    }))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });

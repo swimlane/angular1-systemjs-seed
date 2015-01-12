@@ -9,12 +9,12 @@ export var routes = function(module){
   var $inject = ['$stateProvider', '$futureStateProvider'];
   var RouterConfig = function ($stateProvider, $futureStateProvider) {
 
-    $futureStateProvider.stateFactory('load', function($q, futureState){
+    $futureStateProvider.stateFactory('load', function($q, $ocLazyLoad, futureState){
       var def = $q.defer();
 
       System.import(futureState.src).then(loaded => {
         var key = Object.keys(loaded), newModule = loaded[key[0]];
-        module.register(newModule)
+        $ocLazyLoad.load(newModule)
         def.resolve(newModule);
       });
 
