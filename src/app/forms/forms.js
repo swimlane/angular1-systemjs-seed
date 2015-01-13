@@ -1,6 +1,6 @@
 import angular from 'angular';
 import {selectModule} from 'src/common/components/select';
-import 'dist/app/forms/forms.tpl';
+import './forms.tpl';
 
 
 export var formModule = angular.module('forms', [selectModule.name, 'app/forms/forms.tpl.html']);

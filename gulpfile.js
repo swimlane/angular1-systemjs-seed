@@ -14,6 +14,7 @@ var ngHtml2Js = require("gulp-ng-html2js");
 var htmlMin = require('gulp-minify-html');
 var builder = require('systemjs-builder');
 var RSVP = require('rsvp');
+var less = require('gulp-less');
 
 var compilerOptions = {
   filename: '',
@@ -45,6 +46,7 @@ var path = {
   source:'src/**/*.js',
   html:'**/*.html',
   templates: 'src/**/*.html',
+  less: 'src/**/*.less',
   output:'dist/'
 };
 
@@ -55,7 +57,7 @@ gulp.task('clean', function() {
     .pipe(vinylPaths(del));
 });
 
-gulp.task('build-html', function () {
+gulp.task('html', function () {
   return gulp.src(path.templates)
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.html'}))
@@ -80,7 +82,16 @@ gulp.task('build-html', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('build-es6', function () {
+gulp.task('less', function () {
+  return gulp.src(path.less)
+    .pipe(plumber())
+    .pipe(changed(path.output, {extension: '.less'}))
+    .pipe(less())
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
+gulp.task('es6', function () {
   return gulp.src(path.source)
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.js'}))
@@ -91,10 +102,10 @@ gulp.task('build-es6', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('watch-build', function(callback) {
+gulp.task('compile', function(callback) {
   return runSequence(
     'clean',
-    ['build-html', 'build-es6'],
+    ['less', 'html', 'es6', 'move'],
     callback
   );
 });
@@ -105,7 +116,14 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('serve', ['watch-build'], function(done) {
+gulp.task('move', function(){
+  return gulp.src('./src/**/*.json')
+    .pipe(changed(path.output, {extension: '.json'}))
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
+gulp.task('serve', ['compile'], function(done) {
   browserSync({
     open: false,
     port: 9000,
@@ -120,13 +138,23 @@ gulp.task('serve', ['watch-build'], function(done) {
 });
 
 gulp.task('watch', ['serve'], function() {
-  var watcher = gulp.watch([path.source, path.html], ['watch-build']);
+  var watcher = gulp.watch([path.source, path.html], ['compile']);
   watcher.on('change', function(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 });
 
-gulp.task('build', runSequence('clean', ['build-html', 'build-es6'], function() {
+gulp.task('tree', ['compile'], function() {
+
+  /*
+                app
+        -------------------
+       /      /      \     \
+    admin dashboard forms login
+       |  /       \   |   /
+      modal         select
+
+  */
 
   var routes = require('./src/app/routes.json');
 
@@ -168,7 +196,10 @@ gulp.task('build', runSequence('clean', ['build-html', 'build-es6'], function() 
 
           // build the tree
           var src = tree.src.replace('src', 'dist');
-          builder.buildTree(tree.tree, src + '.js', { sourceMaps: true });
+          builder.buildTree(tree.tree, src + '.js', { 
+            sourceMaps: true 
+            //minify: true
+          });
         });
 
       });
@@ -177,4 +208,4 @@ gulp.task('build', runSequence('clean', ['build-html', 'build-es6'], function() 
 
   });
 
-}));
+});

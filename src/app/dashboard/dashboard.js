@@ -1,7 +1,7 @@
 import angular from 'angular';
 import {modalModule} from 'src/common/components/modal';
 import {selectModule} from 'src/common/components/select';
-import 'dist/app/dashboard/dashboards.tpl';
+import './dashboards.tpl';
 
 
 export var dashboardModule = angular.module('dashboard', 

@@ -1,7 +1,8 @@
 import angular from 'angular';
 import {selectModule} from 'src/common/components/select';
-import 'dist/app/login/login.tpl';
-import 'dist/app/login/signup.tpl';
+import './login.tpl';
+import './signup.tpl';
+import './login.css!'
 
 
 export var loginModule = angular.module('login', [selectModule.name, 

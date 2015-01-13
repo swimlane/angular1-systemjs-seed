@@ -1,5 +1,5 @@
 import angular from 'angular';
-import futureRoutes from './routes.json!json';
+import futureRoutes from './routes.json!';
 
 export var routes = function(module){
 

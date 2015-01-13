@@ -1,6 +1,6 @@
 import angular from 'angular';
 import {modalModule} from 'src/common/components/modal';
-import 'dist/app/admin/admin.tpl';
+import './admin.tpl';
 
 
 export var formModule = angular.module('admin', [modalModule.name, 'app/admin/admin.tpl.html']);
