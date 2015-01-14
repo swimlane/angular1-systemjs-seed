@@ -24,9 +24,9 @@ var compilerOptions = {
   blacklist: [],
   whitelist: [],
   modules: '',
-  sourceMap: true,
-  sourceMapName: '',
-  sourceFileName: '',
+  //sourceMap: true,
+  //sourceMapName: '',
+  //sourceFileName: '',
   sourceRoot: '',
   moduleRoot: '',
   moduleIds: false,
@@ -88,7 +88,9 @@ gulp.task('less', function () {
   return gulp.src(path.less)
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.less'}))
+    .pipe(sourcemaps.init())
     .pipe(less())
+    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
@@ -97,9 +99,9 @@ gulp.task('es6', function () {
   return gulp.src(path.source)
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.js'}))
-    //.pipe(sourcemaps.init())
+    .pipe(sourcemaps.init())
     .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
-    //.pipe(sourcemaps.write("."))
+    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });

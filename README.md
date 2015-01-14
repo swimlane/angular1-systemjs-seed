@@ -7,12 +7,12 @@ Testing SystemJS & ES6 modules that lazy-load with AngularJS using 6to5.
 
 This project does:
 
-- ES6 Syntax via 6to5
+- ES6 Syntax via 6to5 with source maps
 - ES6 Modules via SystemJS
 - Karma / Jasmine unit tests with coverage report
 - Lazy-loading modules via routes with AngularJS
 - Easy watch/lint/test/build setup via Gulp
-- LESS CSS Support
+- LESS CSS Support with source maps
 - AngularJS Template Compilation
 
 ### Install & Run
@@ -34,9 +34,10 @@ This project does:
 
 and `gulp lint` to lint it.
 
-### Tooling
+### IDE Tooling
 
-- Install [EditorConfig](http://editorconfig.org/)
+- [EditorConfig](http://editorconfig.org/)
+- [JSHint](http://jshint.com/install/)
 
 ### Best Practices
 
