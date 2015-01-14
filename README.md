@@ -14,6 +14,7 @@ This project does:
 - Easy watch/lint/test/build setup via Gulp
 - LESS CSS Support with source maps
 - AngularJS Template Compilation
+- AngularJS Annotatation
 
 ### Install & Run
 
@@ -52,7 +53,5 @@ and `gulp lint` to lint it.
 ### Resources
 
 - https://github.com/systemjs/systemjs
-- https://github.com/systemjs/builder/issues/5
 - https://github.com/gocardless/es6-angularjs
 - http://glenmaddern.com/articles/javascript-in-2015
-- http://teropa.info/blog/2014/03/18/using-angular-2-0-dependency-injection-in-a-backbone-app.html

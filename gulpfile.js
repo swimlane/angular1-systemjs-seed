@@ -17,6 +17,7 @@ var RSVP = require('rsvp');
 var less = require('gulp-less');
 var karma = require('karma').server;
 var insert = require('gulp-insert');
+var ngAnnotate = require('gulp-ng-annotate');
 
 var compilerOptions = {
   filename: '',
@@ -74,7 +75,9 @@ gulp.task('html', function () {
       spare: true,
       quotes: true
     }))
-    .pipe(ngHtml2Js())
+    .pipe(ngHtml2Js({
+      //moduleName: "templates",
+    }))
 
     // not entirely sure this is needed....
     .pipe(insert.prepend("import angular from 'angular';\n"))
@@ -101,6 +104,7 @@ gulp.task('es6', function () {
     .pipe(changed(path.output, {extension: '.js'}))
     .pipe(sourcemaps.init())
     .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
+    .pipe(ngAnnotate())
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
