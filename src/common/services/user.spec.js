@@ -1,10 +1,10 @@
 import angular from 'angular';
-import 'angular-mock';
-import {currentUserModule} from './user';
+import 'angular-mocks';
+import {userModule} from './user';
 
 
 describe('CurrentUser', function() {
-  beforeEach(angular.mock.module(currentUserModule.name));
+  beforeEach(angular.mock.module(userModule.name));
 
   var CurrentUser, scope;
 

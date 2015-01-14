@@ -3,3 +3,5 @@ bower_components
 dist
 .idea
 .DS_STORE
+coverage
+jspm_packages

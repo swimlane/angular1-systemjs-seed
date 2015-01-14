@@ -4,19 +4,35 @@ Testing SystemJS & ES6 modules that lazy-load with AngularJS using 6to5.
 
 ![](http://media.giphy.com/media/EldfH1VJdbrwY/giphy.gif)
 
-### Install
+
+This project does:
+
+- ES6 Syntax via 6to5
+- ES6 Modules via SystemJS
+- Karma / Jasmine unit tests with coverage report
+- Lazy-loading modules via routes with AngularJS
+- Easy watch/lint/test/build setup via Gulp
+- LESS CSS Support
+- AngularJS Template Compilation
+
+### Install & Run
 
 1. `brew install node`
 2. `npm install -g gulp`
-3. `npm install`
-4. `bower install`
-5. `gulp watch serve`
-6. Browse to `http://localhost:9000`
+3. `npm install -g jspm`
+4. `npm install`
+5. `bower install`
+6. `jspm install`
+7. `gulp watch serve`
+8. Browse to `http://localhost:9000`
 
-### Tests
+### Run Tests
 
 1. `npm install -g karma-cli`
 2. `npm install -g jspm`
+3. `gulp test`
+
+and `gulp lint` to lint it.
 
 ### Tooling
 

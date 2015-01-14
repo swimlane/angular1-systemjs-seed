@@ -11,6 +11,7 @@ module.config(routes(module));
 module.config(function ($urlRouterProvider, $locationProvider, $stateProvider, $httpProvider) {
   //$locationProvider.html5Mode(true);
   $httpProvider.useApplyAsync(true);
+  $urlRouterProvider.otherwise('/login');
 });
 
 angular.element(document).ready(function() {

@@ -13,6 +13,6 @@ formModule.config(function($stateProvider){
   });
 });
 
-formModule.controller('AdminController', function($scope){
-  console.log('admin!')
+formModule.controller('AdminController', $scope => {
+  console.log('admin!');
 });
