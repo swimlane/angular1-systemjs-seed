@@ -9,9 +9,14 @@ Testing SystemJS & ES6 modules that lazy-load with AngularJS using 6to5.
 1. `brew install node`
 2. `npm install -g gulp`
 3. `npm install`
-4. `bower install` // todo: jsmp?
+4. `bower install`
 5. `gulp watch serve`
 6. Browse to `http://localhost:9000`
+
+### Tests
+
+1. `npm install -g karma-cli`
+2. `npm install -g jspm`
 
 ### Tooling
 
@@ -26,16 +31,6 @@ Testing SystemJS & ES6 modules that lazy-load with AngularJS using 6to5.
 ### Research
 
 - https://github.com/marcj/angular-es6-annotations
-- https://github.com/Munter/grunt-reduce
-- https://github.com/guybedford/assetgraph
-- https://github.com/assetgraph/assetgraph-builder
-- https://github.com/aurelia/dependency-injection
-- https://docs.google.com/document/d/1uhs-a41dp2z0NLs-QiXYY-rqLGhgjmTf4iwBad2myzY/edit#heading=h.qbaubqkoiqds
-- http://christopherthielen.github.io/ui-router-extras/#/future
-
-### Build Stuff
-
-- https://www.npmjs.com/package/gulp-angular-templatecache
 
 ### Resources
 
