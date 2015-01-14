@@ -167,9 +167,9 @@ gulp.task('tree', ['compile'], function() {
 
     var promises = [];
 
+    var trees = [];
     routes.forEach(function(t){
 
-      var trees = [];
       promises.push(new RSVP.Promise(function(resolve, reject) {
         console.log('+ Tracing:', t.src);
 
@@ -183,25 +183,32 @@ gulp.task('tree', ['compile'], function() {
 
       }));
 
-      RSVP.all(promises).then(function(){
-        trees.forEach(function(tree){
+    });
 
-          trees.forEach(function(childTree){
-            if(childTree !== tree){
-              builder.subtractTrees(tree.tree, childTree.tree);
-            }
-          });
+    RSVP.all(promises).then(function(){
 
-          console.log('+ Building tree:', tree.src)
-
-          // build the tree
-          var src = tree.src.replace('src', 'dist');
-          builder.buildTree(tree.tree, src + '.js', { 
-            sourceMaps: true 
-            //minify: true
-          });
+      var commonTree = trees[0].tree;
+      trees.forEach(function(tree, i){
+        if (i === 0) {return};
+        commonTree = builder.intersectTrees(commonTree, tree.tree);
+      })      
+      
+      builder.buildTree(commonTree, 'dist/common.js', { 
+          sourceMaps: true 
+          //minify: true
         });
 
+      trees.forEach(function(tree, i){
+        trees[i].tree = builder.subtractTrees(tree.tree, commonTree);
+        
+        console.log('+ Building tree:', tree.src)
+
+        // build the tree
+        var src = tree.src.replace('src', 'dist');
+        builder.buildTree(tree.tree, src + '.js', { 
+          sourceMaps: true 
+          //minify: true
+        });
       });
 
     });
