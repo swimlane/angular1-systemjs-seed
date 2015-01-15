@@ -1,9 +1,10 @@
 import angular from 'angular';
 import {modalModule} from 'src/common/components/modal';
+import {popupModule} from 'src/commom/components/popup';
 import './dashboards.tpl';
 
 export var dashboardModule = angular.module('dashboard', 
-	[modalModule.name, 'app/dashboard/dashboards.tpl.html']);
+	[modalModule.name, popupModule.name, 'app/dashboard/dashboards.tpl.html']);
 
 dashboardModule.config(function($stateProvider){
   $stateProvider.state('dashboards', {
