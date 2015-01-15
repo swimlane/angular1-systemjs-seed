@@ -19,6 +19,10 @@ var karma = require('karma').server;
 var insert = require('gulp-insert');
 var ngAnnotate = require('gulp-ng-annotate');
 
+var AssetGraph = require('assetgraph');
+var systemJsAssetGraph = require('systemjs-assetgraph');
+
+
 var compilerOptions = {
   filename: '',
   filenameRelative: '',
@@ -163,13 +167,17 @@ gulp.task('watch', ['serve'], function() {
 
 gulp.task('tree', ['compile'], function() {
 
-  // var allTrees = {};
+  var allTrees = {};
 
   var startsrc = 'dist/app/admin/admin';
   builder.loadConfig('./system.config.js').then(function(){
     var buildDeps = function(src, level){
       // trace source to get dependency tree
       return builder.trace(src).then(function(traceTree){
+        if (allTrees[traceTree.moduleName]){
+          traceTree = allTrees[traceTree.moduleName];
+        }
+
         // extract dependency source paths
         var sources = Object.keys(traceTree.tree);
         console.log('-----------------------------------------------')
@@ -187,14 +195,14 @@ gulp.task('tree', ['compile'], function() {
           }
 
           promises.push(new RSVP.Promise(function(resolve, reject) {
-            buildDeps(source, level + 1).then(function(subTree){
+            buildDeps(source, level + 1).then(function(subTree){              
               subTrees.push(subTree);
               resolve();
             });
           }));
         })
-
-        RSVP.all(promises).then(function(){
+        
+        return RSVP.all(promises).then(function(){
           console.log("subtrees: " + subTrees.length);
 
           // extract common tree
@@ -210,30 +218,32 @@ gulp.task('tree', ['compile'], function() {
 
           // add common tree to parent
           traceTree.tree = builder.addTrees(traceTree.tree, commonTree);
-          
-          // build parent
-          builder.buildTree(traceTree.tree, src + '.js', { 
-            sourceMaps: true 
-            //minify: true
-          });
-
+          allTrees[traceTree.moduleName] = traceTree;
+          return resolve(traceTree);
         });
 
-        return traceTree;
-      });
+      }).then(function(tr){
+        console.log('we are here!')
+        return tr;
+      })
     }
 
-    buildDeps(startsrc, 1).then(function(tree){
-      // console.log(tree)
+    buildDeps(startsrc, 1).then(function(test){
+      console.log('waaat')
+      console.log(test)
+      // build parent
+      allTrees.forEach(function(tree){
+        builder.buildTree(traceTree.tree, src + '.js', {
+          sourceMaps: true
+          //minify: true
+        });
+      })
     });
 
     // buildDeps('dist/app/app', 1).then(function(tree){
     //   // console.log(tree)
     // });
-
   });
-  
-
 });
 
 
@@ -298,5 +308,24 @@ gulp.task('oldTree', ['compile'], function(){
     });
 
   });
+
+});
+
+
+
+gulp.task('assetGraph', ['compile'], function(){
+  var outRoot = 'app-built';
+
+  new AssetGraph({root: './'})
+    .loadAssets(['*.html', '*.js'])
+    .queue(systemJsAssetGraph({
+      outRoot: 'app-built',
+      bundle: true
+    }))
+    .writeAssetsToDisc({url: /^file:/}, 'app-built')
+    .run(function (err) {
+      if (err) throw err;
+      console.log('Done');
+    });
 
 });
