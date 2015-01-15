@@ -174,11 +174,6 @@ gulp.task('tree', ['compile'], function() {
 
         // extract dependency source paths
         var sources = Object.keys(traceTree.tree);
-        console.log('-----------------------------------------------')
-        console.log('building source ' + src);
-        console.log('level ' + level)
-        console.log('dependencies: ');
-        console.log(sources)
         
         // process each dependency individually, and collect their trees
         var subTrees = [];
@@ -189,45 +184,64 @@ gulp.task('tree', ['compile'], function() {
           }
 
           promises.push(new RSVP.Promise(function(resolve, reject) {
-            buildDeps(source, level + 1).then(function(subTree){              
+            buildDeps(source, level + 1).then(function(subTree){     
               subTrees.push(subTree);
               resolve();
             });
           }));
         })
-        
+
         return RSVP.all(promises).then(function(){
+          console.log('=======================================================================================');
+          console.log("Source: " + src);
+          console.log('dependencies: ');
+          console.log(sources);        
           console.log("subtrees: " + subTrees.length);
 
+          if (subTrees.length === 0) {
+            return traceTree;
+          }
+
           // extract common tree
+          console.log('Extracting common trees')
+          console.log('-------------------------------------')
+
           var commonTree = subTrees[0].tree;
-          subTrees.forEach(function(tree, i){          
+          subTrees.forEach(function(tree, i){
+            console.log('intersecting with ' + tree.moduleName)
             commonTree = builder.intersectTrees(commonTree, tree.tree);
           })
 
-          // remove common tree from subtrees
-          subTrees.forEach(function(tree, i){        
+          console.log('Common tree:');
+          console.log(Object.keys(commonTree))
+
+          subTrees.forEach(function(tree, i){
+            // remove common tree from subtrees
+            tree.tree = builder.subtractTrees(tree.tree, commonTree);
+
+            // remove subtree from parent tree
             traceTree.tree = builder.subtractTrees(traceTree.tree, tree.tree);
+
+            allTrees[tree.moduleName] = tree;
           })
 
           // add common tree to parent
           traceTree.tree = builder.addTrees(traceTree.tree, commonTree);
           allTrees[traceTree.moduleName] = traceTree;
-          return resolve(traceTree);
+          return traceTree;
         });
 
-      }).then(function(tr){
-        console.log('we are here!')
-        return tr;
       })
     }
 
     buildDeps(startsrc, 1).then(function(test){
-      console.log('waaat')
-      console.log(test)
+      console.log('===============================================================================================')
       // build parent
-      allTrees.forEach(function(tree){
-        builder.buildTree(traceTree.tree, src + '.js', {
+      keys = Object.keys(allTrees);
+      keys.forEach(function(treeName){
+        var tree = allTrees[treeName];
+        console.log('building ' + tree.moduleName + ".js")
+        builder.buildTree(tree.tree, tree.moduleName + '.js', {
           sourceMaps: true
           //minify: true
         });
