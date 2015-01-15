@@ -144,27 +144,19 @@ gulp.task('watch', ['serve'], function() {
   });
 });
 
+
+// addTrees, subtractTrees, intersectTrees and extractTree
+
 gulp.task('tree', ['compile'], function() {
 
-  /*
-                app
-        -------------------
-       /      /      \     \
-    admin dashboard forms login
-       |  /       \   |   /
-      modal         select
+  // var allTrees = {};
 
-  */
-
-  
-  var startsrc = 'dist/app/app';
+  var startsrc = 'dist/app/admin/admin';
   builder.loadConfig('./system.config.js').then(function(){
-    
-
     var buildDeps = function(src, level){
-      builder.trace(src).then(function(traceTree){
-        if (src.indexOf('bower_components') == 0) return;
-        
+      // trace source to get dependency tree
+      return builder.trace(src).then(function(traceTree){
+        // extract dependency source paths
         var sources = Object.keys(traceTree.tree);
         console.log('-----------------------------------------------')
         console.log('building source ' + src);
@@ -172,31 +164,58 @@ gulp.task('tree', ['compile'], function() {
         console.log('dependencies: ');
         console.log(sources)
         
-        // sources.forEach(function(source){
-        //   if (source === src){
-        //     return;
-        //   }
-        //   buildDeps(source, level + 1);
-        // })
-        
-        // traceTree.forEach(function(subtree){
-        //   console.log(subtree.name)
-        // })
-        // console.log(traceTree);
-        
-        builder.buildTree(traceTree.tree, src + '.js', { 
-          sourceMaps: true 
-          //minify: true
+        // process each dependency individually, and collect their trees
+        var subTrees = [];
+        var promises = [];
+        sources.forEach(function(source){
+          if (source === src || source.indexOf('bower_components') == 0 || source.indexOf('tpl') != -1){
+            return;
+          }
+
+          promises.push(new RSVP.Promise(function(resolve, reject) {
+            buildDeps(source, level + 1).then(function(subTree){
+              subTrees.push(subTree);
+              resolve();
+            });
+          }));
+        })
+
+        RSVP.all(promises).then(function(){
+          console.log("subtrees: " + subTrees.length);
+
+          // extract common tree
+          var commonTree = subTrees[0].tree;
+          subTrees.forEach(function(tree, i){          
+            commonTree = builder.intersectTrees(commonTree, tree.tree);
+          })
+
+          // remove common tree from subtrees
+          subTrees.forEach(function(tree, i){        
+            traceTree.tree = builder.subtractTrees(traceTree.tree, tree.tree);
+          })
+
+          // add common tree to parent
+          traceTree.tree = builder.addTrees(traceTree.tree, commonTree);
+          
+          // build parent
+          builder.buildTree(traceTree.tree, src + '.js', { 
+            sourceMaps: true 
+            //minify: true
+          });
+
         });
 
         return traceTree;
       });
     }
 
-    var tree = buildDeps(startsrc, 1);
-    console.log('done building')
-    console.log(tree)
+    buildDeps(startsrc, 1).then(function(tree){
+      // console.log(tree)
+    });
 
+    // buildDeps('dist/app/app', 1).then(function(tree){
+    //   // console.log(tree)
+    // });
 
   });
   

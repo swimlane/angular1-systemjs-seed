@@ -1,9 +1,8 @@
 import angular from 'angular';
-import {modalModule} from 'src/common/components/modal';
 import './admin.tpl';
 import {builderModule} from './builder/builder'
 import {usersModule} from './users/users'
-export var adminModule = angular.module('admin', [modalModule.name, builderModule, usersModule, 'app/admin/admin.tpl.html']);
+export var adminModule = angular.module('admin', [builderModule, usersModule, 'app/admin/admin.tpl.html']);
 
 adminModule.config(function($stateProvider){
   $stateProvider.state('admin', {

@@ -3,7 +3,7 @@ import {modalModule} from 'src/common/components/modal';
 import './forms.tpl';
 
 
-export var formModule = angular.module('forms', [selectModule.name, 'app/forms/forms.tpl.html']);
+export var formModule = angular.module('forms', ['app/forms/forms.tpl.html']);
 
 formModule.config(function($stateProvider){
   $stateProvider.state('forms', {
