@@ -85,7 +85,7 @@ gulp.task('html', function () {
 
     // not entirely sure this is needed....
     .pipe(insert.prepend("import angular from 'angular';\n"))
-    .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
+    //.pipe(to5(assign({}, compilerOptions, {modules:'system'})))
 
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
@@ -107,8 +107,8 @@ gulp.task('es6', function () {
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.js'}))
     .pipe(sourcemaps.init())
-    .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
-    .pipe(ngAnnotate())
+    //.pipe(to5(assign({}, compilerOptions, {modules:'system'})))
+    //.pipe(ngAnnotate())
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
@@ -116,7 +116,7 @@ gulp.task('es6', function () {
 
 gulp.task('compile', function(callback) {
   return runSequence(
-    'clean',
+    //'clean',
     ['less', 'html', 'es6', 'move'],
     callback
   );
@@ -312,6 +312,18 @@ gulp.task('oldTree', ['compile'], function(){
 });
 
 
+
+gulp.task('steal', ['compile'], function(){
+  var steal = require('steal-tools');
+  steal.build({
+    main: 'dist/app/app',
+    config: 'system.config.js'
+  }, {
+    minify: false,
+    bundleSteal: false,
+    bundle: ['dist/app/login/login', 'dist/app/admin/admin', 'dist/app/dashboard/dashboard', 'dist/app/forms/forms']
+  })
+});
 
 gulp.task('assetGraph', ['compile'], function(){
   var outRoot = 'app-built';
