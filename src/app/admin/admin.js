@@ -1,18 +1,32 @@
 import angular from 'angular';
 import {modalModule} from 'src/common/components/modal';
 import './admin.tpl';
+import {builderModule} from './builder/builder'
+import {usersModule} from './users/users'
+export var adminModule = angular.module('admin', [modalModule.name, builderModule, usersModule, 'app/admin/admin.tpl.html']);
 
-
-export var formModule = angular.module('admin', [modalModule.name, 'app/admin/admin.tpl.html']);
-
-formModule.config(function($stateProvider){
+adminModule.config(function($stateProvider){
   $stateProvider.state('admin', {
     url: '/admin',
     templateUrl: 'app/admin/admin.tpl.html',
     controller: 'AdminController'
   });
+
+  $stateProvider.state('admin.builder', {
+    url: '/builder',
+    templateUrl: 'app/admin/builder/builder.tpl.html',
+    controller: 'BuilderController',
+    parent: 'admin'
+  });
+
+  $stateProvider.state('admin.users', {
+    url: '/users',
+    templateUrl: 'app/admin/users/users.tpl.html',
+    controller: 'UsersController',
+    parent: 'admin'
+  });
 });
 
-formModule.controller('AdminController', function($scope){
+adminModule.controller('AdminController', function($scope){
   console.log('admin!')
 });

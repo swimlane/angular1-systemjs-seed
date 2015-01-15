@@ -1,6 +1,5 @@
 import angular from 'angular';
 import {modalModule} from 'src/common/components/modal';
-import {selectModule} from 'src/common/components/select';
 import './dashboards.tpl';
 
 

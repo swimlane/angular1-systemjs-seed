@@ -1,5 +1,5 @@
 import angular from 'angular';
-import {selectModule} from 'src/common/components/select';
+import {modalModule} from 'src/common/components/modal';
 import './forms.tpl';
 
 

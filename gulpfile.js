@@ -156,20 +156,70 @@ gulp.task('tree', ['compile'], function() {
 
   */
 
+  
+  var startsrc = 'dist/app/app';
+  builder.loadConfig('./system.config.js').then(function(){
+    
+
+    var buildDeps = function(src, level){
+      builder.trace(src).then(function(traceTree){
+        if (src.indexOf('bower_components') == 0) return;
+        
+        var sources = Object.keys(traceTree.tree);
+        console.log('-----------------------------------------------')
+        console.log('building source ' + src);
+        console.log('level ' + level)
+        console.log('dependencies: ');
+        console.log(sources)
+        
+        // sources.forEach(function(source){
+        //   if (source === src){
+        //     return;
+        //   }
+        //   buildDeps(source, level + 1);
+        // })
+        
+        // traceTree.forEach(function(subtree){
+        //   console.log(subtree.name)
+        // })
+        // console.log(traceTree);
+        
+        builder.buildTree(traceTree.tree, src + '.js', { 
+          sourceMaps: true 
+          //minify: true
+        });
+
+        return traceTree;
+      });
+    }
+
+    var tree = buildDeps(startsrc, 1);
+    console.log('done building')
+    console.log(tree)
+
+
+  });
+  
+
+});
+
+
+gulp.task('oldTree', ['compile'], function(){
+
   var routes = require('./src/app/routes.json');
 
   // inject first
-  routes.unshift({
-    src: "src/app/app"
-  });
+  // routes.unshift({
+  //   src: "src/app/app"
+  // });
 
   builder.loadConfig('./system.config.js').then(function(){
 
     var promises = [];
 
     var trees = [];
+    // generate trees
     routes.forEach(function(t){
-
       promises.push(new RSVP.Promise(function(resolve, reject) {
         console.log('+ Tracing:', t.src);
 
@@ -186,7 +236,7 @@ gulp.task('tree', ['compile'], function() {
     });
 
     RSVP.all(promises).then(function(){
-
+      console.log(trees);
       var commonTree = trees[0].tree;
       trees.forEach(function(tree, i){
         if (i === 0) {return};
@@ -214,5 +264,4 @@ gulp.task('tree', ['compile'], function() {
     });
 
   });
-
-});
+})
