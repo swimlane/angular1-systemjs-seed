@@ -145,6 +145,12 @@ gulp.task('serve', ['compile'], function(done) {
   }, done);
 });
 
+gulp.task('iis', ['compile'], function(done) {
+  browserSync({
+    proxy: "windows.local"
+  }, done);
+});
+
 gulp.task('watch', ['serve'], function() {
   var watcher = gulp.watch([path.source, path.html], ['compile']);
   watcher.on('change', function(event) {
