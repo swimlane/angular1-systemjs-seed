@@ -26,6 +26,6 @@ adminModule.config(function($stateProvider){
   });
 });
 
-adminModule.controller('AdminController', function($scope){
-  console.log('admin!')
+adminModule.controller('AdminController', $scope => {
+  console.log('admin!');
 });

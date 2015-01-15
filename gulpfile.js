@@ -15,6 +15,9 @@ var htmlMin = require('gulp-minify-html');
 var builder = require('systemjs-builder');
 var RSVP = require('rsvp');
 var less = require('gulp-less');
+var karma = require('karma').server;
+var insert = require('gulp-insert');
+var ngAnnotate = require('gulp-ng-annotate');
 
 var compilerOptions = {
   filename: '',
@@ -22,9 +25,9 @@ var compilerOptions = {
   blacklist: [],
   whitelist: [],
   modules: '',
-  sourceMap: true,
-  sourceMapName: '',
-  sourceFileName: '',
+  //sourceMap: true,
+  //sourceMapName: '',
+  //sourceFileName: '',
   sourceRoot: '',
   moduleRoot: '',
   moduleIds: false,
@@ -50,7 +53,13 @@ var path = {
   output:'dist/'
 };
 
-var jshintConfig = {esnext:true};
+
+gulp.task('test', ['compile'], function (done) {
+  karma.start({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done);
+});
 
 gulp.task('clean', function() {
  return gulp.src([path.output])
@@ -66,18 +75,14 @@ gulp.task('html', function () {
       spare: true,
       quotes: true
     }))
-    /*.pipe(ngHtml2Js({
-      moduleName: function (file) {
-        console.log(file)
-        var path = file.split('/'),
-            folder = path[path.length - 2];
+    .pipe(ngHtml2Js({
+      //moduleName: "templates",
+    }))
 
-        return folder.replace(/-[a-z]/g, function (match) {
-          return match.substr(1).toUpperCase();
-        });
-      }
-    }))*/
-    .pipe(ngHtml2Js())
+    // not entirely sure this is needed....
+    .pipe(insert.prepend("import angular from 'angular';\n"))
+    .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
+
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
@@ -86,7 +91,9 @@ gulp.task('less', function () {
   return gulp.src(path.less)
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.less'}))
+    .pipe(sourcemaps.init())
     .pipe(less())
+    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
@@ -95,9 +102,10 @@ gulp.task('es6', function () {
   return gulp.src(path.source)
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.js'}))
-    //.pipe(sourcemaps.init())
+    .pipe(sourcemaps.init())
     .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
-    //.pipe(sourcemaps.write("."))
+    .pipe(ngAnnotate())
+    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
@@ -112,7 +120,7 @@ gulp.task('compile', function(callback) {
 
 gulp.task('lint', function() {
   return gulp.src(path.source)
-    .pipe(jshint(jshintConfig))
+    .pipe(jshint())
     .pipe(jshint.reporter(stylish));
 });
 
@@ -278,9 +286,11 @@ gulp.task('oldTree', ['compile'], function(){
           sourceMaps: true 
           //minify: true
         });
+
       });
 
     });
 
   });
-})
+
+});

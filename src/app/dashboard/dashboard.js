@@ -13,6 +13,6 @@ dashboardModule.config(function($stateProvider){
   });
 });
 
-dashboardModule.controller('DashboardCtrl', function($scope){
-	console.log('dashboard!')
+dashboardModule.controller('DashboardCtrl', $scope => {
+	console.log('dashboard!');
 });

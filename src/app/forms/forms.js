@@ -13,6 +13,6 @@ formModule.config(function($stateProvider){
   });
 });
 
-formModule.controller('FormsCtrl', function($scope){
-  console.log('forms!')
+formModule.controller('FormsCtrl', $scope => {
+  console.log('forms!');
 });

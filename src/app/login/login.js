@@ -1,11 +1,12 @@
 import angular from 'angular';
 import {selectModule} from 'src/common/components/select';
+import {userModule} from 'src/common/services/user';
 import './login.tpl';
 import './signup.tpl';
-import './login.css!'
+import './login.css!';
 
 
-export var loginModule = angular.module('login', [selectModule.name, 
+export var loginModule = angular.module('login', [selectModule.name, userModule.name,
   'app/login/login.tpl.html', 'app/login/signup.tpl.html']);
 
 loginModule.config(function($stateProvider){

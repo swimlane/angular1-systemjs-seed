@@ -11,7 +11,7 @@ export var routes = function(module){
 
       System.import(futureState.src).then(loaded => {
         var key = Object.keys(loaded), newModule = loaded[key[0]];
-        $ocLazyLoad.load(newModule)
+        $ocLazyLoad.load(newModule);
         def.resolve(newModule);
       });
 
