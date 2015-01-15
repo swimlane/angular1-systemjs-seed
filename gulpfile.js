@@ -325,8 +325,6 @@ gulp.task('oldTree', ['compile'], function(){
 
 });
 
-
-
 gulp.task('steal', ['compile'], function(){
   var steal = require('steal-tools');
   steal.build({
@@ -354,4 +352,20 @@ gulp.task('assetGraph', ['compile'], function(){
       console.log('Done');
     });
 
+});
+
+gulp.task('builder' , function(){
+  var builder = require('./build/build');
+  var routes = require('./src/app/routes.json');
+  
+  // just get the source of our routes
+  routes = routes.map(function(r){
+    return r.src;
+  });
+
+  builder.build({
+    main: 'src/app/app',
+    config: './system.config.js',
+    bundles: routes
+  });
 });
