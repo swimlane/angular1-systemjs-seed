@@ -367,7 +367,7 @@ gulp.task('builder' , function(){
   });
 
   builder.build({
-    main: 'src/app/app',
+    main: 'app/app',
     config: './system.config.js',
     bundles: routes
   });
