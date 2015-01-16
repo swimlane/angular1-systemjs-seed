@@ -1,11 +1,5 @@
 System.config({
-  "paths": {
-    "*": "*.js",
-    "systemjs-test/*": "src/*.js"
-  }
-});
-
-System.config({
+  baseURL: 'dist',
   meta: {
     'bower_components/angular/angular': { format: 'global', exports: 'angular' },
     'bower_components/angular-mocks/angular-mocks': { deps: ['angular'] },
@@ -13,10 +7,6 @@ System.config({
     'bower_components/ocLazyLoad/dist/ocLazyLoad': { deps: ['angular'] }
   },
   map: {
-    //'app': 'src/app',
-    //'common': 'src/common',
-    'src/app': 'dist/app',
-    'src/common': 'dist/common',
     'css': 'bower_components/plugin-css/css',
     'json': 'bower_components/plugin-json/json',
     'angular': 'bower_components/angular/angular',
@@ -24,8 +14,14 @@ System.config({
     'angular-ui-router': 'bower_components/angular-ui-router/release/angular-ui-router',
     'ocLazyLoad': 'bower_components/ocLazyLoad/dist/ocLazyLoad'
   },
-  bundle: ['dist/app/login/login', 'dist/app/admin/admin', 'dist/app/dashboard/dashboard', 'dist/app/forms/forms']
-  //bundles: {
-  //  'src/app/components': ['src/common/components/modal', 'src/common/components/select']
-  //}
+  paths: {
+    '*': '*.js',
+    'systemjs-test/*': 'src/*.js',
+    'bower_components/*': '../bower_components/*.js'
+  },
+  // only temp for steal build
+  bundle: ['dist/app/login/login', 
+    'dist/app/admin/admin', 
+    'dist/app/dashboard/dashboard', 
+    'dist/app/forms/forms']
 });

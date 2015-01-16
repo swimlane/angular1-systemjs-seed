@@ -1,6 +1,6 @@
 import angular from 'angular';
-import {selectModule} from 'src/common/components/select';
-import {userModule} from 'src/common/services/user';
+import {selectModule} from 'common/components/select';
+import {userModule} from 'common/services/user';
 import './login.tpl';
 import './signup.tpl';
 import './login.css!';
