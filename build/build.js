@@ -34,13 +34,18 @@ var getChildren = function(tree, trees){
 /**
  * Recursively traces all the deps
  */
-var traceDeps = function(parents, cb){
+var traceDeps = function(parents, topTree, cb){
   var count = 0,
     trees = [],
     trace = function(nodes, bundleName){
       nodes.forEach(function(node){
         count++;
         builder.trace(node).then(function(tree){
+
+          // subtract primary tree items
+          if(topTree){
+            tree.tree = builder.subtractTrees(tree.tree, topTree);
+          }
 
           // if we don't have a bundle name,
           // its the top level one
@@ -59,6 +64,13 @@ var traceDeps = function(parents, cb){
         });
       });
     };
+
+  // overloaders
+  if(arguments.length === 2){
+    cb = topTree;
+    topTree = undefined;
+  }
+
   trace(parents);
 };
 
@@ -71,16 +83,23 @@ var traceDeps = function(parents, cb){
  */
 var build = function(config){
 
-  builder.loadConfig(config.config).then(function(that){
+  builder.loadConfig(config.config).then(function(){
 
     traceDeps([config.main], function(mainBundle){
 
-      traceDeps(config.bundles, function(bundles){
+      // find the top tree to subtract that
+      // from all the sub-bundles
+      var topTree = mainBundle.find(function(b){
+        return b.moduleName === config.main;
+      });
+
+      traceDeps(config.bundles, topTree.tree, function(bundles){
 
         // flattens all our deps so we can loop commons together
         // results: http://www.screencast.com/t/bV16I8bc2PF
         // bundles = [ { moduleName, tree, bundle } ]
-        // todo: subtract main module deps from bundle sets...
+        // bundles will not include items from the main module
+        debugger;
 
       });
 
