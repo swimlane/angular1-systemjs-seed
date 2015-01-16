@@ -1,6 +1,6 @@
 import angular from 'angular';
 import {modalModule} from 'src/common/components/modal';
-import {popupModule} from 'src/commom/components/popup';
+//import {popupModule} from 'src/commom/components/popup';
 import './dashboards.tpl';
 
 export var dashboardModule = angular.module('dashboard', 
