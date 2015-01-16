@@ -20,8 +20,8 @@ System.config({
     'bower_components/*': '../bower_components/*.js'
   },
   // only temp for steal build
-  bundle: ['dist/app/login/login', 
-    'dist/app/admin/admin', 
-    'dist/app/dashboard/dashboard', 
-    'dist/app/forms/forms']
+  bundle: ['app/login/login', 
+    'app/admin/admin', 
+    'app/dashboard/dashboard', 
+    'app/forms/forms']
 });

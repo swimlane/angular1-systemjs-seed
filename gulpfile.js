@@ -328,12 +328,15 @@ gulp.task('oldTree', ['compile'], function(){
 gulp.task('steal', ['compile'], function(){
   var steal = require('steal-tools');
   steal.build({
-    main: 'dist/app/app',
+    main: 'app/app',
     config: 'system.config.js'
   }, {
     minify: false,
     bundleSteal: false,
-    bundle: ['dist/app/login/login', 'dist/app/admin/admin', 'dist/app/dashboard/dashboard', 'dist/app/forms/forms']
+    bundle: ['app/login/login', 
+      'app/admin/admin', 
+      'app/dashboard/dashboard',
+      'app/forms/forms']
   })
 });
 
