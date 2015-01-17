@@ -162,7 +162,6 @@ gulp.task('watch', ['serve'], function() {
   });
 });
 
-
 // addTrees, subtractTrees, intersectTrees and extractTree
 
 gulp.task('tree', ['compile'], function() {
@@ -180,7 +179,7 @@ gulp.task('tree', ['compile'], function() {
 
         // extract dependency source paths
         var sources = Object.keys(traceTree.tree);
-        
+
         // process each dependency individually, and collect their trees
         var subTrees = [];
         var promises = [];
@@ -190,7 +189,7 @@ gulp.task('tree', ['compile'], function() {
           }
 
           promises.push(new RSVP.Promise(function(resolve, reject) {
-            buildDeps(source, level + 1).then(function(subTree){     
+            buildDeps(source, level + 1).then(function(subTree){
               subTrees.push(subTree);
               resolve();
             });
@@ -201,7 +200,7 @@ gulp.task('tree', ['compile'], function() {
           console.log('=======================================================================================');
           console.log("Source: " + src);
           console.log('dependencies: ');
-          console.log(sources);        
+          console.log(sources);
           console.log("subtrees: " + subTrees.length);
 
           if (subTrees.length === 0) {
@@ -261,70 +260,6 @@ gulp.task('tree', ['compile'], function() {
 });
 
 
-gulp.task('oldTree', ['compile'], function(){
-
-  var routes = require('./src/app/routes.json');
-
-  // inject first
-  // routes.unshift({
-  //   src: "src/app/app"
-  // });
-
-  builder.loadConfig('./system.config.js').then(function(){
-
-    var promises = [];
-
-    var trees = [];
-    // generate trees
-    routes.forEach(function(t){
-      promises.push(new RSVP.Promise(function(resolve, reject) {
-        console.log('+ Tracing:', t.src);
-
-        builder.trace(t.src).then(function(traceTree) {
-          trees.push({
-            src: t.src, 
-            tree: traceTree.tree
-          });
-          resolve();
-        });
-
-      }));
-
-    });
-
-    RSVP.all(promises).then(function(){
-      console.log(trees);
-      var commonTree = trees[0].tree;
-      trees.forEach(function(tree, i){
-        if (i === 0) {return};
-        commonTree = builder.intersectTrees(commonTree, tree.tree);
-      })      
-      
-      builder.buildTree(commonTree, 'dist/common.js', { 
-          sourceMaps: true 
-          //minify: true
-        });
-
-      trees.forEach(function(tree, i){
-        trees[i].tree = builder.subtractTrees(tree.tree, commonTree);
-        
-        console.log('+ Building tree:', tree.src)
-
-        // build the tree
-        var src = tree.src.replace('src', 'dist');
-        builder.buildTree(tree.tree, src + '.js', { 
-          sourceMaps: true 
-          //minify: true
-        });
-
-      });
-
-    });
-
-  });
-
-});
-
 gulp.task('steal', ['compile'], function(){
   var steal = require('steal-tools');
   steal.build({
@@ -337,35 +272,41 @@ gulp.task('steal', ['compile'], function(){
   })
 });
 
-gulp.task('assetGraph', ['compile'], function(){
-  var outRoot = 'app-built';
-
-  new AssetGraph({root: './'})
-    .loadAssets(['*.html', '*.js'])
-    .queue(systemJsAssetGraph({
-      outRoot: 'app-built',
-      bundle: true
-    }))
-    .writeAssetsToDisc({url: /^file:/}, 'app-built')
-    .run(function (err) {
-      if (err) throw err;
-      console.log('Done');
-    });
-
-});
-
-gulp.task('builder' , function(){
+gulp.task('builder', ['compile'], function(){
   var builder = require('./build/build');
   var routes = require('./src/app/routes.json');
-  
+
   // just get the source of our routes
   routes = routes.map(function(r){
     return r.src;
   });
 
-  builder.build({
+  builder.getInverseIndex({
     main: 'src/app/app',
     config: './system.config.js',
     bundles: routes
+  }).then(function(res){
+    console.log(res);
+  })
+
+});
+
+
+gulp.task('depBuilder', ['compile'], function(){
+  var depBuilder = require('./build/dep-builder');
+  var routes = require('./src/app/routes.json');
+
+  // just get the source of our routes
+  routes = routes.map(function(r){
+    return r.src;
   });
+
+  depBuilder.build({
+    main: 'src/app/app',
+    config: './system.config.js',
+    bundles: routes
+  }).then(function(res){
+    console.log(res);
+  })
+
 });
