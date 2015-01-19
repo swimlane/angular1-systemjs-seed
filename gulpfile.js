@@ -292,17 +292,17 @@ gulp.task('builder', ['compile'], function(){
 });
 
 
-gulp.task('depBuilder', ['compile'], function(){
+gulp.task('depBuilder', ['clean', 'compile'], function(){
   var depBuilder = require('./build/dep-builder');
   var routes = require('./src/app/routes.json');
 
   // just get the source of our routes
   routes = routes.map(function(r){
-    return r.src;
+    return r.src.replace('src/', 'dist/');
   });
 
   depBuilder.build({
-    main: 'src/app/app',
+    main: 'dist/app/app',
     config: './system.config.js',
     bundles: routes
   }).then(function(res){
