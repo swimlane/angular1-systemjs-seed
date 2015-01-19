@@ -19,16 +19,13 @@ var karma = require('karma').server;
 var insert = require('gulp-insert');
 var ngAnnotate = require('gulp-ng-annotate');
 
-var AssetGraph = require('assetgraph');
-var systemJsAssetGraph = require('systemjs-assetgraph');
-
 
 var compilerOptions = {
   filename: '',
   filenameRelative: '',
   blacklist: [],
   whitelist: [],
-  modules: '',
+  //modules: 'system',
   //sourceMap: true,
   //sourceMapName: '',
   //sourceFileName: '',
@@ -79,13 +76,11 @@ gulp.task('html', function () {
       spare: true,
       quotes: true
     }))
-    .pipe(ngHtml2Js({
-      //moduleName: "templates",
-    }))
+    .pipe(ngHtml2Js())
 
     // not entirely sure this is needed....
     .pipe(insert.prepend("import angular from 'angular';\n"))
-    //.pipe(to5(assign({}, compilerOptions, {modules:'system'})))
+    .pipe(to5(compilerOptions))
 
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
@@ -107,8 +102,8 @@ gulp.task('es6', function () {
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.js'}))
     .pipe(sourcemaps.init())
-    //.pipe(to5(assign({}, compilerOptions, {modules:'system'})))
-    //.pipe(ngAnnotate())
+    .pipe(to5(compilerOptions))
+    .pipe(ngAnnotate())
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
@@ -116,7 +111,7 @@ gulp.task('es6', function () {
 
 gulp.task('compile', function(callback) {
   return runSequence(
-    //'clean',
+    'clean',
     ['less', 'html', 'es6', 'move'],
     callback
   );
@@ -162,169 +157,6 @@ gulp.task('watch', ['serve'], function() {
   });
 });
 
-
-// addTrees, subtractTrees, intersectTrees and extractTree
-
-gulp.task('tree', ['compile'], function() {
-
-  var allTrees = {};
-
-  var startsrc = 'dist/app/admin/admin';
-  builder.loadConfig('./system.config.js').then(function(){
-    var buildDeps = function(src, level){
-      // trace source to get dependency tree
-      return builder.trace(src).then(function(traceTree){
-        if (allTrees[traceTree.moduleName]){
-          traceTree = allTrees[traceTree.moduleName];
-        }
-
-        // extract dependency source paths
-        var sources = Object.keys(traceTree.tree);
-        
-        // process each dependency individually, and collect their trees
-        var subTrees = [];
-        var promises = [];
-        sources.forEach(function(source){
-          if (source === src || source.indexOf('bower_components') == 0 || source.indexOf('tpl') != -1){
-            return;
-          }
-
-          promises.push(new RSVP.Promise(function(resolve, reject) {
-            buildDeps(source, level + 1).then(function(subTree){     
-              subTrees.push(subTree);
-              resolve();
-            });
-          }));
-        })
-
-        return RSVP.all(promises).then(function(){
-          console.log('=======================================================================================');
-          console.log("Source: " + src);
-          console.log('dependencies: ');
-          console.log(sources);        
-          console.log("subtrees: " + subTrees.length);
-
-          if (subTrees.length === 0) {
-            return traceTree;
-          }
-
-          // extract common tree
-          console.log('Extracting common trees')
-          console.log('-------------------------------------')
-
-          var commonTree = subTrees[0].tree;
-          subTrees.forEach(function(tree, i){
-            console.log('intersecting with ' + tree.moduleName)
-            commonTree = builder.intersectTrees(commonTree, tree.tree);
-          })
-
-          console.log('Common tree:');
-          console.log(Object.keys(commonTree))
-
-          subTrees.forEach(function(tree, i){
-            // remove common tree from subtrees
-            tree.tree = builder.subtractTrees(tree.tree, commonTree);
-
-            // remove subtree from parent tree
-            traceTree.tree = builder.subtractTrees(traceTree.tree, tree.tree);
-
-            allTrees[tree.moduleName] = tree;
-          })
-
-          // add common tree to parent
-          traceTree.tree = builder.addTrees(traceTree.tree, commonTree);
-          allTrees[traceTree.moduleName] = traceTree;
-          return traceTree;
-        });
-
-      })
-    }
-
-    buildDeps(startsrc, 1).then(function(test){
-      console.log('===============================================================================================')
-      // build parent
-      keys = Object.keys(allTrees);
-      keys.forEach(function(treeName){
-        var tree = allTrees[treeName];
-        console.log('building ' + tree.moduleName + ".js")
-        builder.buildTree(tree.tree, tree.moduleName + '.js', {
-          sourceMaps: true
-          //minify: true
-        });
-      })
-    });
-
-    // buildDeps('dist/app/app', 1).then(function(tree){
-    //   // console.log(tree)
-    // });
-  });
-});
-
-
-gulp.task('oldTree', ['compile'], function(){
-
-  var routes = require('./src/app/routes.json');
-
-  // inject first
-  // routes.unshift({
-  //   src: "src/app/app"
-  // });
-
-  builder.loadConfig('./system.config.js').then(function(){
-
-    var promises = [];
-
-    var trees = [];
-    // generate trees
-    routes.forEach(function(t){
-      promises.push(new RSVP.Promise(function(resolve, reject) {
-        console.log('+ Tracing:', t.src);
-
-        builder.trace(t.src).then(function(traceTree) {
-          trees.push({
-            src: t.src, 
-            tree: traceTree.tree
-          });
-          resolve();
-        });
-
-      }));
-
-    });
-
-    RSVP.all(promises).then(function(){
-      console.log(trees);
-      var commonTree = trees[0].tree;
-      trees.forEach(function(tree, i){
-        if (i === 0) {return};
-        commonTree = builder.intersectTrees(commonTree, tree.tree);
-      })      
-      
-      builder.buildTree(commonTree, 'dist/common.js', { 
-          sourceMaps: true 
-          //minify: true
-        });
-
-      trees.forEach(function(tree, i){
-        trees[i].tree = builder.subtractTrees(tree.tree, commonTree);
-        
-        console.log('+ Building tree:', tree.src)
-
-        // build the tree
-        var src = tree.src.replace('src', 'dist');
-        builder.buildTree(tree.tree, src + '.js', { 
-          sourceMaps: true 
-          //minify: true
-        });
-
-      });
-
-    });
-
-  });
-
-});
-
 gulp.task('steal', ['compile'], function(){
   var steal = require('steal-tools');
   steal.build({
@@ -338,23 +170,6 @@ gulp.task('steal', ['compile'], function(){
       'app/dashboard/dashboard',
       'app/forms/forms']
   })
-});
-
-gulp.task('assetGraph', ['compile'], function(){
-  var outRoot = 'app-built';
-
-  new AssetGraph({root: './'})
-    .loadAssets(['*.html', '*.js'])
-    .queue(systemJsAssetGraph({
-      outRoot: 'app-built',
-      bundle: true
-    }))
-    .writeAssetsToDisc({url: /^file:/}, 'app-built')
-    .run(function (err) {
-      if (err) throw err;
-      console.log('Done');
-    });
-
 });
 
 gulp.task('builder' , function(){
