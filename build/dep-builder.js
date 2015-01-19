@@ -139,6 +139,11 @@ var build = function(config){
 
       })
 
+      config.bundles.forEach(function(routeName){
+        var routeTree = treeIndex[routeName];
+        tree.tree = builder.subtractTrees(tree.tree, routeTree.tree)
+      })
+
       trees.forEach(function(t){
         if (t.moduleName.indexOf('bower_components') != 0){
           builder.buildTree(t.tree, 'dist/' + t.moduleName + '.js', {
