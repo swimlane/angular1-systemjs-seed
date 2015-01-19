@@ -1,5 +1,5 @@
 import angular from 'angular';
-import {modalModule} from 'src/common/components/modal';
+import {modalModule} from 'common/components/modal';
 import './forms.tpl';
 
 

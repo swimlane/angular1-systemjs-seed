@@ -49,8 +49,10 @@ var build = function(config){
     }
 
     var buildDeps = function(src, level){
+      console.log('start ' + src)
       // trace source to get dependency tree
       return builder.trace(src).then(function(traceTree){
+
         var found = trees.filter(function(el){
           return el.moduleName == traceTree.moduleName;
         });
@@ -68,9 +70,14 @@ var build = function(config){
           sources = sources.concat(config.bundles);
         }
 
+
+
         // process each dependency individually, and collect their trees
         var subTrees = [];
         var promises = [];
+
+
+
         sources.forEach(function(source){
           // if (source === src || source.indexOf('bower_components') == 0 || source.indexOf('tpl') != -1){
           if (source === src){
@@ -99,6 +106,7 @@ var build = function(config){
           subTrees.forEach(function(subTree){
             subTree.parent = traceTree;
           })
+          console.log('end ' + src)
           return traceTree;
         });
 
@@ -132,8 +140,8 @@ var build = function(config){
       })
 
       trees.forEach(function(t){
-        if (t.moduleName.indexOf('dist') == 0){
-          builder.buildTree(t.tree, t.moduleName + '.js', {
+        if (t.moduleName.indexOf('bower_components') != 0){
+          builder.buildTree(t.tree, 'dist/' + t.moduleName + '.js', {
             sourceMaps: true
             //minify: true
           });

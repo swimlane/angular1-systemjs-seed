@@ -263,17 +263,37 @@ gulp.task('tree', ['compile'], function() {
 gulp.task('steal', ['compile'], function(){
   var steal = require('steal-tools');
   steal.build({
-    main: 'dist/app/app',
+    main: 'app/app',
     config: 'system.config.js'
   }, {
     minify: false,
     bundleSteal: false,
-    bundle: ['dist/app/login/login', 'dist/app/admin/admin', 'dist/app/dashboard/dashboard', 'dist/app/forms/forms']
+    bundle: ['app/login/login', 
+      'app/admin/admin', 
+      'app/dashboard/dashboard',
+      'app/forms/forms']
   })
 });
 
-gulp.task('builder', ['compile'], function(){
+gulp.task('builder' , function(){
   var builder = require('./build/build');
+  var routes = require('./src/app/routes.json');
+  
+  // just get the source of our routes
+  routes = routes.map(function(r){
+    return r.src;
+  });
+
+  builder.build({
+    main: 'app/app',
+    config: './system.config.js',
+    bundles: routes
+  });
+});
+
+
+gulp.task('depBuilder', ['compile'], function(){
+  var depBuilder = require('./build/dep-builder');
   var routes = require('./src/app/routes.json');
 
   // just get the source of our routes
@@ -281,28 +301,8 @@ gulp.task('builder', ['compile'], function(){
     return r.src;
   });
 
-  builder.getInverseIndex({
-    main: 'src/app/app',
-    config: './system.config.js',
-    bundles: routes
-  }).then(function(res){
-    console.log(res);
-  })
-
-});
-
-
-gulp.task('depBuilder', ['clean', 'compile'], function(){
-  var depBuilder = require('./build/dep-builder');
-  var routes = require('./src/app/routes.json');
-
-  // just get the source of our routes
-  routes = routes.map(function(r){
-    return r.src.replace('src/', 'dist/');
-  });
-
   depBuilder.build({
-    main: 'dist/app/app',
+    main: 'app/app',
     config: './system.config.js',
     bundles: routes
   }).then(function(res){

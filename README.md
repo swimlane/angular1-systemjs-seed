@@ -39,6 +39,7 @@ and `gulp lint` to lint it.
 
 - [EditorConfig](http://editorconfig.org/)
 - [JSHint](http://jshint.com/install/)
+- [VS Task Launcher](https://visualstudiogallery.msdn.microsoft.com/8e1b4368-4afb-467a-bc13-9650572db708)
 
 ### Best Practices
 

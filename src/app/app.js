@@ -1,8 +1,9 @@
 import angular from 'angular';
 import 'angular-ui-router';
 import 'ocLazyLoad';
-import {futureStateModule} from 'src/common/utils/lazy-routes';
+import {futureStateModule} from 'common/utils/lazy-routes';
 import {routes} from './routes';
+
 
 var module = angular.module('swimlane', ['ui.router', 'oc.lazyLoad', futureStateModule.name ]);
 
