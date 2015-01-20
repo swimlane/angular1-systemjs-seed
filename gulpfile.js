@@ -197,13 +197,135 @@ gulp.task('depBuilder', ['compile'], function(){
   routes = routes.map(function(r){
     return r.src;
   });
+  var appTree;
+  var routeTrees = [];
+  var promises = [];
+  promises.push(new RSVP.Promise(function(resolve, reject) {
+    depBuilder.build({
+      main: 'app/app',
+      config: './system.config.js',
+      bundles: routes
+    }).then(function(tree){
+      appTree = tree;
+      resolve();
+    });
+  }));
 
-  depBuilder.build({
-    main: 'app/app',
-    config: './system.config.js',
-    bundles: routes
-  }).then(function(res){
-    console.log(res);
+  routes.forEach(function(route){
+    promises.push(new RSVP.Promise(function(resolve, reject) {
+      depBuilder.build({
+        main: route,
+        config: './system.config.js'
+      }).then(function(tree){
+        routeTrees.push(tree);
+        resolve();
+      });
+    }));
   })
+
+  RSVP.all(promises).then(function() {
+    console.log('got all trees');
+
+    // Removing app tree dependencies from route trees;
+    Object.keys(appTree).forEach(function(moduleName){
+      console.log('removing ' + moduleName);
+
+      routeTrees.forEach(function(treeIndex){
+        if (treeIndex[moduleName]){
+          // deleting the dep tree
+          delete treeIndex[moduleName];
+          // removing dep from the other trees
+          Object.keys(treeIndex).forEach(function(depName){
+            treeIndex[depName].tree = builder.subtractTrees(treeIndex[depName].tree, appTree[moduleName].tree);
+          });
+        }
+      });
+
+    });
+
+    // generating inverse index of dependencies
+    var bundles = {};
+    var inverseIndex = {};
+    routeTrees.forEach(function(treeIndex, i){
+      Object.keys(treeIndex).forEach(function(depName){
+        if (inverseIndex[depName] === undefined){
+          inverseIndex[depName] = [i];
+        } else {
+          inverseIndex[depName].push(i);
+        }
+      });
+    });
+
+    console.log('removed shared dependencies');
+    // generating bundles
+    Object.keys(inverseIndex).forEach(function(moduleName){
+      console.log('---------------------------')
+      console.log('processing ' + moduleName)
+      // if it's included in only one route, leave it there
+      if (inverseIndex[moduleName].length == 1){
+        console.log('not a shared dependency - skipping')
+        return;
+      }
+
+      var module = routeTrees[inverseIndex[moduleName][0]][moduleName];
+      if (inverseIndex[moduleName].length / routeTrees.length >= 0.6){
+        // if it's included in more than 60% of the routes, put it in app
+        console.log('shared in more than 60% - including in app');
+        appTree['app/app'].tree = builder.addTrees(appTree['app/app'].tree, module.tree);
+        appTree[moduleName] = module;
+
+      } else {
+        // otherwise, put it in a bundle
+        var bundleName = inverseIndex[moduleName].sort().join('-');
+        console.log('creating bundle ' + bundleName);
+        if (bundles[bundleName] === undefined){
+          bundles[bundleName] = module;
+        } else {
+          bundles[bundleName].tree = builder.addTrees(bundles[bundleName].tree, module.tree);
+        }
+      }
+
+      // remove from other trees;
+      inverseIndex[moduleName].forEach(function(index){
+        var treeIndex = routeTrees[index];
+        delete treeIndex[moduleName];
+
+        Object.keys(treeIndex).forEach(function(depName){
+          treeIndex[depName].tree = builder.subtractTrees(treeIndex[depName].tree, module.tree);
+        });
+
+      })
+    });
+
+    console.log('building');
+
+    Object.keys(appTree).forEach(function(moduleName) {
+      buildTree(appTree[moduleName], moduleName);
+    });
+
+    routeTrees.forEach(function(treeIndex){
+      Object.keys(treeIndex).forEach(function(moduleName) {
+        buildTree(treeIndex[moduleName], moduleName);
+      });
+    });
+
+
+    Object.keys(bundles).forEach(function(bundleName) {
+      buildTree(bundles[bundleName], "bundles/" + bundleName);
+    });
+
+
+    console.log('build successfull!')
+  });
+
+  var buildTree = function(tree, destination){
+    if (destination.indexOf('bower_components') != 0){
+      builder.buildTree(tree.tree, 'dist/' + destination + '.js', {
+        sourceMaps: true
+        //minify: true
+      });
+    }
+  }
+
 
 });
