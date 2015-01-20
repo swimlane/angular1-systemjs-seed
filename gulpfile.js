@@ -204,8 +204,7 @@ gulp.task('depBuilder', ['compile'], function(){
   promises.push(new RSVP.Promise(function(resolve, reject) {
     depBuilder.build({
       main: 'app/app',
-      config: './system.config.js',
-      bundles: routes
+      config: './system.config.js'
     }).then(function(tree){
       appTree = tree;
       resolve();
