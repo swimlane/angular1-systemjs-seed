@@ -5,7 +5,7 @@ import {modalModule} from 'common/components/modal';
 import {userModule} from 'common/services/user';
 import './login.tpl';
 import './signup.tpl';
-// import './login.less!';
+import './login.css!';
 
 
 export var loginModule = angular.module('login', [selectModule.name, dateModule.name, modalModule.name, userModule.name,
@@ -30,7 +30,8 @@ loginModule.controller('LoginController', $scope => {
   $scope.$watch('theme', function(ev, newVal, oldVal){
 
     // switch to css if production
-    System.import('assets/' + newVal + '.less!').then(loaded => {
+    var name = window.dev ? 'less' : 'css';
+    System.import('assets/' + newVal + '.' + name + '!').then(loaded => {
         angular.element('body').addClass(newVal);
     });
 
