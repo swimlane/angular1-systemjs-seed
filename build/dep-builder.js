@@ -51,7 +51,6 @@ var build = function(config){
     var buildDeps = function(src, level){
       // trace source to get dependency tree
       return builder.trace(src).then(function(traceTree){
-
         var found = trees.filter(function(el){
           return el.moduleName == traceTree.moduleName;
         });
@@ -64,17 +63,11 @@ var build = function(config){
         // extract dependency source paths
         var sources = Object.keys(traceTree.tree);
 
-        // if root, add the routes as dependencies
-        //if (level === 1){
-        //  sources = sources.concat(config.bundles);
-        //}
-
         // process each dependency individually, and collect their trees
         var subTrees = [];
         var promises = [];
 
         sources.forEach(function(source){
-          // if (source === src || source.indexOf('bower_components') == 0 || source.indexOf('tpl') != -1){
           if (source === src){
             return;
           }
@@ -86,7 +79,6 @@ var build = function(config){
           } else {
             inverseIndex[source] = [traceTree];
           }
-
           promises.push(new RSVP.Promise(function(resolve, reject) {
             buildDeps(source, level + 1).then(function(subTree){
               subTrees.push(subTree);
@@ -110,15 +102,8 @@ var build = function(config){
     return buildDeps(config.main, 1).then(function(tree){
       Object.keys(inverseIndex).forEach(function(depName){
         depTree = treeIndex[depName];
-        //console.log("=================================================================")
-        //console.log('finding lowest common ancestor for ' + depName);
-        //console.log('parents:')
-        inverseIndex[depName].forEach(function(n){
-          console.log(n.moduleName);
-        })
+
         var commonAncestor = nca(inverseIndex[depName]);
-        //console.log('common ancestor: -------------------------------')
-        //console.log(commonAncestor.moduleName);
 
         commonAncestor.tree = builder.addTrees(commonAncestor.tree, depTree.tree);
 
@@ -130,21 +115,6 @@ var build = function(config){
         })
 
       })
-
-      //config.bundles.forEach(function(routeName){
-      //  var routeTree = treeIndex[routeName];
-      //  tree.tree = builder.subtractTrees(tree.tree, routeTree.tree)
-      //})
-
-      //trees.forEach(function(t){
-      //  if (t.moduleName.indexOf('bower_components') != 0){
-      //    builder.buildTree(t.tree, 'dist/' + t.moduleName + '.js', {
-      //      sourceMaps: true
-      //      //minify: true
-      //    });
-      //  }
-      //})
-
 
       return treeIndex;
     });

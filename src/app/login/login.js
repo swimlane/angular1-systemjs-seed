@@ -3,7 +3,7 @@ import {selectModule} from 'common/components/select';
 import {userModule} from 'common/services/user';
 import './login.tpl';
 import './signup.tpl';
-import './login.less!';
+//import './login.less!';
 
 
 export var loginModule = angular.module('login', [selectModule.name, userModule.name,

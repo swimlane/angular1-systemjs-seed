@@ -18,6 +18,7 @@ var less = require('gulp-less');
 var karma = require('karma').server;
 var insert = require('gulp-insert');
 var ngAnnotate = require('gulp-ng-annotate');
+var fs = require('fs');
 
 
 var compilerOptions = {
@@ -63,7 +64,7 @@ gulp.task('test', ['compile'], function (done) {
 });
 
 gulp.task('clean', function() {
- return gulp.src([path.output])
+  return gulp.src([path.output])
     .pipe(vinylPaths(del));
 });
 
@@ -112,8 +113,7 @@ gulp.task('es6', function () {
 gulp.task('compile', function(callback) {
   return runSequence(
     'clean',
-    //['less', 'html', 'es6', 'move'],
-    ['html', 'es6', 'move-json', 'move-less'],
+    ['less', 'html', 'es6', 'move'],
     callback
   );
 });
@@ -124,16 +124,9 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('move-json', function(){
+gulp.task('move', function(){
   return gulp.src('./src/**/*.json')
     .pipe(changed(path.output, {extension: '.json'}))
-    .pipe(gulp.dest(path.output))
-    .pipe(browserSync.reload({ stream: true }));
-});
-
-gulp.task('move-less', function(){
-  return gulp.src('./src/**/*.less')
-    .pipe(changed(path.output, {extension: '.less'}))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
@@ -173,8 +166,8 @@ gulp.task('steal', ['compile'], function(){
   }, {
     minify: false,
     bundleSteal: false,
-    bundle: ['app/login/login', 
-      'app/admin/admin', 
+    bundle: ['app/login/login',
+      'app/admin/admin',
       'app/dashboard/dashboard',
       'app/forms/forms']
   })
@@ -183,7 +176,7 @@ gulp.task('steal', ['compile'], function(){
 gulp.task('builder' , function(){
   var builder = require('./build/build');
   var routes = require('./src/app/routes.json');
-  
+
   // just get the source of our routes
   routes = routes.map(function(r){
     return r.src;
@@ -248,7 +241,6 @@ gulp.task('depBuilder', ['compile'], function(){
           });
         }
       });
-
     });
 
     // generating inverse index of dependencies
@@ -305,35 +297,42 @@ gulp.task('depBuilder', ['compile'], function(){
       })
     });
 
-    console.log('building');
-
-    Object.keys(appTree).forEach(function(moduleName) {
-      buildTree(appTree[moduleName], moduleName);
+    console.log('building...');
+    // build bundles
+    var bundlesConfig = {};
+    Object.keys(bundles).forEach(function(bundleName) {
+      buildTree(bundles[bundleName], "bundles/" + bundleName);
+      bundlesConfig["bundles/" + bundleName] = Object.keys(bundles[bundleName].tree);
     });
-
+    // build route trees
     routeTrees.forEach(function(treeIndex){
       Object.keys(treeIndex).forEach(function(moduleName) {
         buildTree(treeIndex[moduleName], moduleName);
       });
     });
+    // build root app
+    Object.keys(appTree).forEach(function(moduleName) {
+      buildTree(appTree[moduleName], moduleName).then(function(){
+        if (moduleName === 'app/app'){
+          var bundlesString = "System.bundles = " + JSON.stringify(bundlesConfig) + ";";
 
-
-    Object.keys(bundles).forEach(function(bundleName) {
-      buildTree(bundles[bundleName], "bundles/" + bundleName);
+          gulp.src('dist/app/app.js')
+            .pipe(insert.prepend(bundlesString))
+            .pipe(gulp.dest('dist/app'));
+        }
+      })
     });
 
-
-    console.log('build successfull!')
+    console.log('build successful!')
   });
 
   var buildTree = function(tree, destination){
     if (destination.indexOf('bower_components') != 0){
-      builder.buildTree(tree.tree, 'dist/' + destination + '.js', {
+      return builder.buildTree(tree.tree, 'dist/' + destination + '.js', {
         sourceMaps: true
         //minify: true
-      });
+      })
     }
   }
-
 
 });
