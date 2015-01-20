@@ -7,6 +7,7 @@ System.config({
     'bower_components/ocLazyLoad/dist/ocLazyLoad': { deps: ['angular'] }
   },
   map: {
+    'less': 'common/utils/less',
     'css': 'bower_components/plugin-css/css',
     'json': 'bower_components/plugin-json/json',
     'angular': 'bower_components/angular/angular',
