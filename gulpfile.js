@@ -98,6 +98,21 @@ gulp.task('less', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
+gulp.task('move-json', function () {
+    return gulp.src('./src/**/*.json')
+      .pipe(changed(path.output, { extension: '.json' }))
+      .pipe(gulp.dest(path.output))
+      .pipe(browserSync.reload({ stream: true }));
+});
+
+// todo...
+gulp.task('move-less', function () {
+    return gulp.src('./src/**/*.less')
+      .pipe(changed(path.output, { extension: '.less' }))
+      .pipe(gulp.dest(path.output))
+      .pipe(browserSync.reload({ stream: true }));
+});
+
 gulp.task('es6', function () {
   return gulp.src(path.source)
     .pipe(plumber())
@@ -113,7 +128,8 @@ gulp.task('es6', function () {
 gulp.task('compile', function(callback) {
   return runSequence(
     'clean',
-    ['less', 'html', 'es6', 'move'],
+    //['less', 'html', 'es6', 'move'],
+    ['html', 'es6', 'move-json', 'move-less'],
     callback
   );
 });
@@ -122,13 +138,6 @@ gulp.task('lint', function() {
   return gulp.src(path.source)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
-});
-
-gulp.task('move', function(){
-  return gulp.src('./src/**/*.json')
-    .pipe(changed(path.output, {extension: '.json'}))
-    .pipe(gulp.dest(path.output))
-    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('serve', ['compile'], function(done) {
