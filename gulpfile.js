@@ -112,7 +112,8 @@ gulp.task('es6', function () {
 gulp.task('compile', function(callback) {
   return runSequence(
     'clean',
-    ['less', 'html', 'es6', 'move'],
+    //['less', 'html', 'es6', 'move'],
+    ['html', 'es6', 'move-json', 'move-less'],
     callback
   );
 });
@@ -123,9 +124,16 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('move', function(){
+gulp.task('move-json', function(){
   return gulp.src('./src/**/*.json')
     .pipe(changed(path.output, {extension: '.json'}))
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
+gulp.task('move-less', function(){
+  return gulp.src('./src/**/*.less')
+    .pipe(changed(path.output, {extension: '.less'}))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
