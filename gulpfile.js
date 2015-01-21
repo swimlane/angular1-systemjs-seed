@@ -19,8 +19,7 @@ var karma = require('karma').server;
 var insert = require('gulp-insert');
 var ngAnnotate = require('gulp-ng-annotate');
 var fs = require('fs');
-var replace = require('gulp-token-replace');
-
+var replace = require('gulp-replace-task');
 
 var compilerOptions = {
   filename: '',
@@ -109,11 +108,25 @@ gulp.task('json', function () {
 });
 
 gulp.task('token-replace', function(){
-  return gulp.src(['index.html'])
-    .pipe(replace({global:{
-      hash: Math.round(new Date() / 1000)
-    }}))
-    .pipe(gulp.dest('./'))
+  return gulp.src('./index.html')
+    .pipe(replace({
+      usePrefix: false,
+      patterns: [
+        {
+          match: '<!--',
+          replacement: ''
+        },
+        {
+          match: '-->',
+          replacement: ''
+        },
+        {
+          match: '{{hash}}',
+          replacement: Math.round(new Date() / 1000)
+        }
+      ]
+    }))
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('less-themes', function () {
