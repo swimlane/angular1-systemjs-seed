@@ -38,7 +38,7 @@ This project does:
 
 and `gulp lint` to lint it.
 
-### IDE Tooling
+### Tooling
 
 - [EditorConfig](http://editorconfig.org/)
 - [JSHint](http://jshint.com/install/)
@@ -50,7 +50,7 @@ and `gulp lint` to lint it.
 - https://github.com/gocardless/angularjs-style-guide
 - http://sett.ociweb.com/sett/settApr2014.html
 
-### Search & Resources
+### Research & Resources
 
 - https://github.com/systemjs/systemjs
 - https://github.com/gocardless/es6-angularjs
