@@ -13,9 +13,9 @@
 <body data-main-app ng-cloak>
 
     <noscript>
-        <div class="u-padding-Am deprecation-warning">
+        <div class="deprecation-warning">
           <h1>Please enable Javascript</h1>
-          <p>GoCardless requires your browser to have Javascript enabled.
+          <p>Demo requires your browser to have Javascript enabled.
           <a href="http://enable-javascript.com" target="_blank">Learn more</a></p>
         </div>
     </noscript>
@@ -32,6 +32,13 @@
     <script src="system.config.js"></script>
 
     <script>
+        /*var systemLocate = System.locate;
+        System.locate = function(load) {
+          return Promise.resolve(systemLocate.call(this, load)).then(function(address) {
+            if(address.indexOf('bust') > -1) return address;
+            return address + '?bust={{hash}}';
+          });
+        }*/
         System.import('app/app');
     </script>
 </body>

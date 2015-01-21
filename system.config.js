@@ -7,7 +7,6 @@ System.config({
     'bower_components/ocLazyLoad/dist/ocLazyLoad': { deps: ['angular'] }
   },
   map: {
-    'less': 'common/utils/less',
     'css': 'bower_components/plugin-css/css',
     'json': 'bower_components/plugin-json/json',
     'angular': 'bower_components/angular/angular',
@@ -19,10 +18,5 @@ System.config({
     '*': '*.js',
     'systemjs-test/*': 'src/*.js',
     'bower_components/*': '../bower_components/*.js'
-  },
-  // only temp for steal build
-  bundle: ['app/login/login', 
-    'app/admin/admin', 
-    'app/dashboard/dashboard', 
-    'app/forms/forms']
+  }
 });

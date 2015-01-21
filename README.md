@@ -15,6 +15,8 @@ This project does:
 - LESS CSS Support with source maps
 - AngularJS Template Compilation
 - AngularJS Annotatation
+- Bundle builds via SystemJS Builder
+- Cache Busting with SystemJS
 
 ### Install & Run
 

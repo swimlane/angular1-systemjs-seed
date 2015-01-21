@@ -27,12 +27,11 @@ loginModule.config(function($stateProvider){
 loginModule.controller('LoginController', $scope => {
   $scope.loggedin = false;
 
-  $scope.$watch('theme', function(ev, newVal, oldVal){
+  $scope.$watch('theme', function(newVal, oldVal, ev){
+    if(!newVal) return;
 
-    // switch to css if production
-    var name = window.dev ? 'less' : 'css';
-    System.import('assets/' + newVal + '.' + name + '!').then(loaded => {
-        angular.element('body').addClass(newVal);
+    System.import('assets/' + newVal + '.css!').then(loaded => {
+        angular.element(document.body).addClass(newVal);
     });
 
   });
