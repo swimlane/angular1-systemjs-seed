@@ -1,6 +1,6 @@
 # SystemJS Module Loader
 
-Testing SystemJS & ES6 modules that lazy-load with AngularJS using 6to5.
+Testing ES6 modules with SystemJS with ES6 syntax using 6to5 that lazy-load and bundle build with AngularJS.
 
 ![](http://media.giphy.com/media/EldfH1VJdbrwY/giphy.gif)
 
@@ -17,6 +17,7 @@ This project does:
 - AngularJS Annotatation
 - Bundle builds via SystemJS Builder
 - Cache Busting with SystemJS
+- Demonstrates on-demand theme loading
 
 ### Install & Run
 
@@ -49,12 +50,10 @@ and `gulp lint` to lint it.
 - https://github.com/gocardless/angularjs-style-guide
 - http://sett.ociweb.com/sett/settApr2014.html
 
-### Research
-
-- https://github.com/marcj/angular-es6-annotations
-
-### Resources
+### Search & Resources
 
 - https://github.com/systemjs/systemjs
 - https://github.com/gocardless/es6-angularjs
 - http://glenmaddern.com/articles/javascript-in-2015
+- https://github.com/marcj/angular-es6-annotations
+- https://github.com/robianmcd/angular-next
