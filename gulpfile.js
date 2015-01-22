@@ -160,6 +160,14 @@ gulp.task('compile', function(callback) {
   );
 });
 
+gulp.task('release', function(callback) {
+  return runSequence(
+    'compile',
+    ['depBuilder', 'token-replace'],
+    callback
+  );
+});
+
 gulp.task('lint', function() {
   return gulp.src(path.source)
     .pipe(jshint())
@@ -177,12 +185,6 @@ gulp.task('serve', ['compile'], function(done) {
         next();
       }
     }
-  }, done);
-});
-
-gulp.task('iis', ['compile'], function(done) {
-  browserSync({
-    proxy: "windows.local"
   }, done);
 });
 

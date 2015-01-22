@@ -1,4 +1,4 @@
-# SystemJS Module Loader
+# ES6 & AngularJS
 
 Testing ES6 modules with SystemJS with ES6 syntax using 6to5 that lazy-load and bundle build with AngularJS.
 
@@ -37,6 +37,10 @@ This project does:
 3. `gulp test`
 
 and `gulp lint` to lint it.
+
+### Production Build
+
+`gulp release` does: bundles, cache busting, and minification.
 
 ### Tooling
 
