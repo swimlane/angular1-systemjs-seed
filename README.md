@@ -25,10 +25,8 @@ This project does:
 2. `npm install -g gulp`
 3. `npm install -g jspm`
 4. `npm install`
-5. `bower install`
-6. `jspm install`
-7. `gulp watch serve`
-8. Browse to `http://localhost:9000`
+5. `gulp watch serve`
+6. Browse to `http://localhost:9000`
 
 ### Run Tests
 
