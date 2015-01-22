@@ -1,8 +1,10 @@
 import angular from 'angular';
-import futureRoutes from './routes.json!';
+import futureRoutes from 'app/routes.json!';
+import {futureStateModule} from './lazy-routes';
 
-export var routes = function(module){
+export var routing = function(module){
 
+  module.requires.push(futureStateModule.name);
   var $inject = ['$stateProvider', '$futureStateProvider'];
   var RouterConfig = function ($stateProvider, $futureStateProvider) {
 
@@ -16,8 +18,9 @@ export var routes = function(module){
           newModule = loaded[key[0]];
         }
         
-        $ocLazyLoad.load(newModule);
-        def.resolve(newModule);
+        $ocLazyLoad.load(newModule).then(function(){
+          def.resolve(newModule);
+        });
       });
 
       return def.promise;

@@ -1,13 +1,11 @@
 import angular from 'angular';
 import 'angular-ui-router';
 import 'ocLazyLoad';
-import {futureStateModule} from 'common/utils/lazy-routes';
-import {routes} from './routes';
+import {routing} from 'common/utils/routing';
 
+var module = angular.module('swimlane', ['ui.router', 'oc.lazyLoad' ]);
 
-var module = angular.module('swimlane', ['ui.router', 'oc.lazyLoad', futureStateModule.name ]);
-
-module.config(routes(module));
+module.config(routing(module));
 
 module.config(function ($urlRouterProvider, $locationProvider, $stateProvider, $httpProvider) {
   //$locationProvider.html5Mode(true);
@@ -16,7 +14,7 @@ module.config(function ($urlRouterProvider, $locationProvider, $stateProvider, $
 });
 
 angular.element(document).ready(function() {
-	angular.bootstrap(document.querySelector('[data-main-app]'), [ module.name ], {
+	angular.bootstrap(document.body, [ module.name ], {
 		// strictDi: true // turning off for now
 	});
 });
