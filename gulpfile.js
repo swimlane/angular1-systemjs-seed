@@ -107,17 +107,17 @@ gulp.task('json', function () {
       .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('token-replace', function(){
+gulp.task('cache-bust', function(){
   return gulp.src('./index.html')
     .pipe(replace({
       usePrefix: false,
       patterns: [
         {
-          match: '<!--',
+          match: '<!--PROD',
           replacement: ''
         },
         {
-          match: '-->',
+          match: 'END-->',
           replacement: ''
         },
         {
@@ -163,7 +163,7 @@ gulp.task('compile', function(callback) {
 gulp.task('release', function(callback) {
   return runSequence(
     'compile',
-    ['depBuilder', 'token-replace'],
+    ['depBuilder', 'cache-bust'],
     callback
   );
 });
@@ -192,22 +192,6 @@ gulp.task('watch', ['serve'], function() {
   var watcher = gulp.watch([path.source, path.html], ['compile']);
   watcher.on('change', function(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  });
-});
-
-gulp.task('builder' , function(){
-  var builder = require('./build/build');
-  var routes = require('./src/app/routes.json');
-
-  // just get the source of our routes
-  routes = routes.map(function(r){
-    return r.src;
-  });
-
-  builder.build({
-    main: 'app/app',
-    config: './system.config.js',
-    bundles: routes
   });
 });
 
