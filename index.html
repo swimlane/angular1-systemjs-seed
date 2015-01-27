@@ -31,17 +31,21 @@
     <script src="jspm_packages/system.js"></script>
     <script src="system.config.js"></script>
 
-    <!--
+    <!--PROD
     <script>
       var systemLocate = System.locate;
-        System.locate = function(load) {
-          return Promise.resolve(systemLocate.call(this, load)).then(function(address) {
-            if(address.indexOf('bust') > -1) return address;
-            return address + '?bust={{hash}}';
-          });
-        }
+      System.locate = function(load) {
+        var System = this;
+        return Promise.resolve(systemLocate.call(this, load)).then(function(address) {
+          if(address.indexOf('bust') > -1 || 
+            address.indexOf('css') > -1 || 
+            address.indexOf('json') > -1) return address;
+          return address + System.cacheBust;
+        });
+      }
+      System.cacheBust = '?bust=' + {{hash}};
     </script>
-    -->
+    END-->
 
     <script>
         System.import('app/app');

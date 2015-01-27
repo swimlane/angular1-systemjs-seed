@@ -78,9 +78,9 @@ gulp.task('html', function () {
     .pipe(plumber())
     .pipe(changed(path.output, { extension: '.html' }))
     .pipe(htmlMin({
-        empty: true,
-        spare: true,
-        quotes: true
+      empty: true,
+      spare: true,
+      quotes: true
     }))
     .pipe(ngHtml2Js())
 
@@ -157,7 +157,6 @@ gulp.task('less-themes', function () {
       .pipe(gulp.dest(path.themesOutput))
       .pipe(browserSync.reload({ stream: true }));
 });
-
 
 gulp.task('es6', function () {
   return gulp.src(path.source)
