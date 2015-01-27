@@ -20,6 +20,8 @@ var insert = require('gulp-insert');
 var ngAnnotate = require('gulp-ng-annotate');
 var fs = require('fs');
 var replace = require('gulp-replace-task');
+var cache = require('gulp-cached');
+var uglify = require('gulp-uglify');
 
 var compilerOptions = {
   filename: '',
@@ -72,12 +74,13 @@ gulp.task('clean', function() {
 
 gulp.task('html', function () {
   return gulp.src(path.templates)
+    .pipe(cache('html'))
     .pipe(plumber())
-    .pipe(changed(path.output, {extension: '.html'}))
+    .pipe(changed(path.output, { extension: '.html' }))
     .pipe(htmlMin({
-      empty: true,
-      spare: true,
-      quotes: true
+        empty: true,
+        spare: true,
+        quotes: true
     }))
     .pipe(ngHtml2Js())
 
@@ -91,6 +94,7 @@ gulp.task('html', function () {
 
 gulp.task('less', function () {
   return gulp.src(path.less)
+    .pipe(cache('less'))
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.less'}))
     .pipe(sourcemaps.init())
@@ -100,24 +104,40 @@ gulp.task('less', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('json', function () {
-    return gulp.src('./src/**/*.json')
-      .pipe(changed(path.output, { extension: '.json' }))
-      .pipe(gulp.dest(path.output))
-      .pipe(browserSync.reload({ stream: true }));
+gulp.task('move', function () {
+  return gulp.src([
+      './src/**/*.json', 
+      './src/**/*.svg',
+      './src/**/*.woff',
+      './src/**/*.ttf',
+      './src/**/*.png',
+      './src/**/*.ico',
+      './src/**/*.jpg',
+      './src/**/*.eot'])
+    .pipe(cache('move'))
+    //.pipe(changed(path.output, { extension: '.json' }))
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('token-replace', function(){
+gulp.task('json', function () {
+  return gulp.src('./src/**/*.json')
+    .pipe(changed(path.output, { extension: '.json' }))
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.reload({ stream: true }));
+});
+
+gulp.task('cache-bust', function(){
   return gulp.src('./index.html')
     .pipe(replace({
       usePrefix: false,
       patterns: [
         {
-          match: '<!--',
+          match: '<!--PROD',
           replacement: ''
         },
         {
-          match: '-->',
+          match: 'END-->',
           replacement: ''
         },
         {
@@ -131,39 +151,65 @@ gulp.task('token-replace', function(){
 
 gulp.task('less-themes', function () {
     return gulp.src(path.themes)
+      .pipe(cache('less-themes'))
       .pipe(plumber())
-      .pipe(changed(path.output, {extension: '.less'}))
-      .pipe(sourcemaps.init())
       .pipe(less())
-      .pipe(sourcemaps.write("."))
       .pipe(gulp.dest(path.themesOutput))
       .pipe(browserSync.reload({ stream: true }));
 });
 
+
 gulp.task('es6', function () {
   return gulp.src(path.source)
+    .pipe(cache('es6'))
     .pipe(plumber())
-    .pipe(changed(path.output, {extension: '.js'}))
+    .pipe(changed(path.output, { extension: '.js' }))
     .pipe(sourcemaps.init())
     .pipe(to5(compilerOptions))
-    .pipe(ngAnnotate())
+    .pipe(ngAnnotate(
+      {sourceMap : true}
+    ))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('compile', function(callback) {
+
+gulp.task('compile', function (callback) {
   return runSequence(
-    'clean',
-    ['less', 'less-themes', 'html', 'es6', 'json'],
+    ['less', 'less-themes', 'html', 'es6', 'move'],
     callback
   );
 });
 
+gulp.task('recompile', function (callback) {
+  return runSequence(
+    'clean',
+    ['compile'],
+    callback
+  );
+});
+
+gulp.task('minify', function(){
+  var condition = '**/routing.js';
+  return gulp.src([
+      'dist/**/*.js',
+      '!**/routing.js',
+      '!**/lazy-routes.js',
+      '!**/routes.js'
+    ])
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(uglify(
+      {mangle: false}
+    ))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest(path.output))
+});
+
 gulp.task('release', function(callback) {
   return runSequence(
-    'compile',
-    ['depBuilder', 'token-replace'],
+    ['build', 'cache-bust'],
+    'minify',
     callback
   );
 });
@@ -174,7 +220,7 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('serve', ['compile'], function(done) {
+gulp.task('serve', ['recompile'], function (done) {
   browserSync({
     open: false,
     port: 9000,
@@ -189,171 +235,27 @@ gulp.task('serve', ['compile'], function(done) {
 });
 
 gulp.task('watch', ['serve'], function() {
-  var watcher = gulp.watch([path.source, path.html], ['compile']);
+  var watcher = gulp.watch([path.source, path.html, path.less, path.themes], ['compile']);
   watcher.on('change', function(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 });
 
-gulp.task('builder' , function(){
-  var builder = require('./build/build');
+gulp.task('build', ['recompile'], function () {
+  var depBuilder = require('./builder/builder');
   var routes = require('./src/app/routes.json');
+  
+  // get the source paths of our routes
+  routes = routes.map(function (r) { return r.src; });
 
-  // just get the source of our routes
-  routes = routes.map(function(r){
-    return r.src;
-  });
-
-  builder.build({
+  var config = {
     main: 'app/app',
+    routes: routes,
+    bundleThreshold: 0.6,
     config: './system.config.js',
-    bundles: routes
-  });
-});
-
-
-gulp.task('depBuilder', ['compile'], function(){
-  var depBuilder = require('./build/dep-builder');
-  var routes = require('./src/app/routes.json');
-
-  // just get the source of our routes
-  routes = routes.map(function(r){
-    return r.src;
-  });
-  var appTree;
-  var routeTrees = [];
-  var promises = [];
-  promises.push(new RSVP.Promise(function(resolve, reject) {
-    depBuilder.build({
-      main: 'app/app',
-      config: './system.config.js'
-    }).then(function(tree){
-      appTree = tree;
-      resolve();
-    });
-  }));
-
-  routes.forEach(function(route){
-    promises.push(new RSVP.Promise(function(resolve, reject) {
-      depBuilder.build({
-        main: route,
-        config: './system.config.js'
-      }).then(function(tree){
-        routeTrees.push(tree);
-        resolve();
-      });
-    }));
-  })
-
-  RSVP.all(promises).then(function() {
-    console.log('got all trees');
-
-    // Removing app tree dependencies from route trees;
-    Object.keys(appTree).forEach(function(moduleName){
-      console.log('removing ' + moduleName);
-
-      routeTrees.forEach(function(treeIndex){
-        if (treeIndex[moduleName]){
-          // deleting the dep tree
-          delete treeIndex[moduleName];
-          // removing dep from the other trees
-          Object.keys(treeIndex).forEach(function(depName){
-            treeIndex[depName].tree = builder.subtractTrees(treeIndex[depName].tree, appTree[moduleName].tree);
-          });
-        }
-      });
-    });
-
-    // generating inverse index of dependencies
-    var bundles = {};
-    var inverseIndex = {};
-    routeTrees.forEach(function(treeIndex, i){
-      Object.keys(treeIndex).forEach(function(depName){
-        if (inverseIndex[depName] === undefined){
-          inverseIndex[depName] = [i];
-        } else {
-          inverseIndex[depName].push(i);
-        }
-      });
-    });
-
-    console.log('removed shared dependencies');
-    // generating bundles
-    Object.keys(inverseIndex).forEach(function(moduleName){
-      console.log('---------------------------')
-      console.log('processing ' + moduleName)
-      // if it's included in only one route, leave it there
-      if (inverseIndex[moduleName].length == 1){
-        console.log('not a shared dependency - skipping')
-        return;
-      }
-
-      var module = routeTrees[inverseIndex[moduleName][0]][moduleName];
-      if (inverseIndex[moduleName].length / routeTrees.length >= 0.6){
-        // if it's included in more than 60% of the routes, put it in app
-        console.log('shared in more than 60% - including in app');
-        appTree['app/app'].tree = builder.addTrees(appTree['app/app'].tree, module.tree);
-        appTree[moduleName] = module;
-
-      } else {
-        // otherwise, put it in a bundle
-        var bundleName = inverseIndex[moduleName].sort().join('-');
-        console.log('creating bundle ' + bundleName);
-        if (bundles[bundleName] === undefined){
-          bundles[bundleName] = module;
-        } else {
-          bundles[bundleName].tree = builder.addTrees(bundles[bundleName].tree, module.tree);
-        }
-      }
-
-      // remove from other trees;
-      inverseIndex[moduleName].forEach(function(index){
-        var treeIndex = routeTrees[index];
-        delete treeIndex[moduleName];
-
-        Object.keys(treeIndex).forEach(function(depName){
-          treeIndex[depName].tree = builder.subtractTrees(treeIndex[depName].tree, module.tree);
-        });
-
-      })
-    });
-
-    console.log('building...');
-    // build bundles
-    var bundlesConfig = {};
-    Object.keys(bundles).forEach(function(bundleName) {
-      buildTree(bundles[bundleName], "bundles/" + bundleName);
-      bundlesConfig["bundles/" + bundleName] = Object.keys(bundles[bundleName].tree);
-    });
-    // build route trees
-    routeTrees.forEach(function(treeIndex){
-      Object.keys(treeIndex).forEach(function(moduleName) {
-        buildTree(treeIndex[moduleName], moduleName);
-      });
-    });
-    // build root app
-    Object.keys(appTree).forEach(function(moduleName) {
-      buildTree(appTree[moduleName], moduleName).then(function(){
-        if (moduleName === 'app/app'){
-          var bundlesString = "System.bundles = " + JSON.stringify(bundlesConfig) + ";";
-
-          gulp.src('dist/app/app.js')
-            .pipe(insert.prepend(bundlesString))
-            .pipe(gulp.dest('dist/app'));
-        }
-      })
-    });
-
-    console.log('build successful!')
-  });
-
-  var buildTree = function(tree, destination){
-    if (destination.indexOf('bower_components') != 0){
-      return builder.buildTree(tree.tree, 'dist/' + destination + '.js', {
-        sourceMaps: true
-        //minify: true
-      })
-    }
+    sourceMaps: true,
+    minify: false
   }
 
+  return depBuilder.build(config);
 });

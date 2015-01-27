@@ -2,6 +2,7 @@ import angular from 'angular';
 import 'angular-ui-router';
 import 'ocLazyLoad';
 import {routing} from 'common/utils/routing';
+import 'common/core';
 
 var module = angular.module('swimlane', ['ui.router', 'oc.lazyLoad' ]);
 
