@@ -3,6 +3,7 @@ import 'angular-ui-router';
 import 'ocLazyLoad';
 import {routing} from 'common/utils/routing';
 import 'common/core';
+import 'bower_components/plugin-css/css'
 
 var module = angular.module('swimlane', ['ui.router', 'oc.lazyLoad' ]);
 
