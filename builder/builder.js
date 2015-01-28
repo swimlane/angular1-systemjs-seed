@@ -42,6 +42,8 @@ var build = function(config){
         console.log('building...')
         return buildTrees(bundles, config);
     });
+  }, function(error){
+    console.log('error')
   });
 }
 
@@ -120,7 +122,7 @@ var buildTrees = function(bundles, config){
   console.log('building bundles...')
   Object.keys(bundles).forEach(function (bundleName) {
     buildTree(bundles[bundleName], "bundles/" + bundleName, config);
-    bundlesConfig["bundles/" + bundleName] = Object.keys(bundles[bundleName].tree);
+    bundlesConfig["bundles/" + bundleName] = Object.keys(bundles[bundleName].tree).filter(function(item){ return item.indexOf('.css!') == -1});
   });
   // build route trees
   console.log('building routes...')
