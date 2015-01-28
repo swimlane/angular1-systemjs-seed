@@ -97,9 +97,7 @@ gulp.task('less', function () {
     .pipe(cache('less'))
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.less'}))
-    .pipe(sourcemaps.init())
     .pipe(less())
-    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
