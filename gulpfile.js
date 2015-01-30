@@ -163,9 +163,10 @@ gulp.task('es6', function () {
     .pipe(changed(path.output, { extension: '.js' }))
     .pipe(sourcemaps.init())
     .pipe(to5(compilerOptions))
-    .pipe(ngAnnotate(
-      {sourceMap : true}
-    ))
+    .pipe(ngAnnotate({
+      sourceMap: true,
+      gulpWarnings: false
+    }))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
