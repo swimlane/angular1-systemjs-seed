@@ -20,6 +20,8 @@ var insert = require('gulp-insert');
 var ngAnnotate = require('gulp-ng-annotate');
 var fs = require('fs');
 var replace = require('gulp-replace-task');
+var lessPluginCleanCSS = require("less-plugin-clean-css");
+var cleancss = new lessPluginCleanCSS({advanced: true});
 
 var compilerOptions = {
   filename: '',
@@ -94,7 +96,9 @@ gulp.task('less', function () {
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.less'}))
     .pipe(sourcemaps.init())
-    .pipe(less())
+    .pipe(less(
+      plugins: [ cleancss ]
+    ))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
@@ -134,7 +138,9 @@ gulp.task('less-themes', function () {
       .pipe(plumber())
       .pipe(changed(path.output, {extension: '.less'}))
       .pipe(sourcemaps.init())
-      .pipe(less())
+      .pipe(less(
+        plugins: [ cleancss ]
+      ))
       .pipe(sourcemaps.write("."))
       .pipe(gulp.dest(path.themesOutput))
       .pipe(browserSync.reload({ stream: true }));

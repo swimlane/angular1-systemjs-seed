@@ -12,7 +12,7 @@ This project does:
 - Karma / Jasmine unit tests with coverage report
 - Lazy-loading modules via routes with AngularJS
 - Easy watch/lint/test/build setup via Gulp
-- LESS CSS Support with source maps
+- LESS CSS Support with source maps and minification
 - AngularJS Template Compilation
 - AngularJS Annotatation
 - Bundle builds via SystemJS Builder

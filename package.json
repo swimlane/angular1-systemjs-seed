@@ -24,6 +24,7 @@
     "karma-coverage": "^0.2.7",
     "karma-jasmine": "^0.2.2",
     "karma-jspm": "^1.1.2",
+    "less-plugin-clean-css": "^1.5.0",
     "ng-annotate": "^0.14.1",
     "object.assign": "^1.1.1",
     "rsvp": "^3.0.16",
