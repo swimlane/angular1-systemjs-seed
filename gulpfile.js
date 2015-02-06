@@ -100,9 +100,9 @@ gulp.task('less', function () {
     .pipe(plumber())
     .pipe(changed(path.output, {extension: '.less'}))
     .pipe(sourcemaps.init())
-    .pipe(less(
+    .pipe(less({
       plugins: [ cleancss ]
-    ))
+    }))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
@@ -159,9 +159,9 @@ gulp.task('less-themes', function () {
       .pipe(plumber())
       .pipe(changed(path.output, {extension: '.less'}))
       .pipe(sourcemaps.init())
-      .pipe(less(
+      .pipe(less({
         plugins: [ cleancss ]
-      ))
+      }))
       .pipe(sourcemaps.write("."))
       .pipe(gulp.dest(path.themesOutput))
       .pipe(browserSync.reload({ stream: true }));

@@ -12,8 +12,5 @@
     "ocLazyLoad": "~0.5.2",
     "plugin-json": "https://github.com/systemjs/plugin-json.git",
     "plugin-css": "https://github.com/systemjs/plugin-css.git"
-  },
-  "devDependencies": {
-    "less": "~2.2.0"
   }
 }
