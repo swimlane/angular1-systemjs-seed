@@ -1,64 +1,33 @@
 var to5 = require('gulp-6to5');
 var builder = require('systemjs-builder');
 var RSVP = require('rsvp');
+var clone = require('node-v8-clone');
+var nearestCommonAncestor = require('./nearest-common-ancestor');
 
-var build = function(config){
+// returns all the trees of the file's dependencies, optimized
+var getTrees = function(config, treeCache){
   return builder.loadConfig(config.config).then(function(){
-
     var inverseIndex = {};
-
     var treeIndex = {};
     var trees = [];
 
-    // returns array of parents of a node. root is first
-    function parents(node) {
-      var nodes = [];
-      for (; node; node = node.parent) {
-        nodes.unshift(node)
+    // adds tree to caches
+    var addToCache = function(tree){
+      var found = trees.filter(function(el){
+        return el.moduleName == tree.moduleName;
+      });
+
+      if (found.length == 0){
+        treeCache[tree.moduleName] = tree;
+        trees.push(tree);
+        treeIndex[tree.moduleName] = tree;
       }
-      return nodes;
-    }
-
-    // returns nearest common ancestor for two nodes
-    function commonAncestor(node1, node2) {
-      var parents1 = parents(node1)
-      var parents2 = parents(node2)
-
-      if (parents1[0].moduleName != parents2[0].moduleName) throw "No common ancestor!"
-
-      for (var i = 0; i < parents1.length; i++) {
-        if (parents2[i] === undefined){
-          return parents1[i - 1];
-        }
-        if (parents1[i].moduleName != parents2[i].moduleName) return parents1[i - 1];
-      }
-
-      return parents1[i - 1];
-    }
-
-    // finds nearest common ancestor for array of nodes;
-    var nca = function(nodes){
-      var result = nodes[0];
-
-      nodes.forEach(function(n, i){
-        if (i == 0) return;
-        result = commonAncestor(result, n);
-      })
-
-      return result;
     }
 
     var buildDeps = function(src, level){
       // trace source to get dependency tree
       return builder.trace(src).then(function(traceTree){
-        var found = trees.filter(function(el){
-          return el.moduleName == traceTree.moduleName;
-        });
-
-        if (found.length == 0){
-          trees.push(traceTree);
-          treeIndex[traceTree.moduleName] = traceTree;
-        }
+        addToCache(traceTree);
 
         // extract dependency source paths
         var sources = Object.keys(traceTree.tree);
@@ -79,11 +48,19 @@ var build = function(config){
           } else {
             inverseIndex[source] = [traceTree];
           }
+
           promises.push(new RSVP.Promise(function(resolve, reject) {
-            buildDeps(source, level + 1).then(function(subTree){
+            if (treeCache[source]){
+              var subTree = clone.clone(treeCache[source], false);
+              addToCache(subTree);
               subTrees.push(subTree);
               resolve();
-            });
+            } else {
+              buildDeps(source, level + 1).then(function (subTree) {
+                subTrees.push(subTree);
+                resolve();
+              });
+            }
           }));
         })
 
@@ -103,8 +80,7 @@ var build = function(config){
       Object.keys(inverseIndex).forEach(function(depName){
         depTree = treeIndex[depName];
 
-        var commonAncestor = nca(inverseIndex[depName]);
-
+        var commonAncestor = nearestCommonAncestor.nca(inverseIndex[depName]);
         commonAncestor.tree = builder.addTrees(commonAncestor.tree, depTree.tree);
 
         inverseIndex[depName].forEach(function(n){
@@ -115,7 +91,6 @@ var build = function(config){
         })
 
       })
-
       return treeIndex;
     });
   });
@@ -123,5 +98,5 @@ var build = function(config){
 
 
 module.exports = {
-  build: build
+  getTrees: getTrees
 };
