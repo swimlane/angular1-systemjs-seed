@@ -22,11 +22,10 @@ This project does:
 ### Install & Run
 
 1. `brew install node`
-2. `npm install -g gulp`
-3. `npm install -g jspm`
-4. `npm install`
-5. `gulp watch serve`
-6. Browse to `http://localhost:9000`
+2. `npm install -g gulp jspm bower`
+3. `npm install`
+4. `gulp watch serve`
+5. Browse to `http://localhost:9000`
 
 ### Run Tests
 
