@@ -27,6 +27,14 @@ System.config({
       "deps": [
         "angular"
       ]
+    },
+    'bower_components/ui-router-extras/release/modular/ct-ui-router-extras.core': {
+      format: 'global',
+      deps: ['angular']
+    },
+    'bower_components/ui-router-extras/release/modular/ct-ui-router-extras.future': {
+      format: 'global',
+      deps: ['bower_components/ui-router-extras/release/modular/ct-ui-router-extras.core']
     }
   }
 });
@@ -38,7 +46,8 @@ System.config({
     "angular-ui-router": "bower_components/angular-ui-router/release/angular-ui-router",
     "css": "bower_components/plugin-css/css",
     "json": "bower_components/plugin-json/json",
-    "ocLazyLoad": "bower_components/ocLazyLoad/dist/ocLazyLoad"
+    "ocLazyLoad": "bower_components/ocLazyLoad/dist/ocLazyLoad",
+    "ui-router-extras": "bower_components/ui-router-extras/release/modular/ct-ui-router-extras.future"
   }
 });
 

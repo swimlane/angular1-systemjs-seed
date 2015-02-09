@@ -1,10 +1,11 @@
 import angular from 'angular';
 import futureRoutes from 'app/routes.json!';
-import {futureStateModule} from './lazy-routes';
+import 'ui-router-extras';
 
 export var routing = function(module){
 
-  module.requires.push(futureStateModule.name);
+  module.requires.push('ct.ui.router.extras.future');
+  
   var $inject = ['$stateProvider', '$futureStateProvider'];
   var RouterConfig = function ($stateProvider, $futureStateProvider) {
 
@@ -19,7 +20,7 @@ export var routing = function(module){
         }
         
         $ocLazyLoad.load(newModule).then(function(){
-          def.resolve(newModule);
+          def.resolve();
         });
       });
 
