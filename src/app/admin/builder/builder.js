@@ -1,7 +1,6 @@
 import angular from 'angular';
 import {modalModule} from 'common/components/modal';
 import {selectModule} from 'common/components/select';
-import {futureStateModule} from 'common/utils/lazy-routes';
 import './builder.tpl';
 
 
