@@ -263,7 +263,8 @@ gulp.task('build', ['recompile'], function () {
     bundleThreshold: 0.6,
     config: './system.config.js',
     sourceMaps: true,
-    minify: false
+    minify: false,
+    mangle: false
   }
 
   return depBuilder.build(config);

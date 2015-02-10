@@ -150,7 +150,10 @@ var buildTree = function (tree, destination, config) {
   //if (destination.indexOf('bower_components') != 0) {
     return builder.buildTree(tree.tree, 'dist/' + destination + '.js', {
       sourceMaps: config.sourceMaps,
-      minify: config.minify
+      minify: config.minify,
+      mangle: config.mangle,
+      config: config.config
+
     })
   //}
 }
