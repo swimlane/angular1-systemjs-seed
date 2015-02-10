@@ -28,13 +28,17 @@ System.config({
         "angular"
       ]
     },
-    'bower_components/ui-router-extras/release/modular/ct-ui-router-extras.core': {
-      format: 'global',
-      deps: ['angular']
+    "bower_components/ui-router-extras/release/modular/ct-ui-router-extras.core": {
+      "format": "global",
+      "deps": [
+        "angular"
+      ]
     },
-    'bower_components/ui-router-extras/release/modular/ct-ui-router-extras.future': {
-      format: 'global',
-      deps: ['bower_components/ui-router-extras/release/modular/ct-ui-router-extras.core']
+    "bower_components/ui-router-extras/release/modular/ct-ui-router-extras.future": {
+      "format": "global",
+      "deps": [
+        "bower_components/ui-router-extras/release/modular/ct-ui-router-extras.core"
+      ]
     }
   }
 });
