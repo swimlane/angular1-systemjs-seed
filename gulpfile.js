@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util')
 var plumber = require('gulp-plumber');
 var to5 = require('gulp-6to5');
 var changed = require('gulp-changed');
@@ -24,6 +25,7 @@ var lessPluginCleanCSS = require("less-plugin-clean-css");
 var cleancss = new lessPluginCleanCSS({advanced: true});
 var cache = require('gulp-cached');
 var uglify = require('gulp-uglify');
+var coffee = require('gulp-coffee');
 
 var compilerOptions = {
   filename: '',
@@ -53,6 +55,7 @@ var compilerOptions = {
 
 var path = {
   source:'src/**/*.js',
+  coffee:'src/**/*.coffee',
   html:'**/*.html',
   templates: 'src/**/*.html',
   less: ['src/**/*.less', '!src/assets/**/*.less'],
@@ -183,10 +186,26 @@ gulp.task('es6', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
+gulp.task('es6-coffee', function () {
+  return gulp.src(path.coffee)
+    .pipe(cache('es6-coffee'))
+    .pipe(plumber())
+    .pipe(changed(path.output, { extension: '.coffee' }))
+    .pipe(sourcemaps.init())
+    .pipe(coffee({bare: true}).on('error', gutil.log))
+    .pipe(to5(compilerOptions))
+    .pipe(ngAnnotate({
+      sourceMap: true,
+      gulpWarnings: false
+    }))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest(path.output))
+    .pipe(browserSync.reload({ stream: true }));
+});
 
 gulp.task('compile', function (callback) {
   return runSequence(
-    ['less', 'less-themes', 'html', 'es6', 'move'],
+    ['less', 'less-themes', 'html', 'es6', 'es6-coffee', 'move'],
     callback
   );
 });

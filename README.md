@@ -13,6 +13,7 @@ This project does:
 - Lazy-loading modules via routes with AngularJS
 - Easy watch/lint/test/build setup via Gulp
 - LESS CSS Support with source maps and minification
+- Write code in CoffeeScript (optional)
 - AngularJS Template Compilation
 - AngularJS Annotatation
 - Bundle builds via SystemJS Builder
