@@ -21,19 +21,15 @@ This project does:
 
 ### Install & Run
 
-1. `brew install node`
-2. `npm install -g gulp jspm bower`
-3. `npm install`
-4. `gulp watch serve`
-5. Browse to `http://localhost:9000`
+1. `npm install -g gulp jspm bower`
+2. `npm install`
+3. `gulp watch serve`
+4. Browse to `http://localhost:9000`
 
 ### Run Tests
 
-1. `npm install -g karma-cli`
-2. `npm install -g jspm`
-3. `gulp test`
-
-and `gulp lint` to lint it.
+- `gulp test` to run karma tests
+- `gulp lint` to run jshint
 
 ### Production Build
 
@@ -58,3 +54,4 @@ and `gulp lint` to lint it.
 - http://glenmaddern.com/articles/javascript-in-2015
 - https://github.com/marcj/angular-es6-annotations
 - https://github.com/robianmcd/angular-next
+- https://github.com/ng-next/ng-next-example
