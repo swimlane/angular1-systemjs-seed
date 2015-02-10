@@ -26,14 +26,11 @@ This project does:
 3. `gulp watch serve`
 4. Browse to `http://localhost:9000`
 
-### Run Tests
+### Gulp Tasks
 
 - `gulp test` to run karma tests
 - `gulp lint` to run jshint
-
-### Production Build
-
-`gulp release` does: bundles, cache busting, and minification.
+- `gulp release` to bundle, cache busting, and minify
 
 ### Tooling
 
