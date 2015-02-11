@@ -2,7 +2,7 @@
   "name": "systemjs-test",
   "version": "1.0.0",
   "devDependencies": {
-    "browser-sync": "^1.8.1",
+    "browser-sync": "^2.0.1",
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-6to5": "^2.0.0",

@@ -1,6 +1,6 @@
-# ES6 & AngularJS
+# SystemJS + AngularJS
 
-Testing ES6 modules with SystemJS with ES6 syntax using 6to5 that lazy-load and bundle build with AngularJS.
+Seed project for ES6 modules via SystemJS with ES6 syntax using 6to5 that lazy-load and bundle build with AngularJS.
 
 ![](http://media.giphy.com/media/EldfH1VJdbrwY/giphy.gif)
 
@@ -11,13 +11,15 @@ This project does:
 - ES6 Modules via SystemJS
 - Karma / Jasmine unit tests with coverage report
 - Lazy-loading modules via routes with AngularJS
-- Easy watch/lint/test/build setup via Gulp
+- Easy watch/browser-sync/lint/test/build setup via Gulp
 - LESS CSS Support with source maps and minification
 - AngularJS Template Compilation
 - AngularJS Annotatation
 - Bundle builds via SystemJS Builder
 - Cache Busting with SystemJS
 - Demonstrates on-demand theme loading
+
+This seed project demonstrates the [systemjs-route-bundler](https://github.com/Swimlane/systemjs-route-bundler) build tool.
 
 ### Install & Run
 
