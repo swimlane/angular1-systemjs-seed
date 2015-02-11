@@ -4,7 +4,8 @@ System.config({
     "*": "*.js",
     "systemjs-test/*": "src/*.js",
     "bower_components/*": "../bower_components/*.js"
-  }
+  },
+  "buildCSS": false
 });
 
 System.config({
