@@ -11,7 +11,7 @@ This project does:
 - ES6 Modules via SystemJS
 - Karma / Jasmine unit tests with coverage report
 - Lazy-loading modules via routes with AngularJS
-- Easy watch/lint/test/build setup via Gulp
+- Easy watch/browser-sync/lint/test/build setup via Gulp
 - LESS CSS Support with source maps and minification
 - AngularJS Template Compilation
 - AngularJS Annotatation
