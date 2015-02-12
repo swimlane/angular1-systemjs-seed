@@ -14,12 +14,12 @@ export var routing = function(module){
 
       System.import(futureState.src).then(loaded => {
         var newModule = loaded;
-        if(!loaded.name){
-          var key = Object.keys(loaded), 
+        if (!loaded.name) {
+          var key = Object.keys(loaded);
           newModule = loaded[key[0]];
         }
         
-        $ocLazyLoad.load(newModule).then(function(){
+        $ocLazyLoad.load(newModule).then(function() {
           def.resolve();
         });
       });
@@ -30,7 +30,6 @@ export var routing = function(module){
     futureRoutes.forEach(function(r){
       $futureStateProvider.futureState(r);
     });
-    
   };
 
   RouterConfig.$inject = $inject;
