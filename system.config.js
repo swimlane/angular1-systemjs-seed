@@ -49,11 +49,11 @@ System.config({
     "angular": "bower_components/angular/angular",
     "angular-mocks": "bower_components/angular-mocks/angular-mocks",
     "angular-ui-router": "bower_components/angular-ui-router/release/angular-ui-router",
+    "chai": "node_modules/chai/chai",
     "css": "bower_components/plugin-css/css",
     "json": "bower_components/plugin-json/json",
     "ocLazyLoad": "bower_components/ocLazyLoad/dist/ocLazyLoad",
-    "ui-router-extras": "bower_components/ui-router-extras/release/modular/ct-ui-router-extras.future",
-    "chai": "node_modules/chai/chai"
+    "ui-router-extras": "bower_components/ui-router-extras/release/modular/ct-ui-router-extras.future"
   }
 });
 
