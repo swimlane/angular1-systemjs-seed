@@ -32,7 +32,6 @@ var build = function(config){
       return RSVP.all(promises).then(function () {
         // Remove app tree dependencies from route trees;
         removeDepsFromRoutes();
-
         // generate inverse index of dependencies
         var inverseIndex = generateInverseIndex();
         // generate bundles
@@ -43,7 +42,7 @@ var build = function(config){
         return buildTrees(bundles, config);
     });
   }, function(error){
-    console.log('error')
+    console.log(error)
   });
 }
 
@@ -117,45 +116,69 @@ var generateBundles = function(inverseIndex, bundleThreshold){
 }
 
 var buildTrees = function(bundles, config){
+  var builderPromises = [];
+
   // build bundles
   var bundlesConfig = {};
   console.log('building bundles...')
   Object.keys(bundles).forEach(function (bundleName) {
-    buildTree(bundles[bundleName], "bundles/" + bundleName, config);
+    builderPromises.push(new RSVP.Promise(function (resolve, reject) {
+      buildTree(bundles[bundleName], "bundles/" + bundleName, config).then(function () {
+        resolve();
+      }, function(error){
+        console.log('error')
+      });
+    }));
     bundlesConfig["bundles/" + bundleName] = Object.keys(bundles[bundleName].tree).filter(function(item){ return item.indexOf('.css!') == -1});
   });
+
   // build route trees
   console.log('building routes...')
   routeTrees.forEach(function (treeIndex) {
     Object.keys(treeIndex).forEach(function (moduleName) {
-      buildTree(treeIndex[moduleName], moduleName, config);
+      builderPromises.push(new RSVP.Promise(function (resolve, reject) {
+        buildTree(treeIndex[moduleName], moduleName, config).then(function () {
+          resolve();
+        }, function(error){
+          console.log('error')
+        });
+      }));
     });
   });
+
   // build root app
   console.log('building app...')
-  return Object.keys(appTree).forEach(function (moduleName) {
-    buildTree(appTree[moduleName], moduleName, config).then(function () {
-      if (moduleName === 'app/app') {
-        var bundlesString = "System.bundles = " + JSON.stringify(bundlesConfig, null, 4) + ";";
-
-        return gulp.src('dist/app/app.js')
-          .pipe(insert.prepend(bundlesString))
-          .pipe(gulp.dest('dist/app'));
-      }
-    })
+  Object.keys(appTree).forEach(function (moduleName) {
+    builderPromises.push(new RSVP.Promise(function (resolve, reject) {
+      buildTree(appTree[moduleName], moduleName, config).then(function () {
+        if (moduleName === 'app/app') {
+          var bundlesString = "System.bundles = " + JSON.stringify(bundlesConfig, null, 4) + ";";
+          gulp.src('dist/app/app.js')
+            .pipe(insert.prepend(bundlesString))
+            .pipe(gulp.dest('dist/app'));
+        }
+        resolve();
+      }, function(error){
+        console.log(error)
+      })
+    }));
   });
+
+  return RSVP.all(builderPromises).then(function () {
+    console.log('build succeeded')
+    return true;
+  }, function(error){
+    console.log(error)
+  })
 }
 
 var buildTree = function (tree, destination, config) {
-  //if (destination.indexOf('bower_components') != 0) {
-    return builder.buildTree(tree.tree, 'dist/' + destination + '.js', {
-      sourceMaps: config.sourceMaps,
-      minify: config.minify,
-      mangle: config.mangle,
-      config: config.config
-
-    })
-  //}
+  return builder.buildTree(tree.tree, 'dist/' + destination + '.js', {
+    sourceMaps: config.sourceMaps,
+    minify: config.minify,
+    mangle: config.mangle,
+    config: config.config
+  })
 }
 
 module.exports = {
