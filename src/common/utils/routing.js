@@ -1,4 +1,3 @@
-import angular from 'angular';
 import futureRoutes from 'app/routes.json!';
 import 'ui-router-extras';
 
