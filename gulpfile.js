@@ -66,7 +66,9 @@ gulp.task('test', ['compile'], function (done) {
   karma.start({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
-  }, done);
+  }, function(){
+    done();
+  });
 });
 
 gulp.task('clean', function() {

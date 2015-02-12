@@ -52,7 +52,8 @@ System.config({
     "css": "bower_components/plugin-css/css",
     "json": "bower_components/plugin-json/json",
     "ocLazyLoad": "bower_components/ocLazyLoad/dist/ocLazyLoad",
-    "ui-router-extras": "bower_components/ui-router-extras/release/modular/ct-ui-router-extras.future"
+    "ui-router-extras": "bower_components/ui-router-extras/release/modular/ct-ui-router-extras.future",
+    "chai": "node_modules/chai/chai"
   }
 });
 
