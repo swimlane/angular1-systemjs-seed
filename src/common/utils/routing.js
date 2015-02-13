@@ -1,14 +1,13 @@
 import futureRoutes from 'app/routes.json!';
 import 'ui-router-extras';
 
-export var routing = function(module){
+export var routing = function(module) {
 
   module.requires.push('ct.ui.router.extras.future');
   
-  var $inject = ['$stateProvider', '$futureStateProvider'];
   var RouterConfig = function ($stateProvider, $futureStateProvider) {
 
-    $futureStateProvider.stateFactory('load', function($q, $ocLazyLoad, futureState){
+    $futureStateProvider.stateFactory('load', ['$q', '$ocLazyLoad', 'futureState', function($q, $ocLazyLoad, futureState) {
       var def = $q.defer();
 
       System.import(futureState.src).then(loaded => {
@@ -24,14 +23,15 @@ export var routing = function(module){
       });
 
       return def.promise;
-    });
+    }]);
 
-    futureRoutes.forEach(function(r){
+    futureRoutes.forEach(function(r) {
       $futureStateProvider.futureState(r);
     });
+
   };
 
-  RouterConfig.$inject = $inject;
+  RouterConfig.$inject = ['$stateProvider', '$futureStateProvider'];
 
   return RouterConfig;
 };
