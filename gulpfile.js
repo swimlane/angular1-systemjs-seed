@@ -24,6 +24,7 @@ var lessPluginCleanCSS = require("less-plugin-clean-css");
 var cleancss = new lessPluginCleanCSS({advanced: true});
 var cache = require('gulp-cached');
 var uglify = require('gulp-uglify');
+var adjustUrls = require('gulp-css-url-adjuster');
 
 var compilerOptions = {
   filename: '',
@@ -58,7 +59,8 @@ var path = {
   less: ['src/**/*.less', '!src/assets/**/*.less'],
   themes: ['src/assets/dark.less', 'src/assets/light.less'],
   themesOutput:'dist/assets/',
-  output:'dist/'
+  output:'dist/',
+  outputCss: 'dist/**/*.css'
 };
 
 
@@ -108,6 +110,14 @@ gulp.task('less', function () {
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
+});
+
+gulp.task('rebase-css-paths', function(callback) {
+  return gulp.src(path.outputCss)
+    .pipe(adjustUrls({
+      replace:  ['../','dist/']
+    }))
+    .pipe(gulp.dest(path.output))
 });
 
 gulp.task('move', function () {
@@ -201,6 +211,14 @@ gulp.task('recompile', function (callback) {
   );
 });
 
+gulp.task('compile-production', function(callback){
+  return runSequence(
+    'recompile',
+    ['rebase-css-paths'],
+    callback
+  )
+});
+
 gulp.task('minify', function(){
   var condition = '**/routing.js';
   return gulp.src([
@@ -252,7 +270,7 @@ gulp.task('watch', ['serve'], function() {
   });
 });
 
-gulp.task('build', ['recompile'], function () {
+gulp.task('build', ['compile-production'], function () {
   var depBuilder = require('./builder/builder');
   var routes = require('./src/app/routes.json');
   

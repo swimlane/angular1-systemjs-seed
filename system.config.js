@@ -7,7 +7,8 @@ System.config({
     "github:*": "../jspm_packages/github/*.js",
     "npm:*": "../jspm_packages/npm/*.js"
   },
-  "buildCSS": true
+  "buildCSS": true,
+  "separateCSS": false
 });
 
 System.config({
