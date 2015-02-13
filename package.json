@@ -41,7 +41,11 @@
     "directories": {
       "lib": "src"
     },
-    "configFile": "system.config.js"
+    "configFile": "system.config.js",
+    "dependencies": {
+      "css": "^0.1.5",
+      "json": "^0.1.0"
+    }
   },
   "scripts": {
     "postinstall": "bower install && jspm install"

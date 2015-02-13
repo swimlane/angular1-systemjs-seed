@@ -9,44 +9,44 @@ var routeTrees = [];
 var promises = [];
 var treeCache = {};
 
-var build = function(config){
+var build = function (config) {
   console.log('tracing source files...')
   return treeWalker.getTrees({
-      main: config.main,
-      config: config.config
+    main: config.main,
+    config: config.config
   }, treeCache).then(function (tree) {
-      appTree = tree;
+    appTree = tree;
 
-      config.routes.forEach(function (route) {
-        promises.push(new RSVP.Promise(function (resolve, reject) {
-          treeWalker.getTrees({
-            main: route,
-            config: './system.config.js'
-          }, treeCache).then(function (tree) {
-            routeTrees.push(tree);
-            resolve();
-          });
-        }));
-      })
+    config.routes.forEach(function (route) {
+      promises.push(new RSVP.Promise(function (resolve, reject) {
+        treeWalker.getTrees({
+          main: route,
+          config: './system.config.js'
+        }, treeCache).then(function (tree) {
+          routeTrees.push(tree);
+          resolve();
+        });
+      }));
+    })
 
-      return RSVP.all(promises).then(function () {
-        // Remove app tree dependencies from route trees;
-        removeDepsFromRoutes();
-        // generate inverse index of dependencies
-        var inverseIndex = generateInverseIndex();
-        // generate bundles
-        console.log('generating bundles...')
-        var bundles = generateBundles(inverseIndex, config.bundleThreshold);
-        // build trees
-        console.log('building...')
-        return buildTrees(bundles, config);
+    return RSVP.all(promises).then(function () {
+      // Remove app tree dependencies from route trees;
+      removeDepsFromRoutes();
+      // generate inverse index of dependencies
+      var inverseIndex = generateInverseIndex();
+      // generate bundles
+      console.log('generating bundles...')
+      var bundles = generateBundles(inverseIndex, config.bundleThreshold);
+      // build trees
+      console.log('building...')
+      return buildTrees(bundles, config);
     });
-  }, function(error){
+  }, function (error) {
     console.log(error)
   });
 }
 
-var removeDepsFromRoutes = function(){
+var removeDepsFromRoutes = function () {
   Object.keys(appTree).forEach(function (moduleName) {
     routeTrees.forEach(function (treeIndex) {
       if (treeIndex[moduleName]) {
@@ -61,7 +61,7 @@ var removeDepsFromRoutes = function(){
   });
 }
 
-var generateInverseIndex = function(){
+var generateInverseIndex = function () {
   var inverseIndex = {};
   routeTrees.forEach(function (treeIndex, i) {
     Object.keys(treeIndex).forEach(function (depName) {
@@ -75,7 +75,7 @@ var generateInverseIndex = function(){
   return inverseIndex;
 }
 
-var generateBundles = function(inverseIndex, bundleThreshold){
+var generateBundles = function (inverseIndex, bundleThreshold) {
   var bundles = {};
   // generating bundles
   Object.keys(inverseIndex).forEach(function (moduleName) {
@@ -90,7 +90,6 @@ var generateBundles = function(inverseIndex, bundleThreshold){
       //console.log('shared by more than ' + (bundleThreshold*100) + '% of routes - including in app');
       appTree['app/app'].tree = builder.addTrees(appTree['app/app'].tree, module.tree);
       appTree[moduleName] = module;
-
     } else {
       // otherwise, put it in a bundle
       var bundleName = inverseIndex[moduleName].sort().join('-');
@@ -115,7 +114,7 @@ var generateBundles = function(inverseIndex, bundleThreshold){
   return bundles;
 }
 
-var buildTrees = function(bundles, config){
+var buildTrees = function (bundles, config) {
   var builderPromises = [];
 
   // build bundles
@@ -123,13 +122,16 @@ var buildTrees = function(bundles, config){
   console.log('building bundles...')
   Object.keys(bundles).forEach(function (bundleName) {
     builderPromises.push(new RSVP.Promise(function (resolve, reject) {
+
       buildTree(bundles[bundleName], "bundles/" + bundleName, config).then(function () {
         resolve();
-      }, function(error){
-        console.log('error')
+      }, function (error) {
+        console.log(error)
       });
     }));
-    bundlesConfig["bundles/" + bundleName] = Object.keys(bundles[bundleName].tree).filter(function(item){ return item.indexOf('.css!') == -1});
+    bundlesConfig["bundles/" + bundleName] = Object.keys(bundles[bundleName].tree).filter(function (item) {
+      return item.indexOf('.css!') == -1
+    });
   });
 
   // build route trees
@@ -139,8 +141,8 @@ var buildTrees = function(bundles, config){
       builderPromises.push(new RSVP.Promise(function (resolve, reject) {
         buildTree(treeIndex[moduleName], moduleName, config).then(function () {
           resolve();
-        }, function(error){
-          console.log('error')
+        }, function (error) {
+          console.log(error)
         });
       }));
     });
@@ -158,7 +160,7 @@ var buildTrees = function(bundles, config){
             .pipe(gulp.dest('dist/app'));
         }
         resolve();
-      }, function(error){
+      }, function (error) {
         console.log(error)
       })
     }));
@@ -167,12 +169,18 @@ var buildTrees = function(bundles, config){
   return RSVP.all(builderPromises).then(function () {
     console.log('build succeeded')
     return true;
-  }, function(error){
+  }, function (error) {
     console.log(error)
   })
 }
 
 var buildTree = function (tree, destination, config) {
+  if (destination.indexOf('github:systemjs/plugin') != -1) {
+    return new RSVP.Promise(function (resolve, reject) {
+      resolve();
+    })
+  }
+
   return builder.buildTree(tree.tree, 'dist/' + destination + '.js', {
     sourceMaps: config.sourceMaps,
     minify: config.minify,
