@@ -1,11 +1,11 @@
 System.config({
-  "baseURL": "dist",
+  "baseURL": "",
   "paths": {
-    "*": "*.js",
+    "*": "dist/*.js",
     "systemjs-test/*": "src/*.js",
-    "bower_components/*": "../bower_components/*.js",
-    "github:*": "../jspm_packages/github/*.js",
-    "npm:*": "../jspm_packages/npm/*.js"
+    "bower_components/*": "bower_components/*.js",
+    "github:*": "jspm_packages/github/*.js",
+    "npm:*": "jspm_packages/npm/*.js"
   },
   "buildCSS": true,
   "separateCSS": false
