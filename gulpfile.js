@@ -117,6 +117,9 @@ gulp.task('rebase-css-paths', function(callback) {
     .pipe(adjustUrls({
       replace:  ['../','dist/']
     }))
+    .pipe(adjustUrls({
+      replace:  ['../','']
+    }))
     .pipe(gulp.dest(path.output))
 });
 
@@ -127,6 +130,7 @@ gulp.task('move', function () {
       './src/**/*.woff',
       './src/**/*.ttf',
       './src/**/*.png',
+      './src/**/*.gif',
       './src/**/*.ico',
       './src/**/*.jpg',
       './src/**/*.eot'])
