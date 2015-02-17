@@ -115,7 +115,7 @@ gulp.task('less', function () {
 gulp.task('rebase-css-paths', function(callback) {
   return gulp.src(path.outputCss)
     .pipe(adjustUrls({
-      replace:  [/\.\.\/(\.\.\/)*/,'dist/']
+      replace:  [/(\.\.\/)+/,'dist/']
     }))    
     .pipe(gulp.dest(path.output))
 });
