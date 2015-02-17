@@ -25,6 +25,7 @@ var cleancss = new lessPluginCleanCSS({advanced: true});
 var cache = require('gulp-cached');
 var uglify = require('gulp-uglify');
 var adjustUrls = require('gulp-css-url-adjuster');
+var routeBundler = require('systemjs-route-bundler')
 
 var compilerOptions = {
   filename: '',
@@ -271,10 +272,8 @@ gulp.task('watch', ['serve'], function() {
   });
 });
 
-gulp.task('build', ['compile-production'], function () {
-  var depBuilder = require('./builder/builder');
+gulp.task('build', ['compile-production'], function () {  
   var routes = require('./src/app/routes.json');
-  
   // get the source paths of our routes
   routes = routes.map(function (r) { return r.src; });
 
@@ -285,8 +284,10 @@ gulp.task('build', ['compile-production'], function () {
     config: './system.config.js',
     sourceMaps: true,
     minify: false,
-    mangle: false
+    mangle: false,
+    dest: 'dist/app',
+    destJs: 'dist/app/app.js'
   }
 
-  return depBuilder.build(config);
+  return routeBundler.build(config);
 });
