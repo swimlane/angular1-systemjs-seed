@@ -4,7 +4,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: 'dist',
+    basePath: '',
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jspm', 'jasmine'],
@@ -43,7 +43,9 @@ module.exports = function(config) {
     proxies: {
       '/base/app/': '/base/dist/app/',
       '/base/common/': '/base/dist/common/',
-      '/bower_components/': '/base/bower_components/'
+      '/bower_components/': '/base/bower_components/',
+      '/base/dist/test/': '/base/test/',
+      '/base/dist/node_modules/': '/base/node_modules/'
     },
 
     // list of files to exclude
