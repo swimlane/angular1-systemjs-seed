@@ -5,7 +5,7 @@ export var routing = function(module) {
 
   module.requires.push('ct.ui.router.extras.future');
   
-  var RouterConfig = function ($stateProvider, $futureStateProvider) {
+  var RouterConfig = ['$stateProvider', '$futureStateProvider', function ($stateProvider, $futureStateProvider) {
 
     $futureStateProvider.stateFactory('load', ['$q', '$ocLazyLoad', 'futureState', function($q, $ocLazyLoad, futureState) {
       var def = $q.defer();
@@ -29,9 +29,7 @@ export var routing = function(module) {
       $futureStateProvider.futureState(r);
     });
 
-  };
-
-  RouterConfig.$inject = ['$stateProvider', '$futureStateProvider'];
+  }];
 
   return RouterConfig;
 };
