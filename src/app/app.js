@@ -3,7 +3,6 @@ import 'angular-ui-router';
 import 'ocLazyLoad';
 import {routing} from 'common/utils/routing';
 import 'common/core';
-import 'css'
 
 var module = angular.module('swimlane', ['ui.router', 'oc.lazyLoad' ]);
 
@@ -16,7 +15,7 @@ module.config(function ($urlRouterProvider, $locationProvider, $stateProvider, $
 });
 
 angular.element(document).ready(function() {
-	angular.bootstrap(document.body, [ module.name ], {
-		// strictDi: true // turning off for now
-	});
+  angular.bootstrap(document.body, [ module.name ], {
+    // strictDi: true // turning off for now
+  });
 });
