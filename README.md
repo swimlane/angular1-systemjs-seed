@@ -34,6 +34,13 @@ This seed project demonstrates the [systemjs-route-bundler](https://github.com/S
 - `gulp lint` to run jshint
 - `gulp release` to bundle, cache busting, and minify
 
+### Versions
+The project has been tested with the following environment:
+
+- node v0.12.0
+- npm v2.5.1
+- jspm v0.13.0
+
 ### Tooling
 
 - [EditorConfig](http://editorconfig.org/)
