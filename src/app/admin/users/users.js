@@ -1,12 +1,25 @@
 import angular from 'angular';
-import {modalModule} from 'common/components/modal';
-import {selectModule} from 'common/components/select';
-import {dateModule} from 'common/components/date';
-import {timeModule} from 'common/components/time';
+import ModalModule from 'common/components/modal';
+import SelectModule from 'common/components/select';
+import DateModule from 'common/components/date';
+import TimeModule from 'common/components/time';
 import './users.tpl';
 
-export var usersModule = angular.module('admin.users', [modalModule.name, dateModule.name, timeModule.name, 'app/admin/users/users.tpl.html']);
+var usersModule = angular.module('admin.users', [
+  ModalModule.name, 
+  DateModule.name, 
+  TimeModule.name, 
+  SelectModule.name,
+  'app/admin/users/users.tpl.html']);
 
-usersModule.controller('UsersController', function($scope){
-  console.log('users!')
-});
+class UsersController{
+  constructor($scope){
+    console.log('users!')
+  }
+}
+
+UsersController.$inject = ['$scope'];
+
+usersModule.controller('UsersController', UsersController);
+
+export default usersModule; 

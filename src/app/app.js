@@ -1,8 +1,8 @@
 import angular from 'angular';
 import 'angular-ui-router';
 import 'ocLazyLoad';
-import {routing} from 'common/utils/routing';
 import 'common/core';
+import routing from 'common/utils/routing';
 
 var module = angular.module('swimlane', ['ui.router', 'oc.lazyLoad' ]);
 
@@ -19,3 +19,5 @@ angular.element(document).ready(function() {
     // strictDi: true // turning off for now
   });
 });
+
+export default module;

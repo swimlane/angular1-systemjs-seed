@@ -1,7 +1,7 @@
-import futureRoutes from 'app/routes.json!';
 import 'ui-router-extras';
+import futureRoutes from 'app/routes.json!';
 
-export var routing = function(module) {
+var routing = function(module) {
 
   module.requires.push('ct.ui.router.extras.future');
   
@@ -33,3 +33,5 @@ export var routing = function(module) {
 
   return RouterConfig;
 };
+
+export default routing;

@@ -1,3 +1,6 @@
+/**
+ * Demonstrates AMD.
+ */
 define(['angular', 'common/components/modal', './forms.tpl'], function(angular){
 
   var formModule = angular.module('forms', ['app/forms/forms.tpl.html', 'common.components.modal']);

@@ -1,13 +1,13 @@
 import angular from 'angular';
+import BuilderModule from './builder/builder'
+import UsersModule from './users/users'
 import './admin.tpl';
-import {builderModule} from './builder/builder'
-import {usersModule} from './users/users'
 
-
-export var adminModule = angular.module('admin', [ 
-  builderModule.name, usersModule.name, 'app/admin/admin.tpl.html']);
-
-adminModule.config(function($stateProvider){
+var adminModule = angular.module('admin', [ 
+  BuilderModule.name, 
+  UsersModule.name, 
+  'app/admin/admin.tpl.html'])
+.config(function($stateProvider){
   $stateProvider.state('admin', {
     url: '/admin',
     templateUrl: 'app/admin/admin.tpl.html',
@@ -27,8 +27,14 @@ adminModule.config(function($stateProvider){
     controller: 'UsersController',
     parent: 'admin'
   });
-});
+})
 
-adminModule.controller('AdminController', $scope => {
-  console.log('admin!');
-});
+class AdminController{
+  constructor(){
+    console.log('admin!');
+  }
+}
+
+adminModule.controller('AdminController', AdminController);
+
+export default adminModule;

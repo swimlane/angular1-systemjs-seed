@@ -1,3 +1,5 @@
 import angular from 'angular';
 
-export var modalModule = angular.module('common.components.modal', []);
+var modalModule = angular.module('common.components.modal', []);
+
+export default modalModule;

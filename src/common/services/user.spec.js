@@ -1,6 +1,6 @@
 import angular from 'angular';
 import 'angular-mocks';
-import {userModule} from './user';
+import UserModule from './user';
 
 
 describe('CurrentUser', function() {
@@ -16,7 +16,7 @@ describe('CurrentUser', function() {
   describe('.get', function() {
     it('has a user', function() {
       var user;
-      CurrentUser.get().then(function(data) {
+      CurrentUser.getUser().then(function(data) {
         user = data;
       });
       

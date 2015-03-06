@@ -1,21 +1,24 @@
 import angular from 'angular';
 
-export var userModule = angular.module('user', []);
+var userModule = angular.module('user', [])
+.factory('CurrentUser', CurrentUser);
 
-userModule.factory('CurrentUser', ['$q', function CurrentUser($q){
+class CurrentUser{
+  constructor($q){
+    this.$q = $q;
+  }
 
-  return {
+  getUser(){
+    var deferred = $q.defer();
 
-    get: function(){
-      var deferred = $q.defer();
+    deferred.resolve({
+      name: 'Panda'
+    });
 
-      deferred.resolve({
-        name: 'Panda'
-      });
+    return deferred.promise;
+  }
+};
 
-      return deferred.promise;
-    }
+CurrentUser.$inject = ['$q'];
 
-  };
-
-}]);
+export default userModule;

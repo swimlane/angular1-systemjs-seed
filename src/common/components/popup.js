@@ -1,4 +1,5 @@
 import angular from 'angular';
 
-export var popupModule = angular.module('common.components.popup', 
-  []);
+var popupModule = angular.module('common.components.popup', []);
+
+export default popupModule;
