@@ -221,6 +221,7 @@ gulp.task('compile-production', function(callback){
   )
 });
 
+// Deprecated, use systemjs built-in minify and mangle instead
 gulp.task('minify', function(){
   var condition = '**/routing.js';
   return gulp.src([
@@ -240,7 +241,6 @@ gulp.task('minify', function(){
 gulp.task('release', function(callback) {
   return runSequence(
     ['build', 'cache-bust'],
-    'minify',
     callback
   );
 });
@@ -283,8 +283,8 @@ gulp.task('build', ['compile-production'], function () {
     bundleThreshold: 0.6,
     config: './system.config.js',
     sourceMaps: true,
-    minify: false,
-    mangle: false,
+    minify: true,
+    mangle: true,
     dest: 'dist/app',
     destJs: 'dist/app/app.js'
   }
