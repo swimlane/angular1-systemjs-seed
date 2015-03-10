@@ -3,14 +3,22 @@ import ModalModule from 'common/components/modal';
 import SelectModule from 'common/components/select';
 import DateModule from 'common/components/date';
 import TimeModule from 'common/components/time';
-import './users.tpl';
+import UsersTemplate from './users.tpl';
 
 var usersModule = angular.module('admin.users', [
   ModalModule.name, 
   DateModule.name, 
   TimeModule.name, 
   SelectModule.name,
-  'app/admin/users/users.tpl.html']);
+  UsersTemplate.name])
+.config(function($stateProvider){
+  $stateProvider.state('admin.users', {
+    url: '/users',
+    templateUrl: UsersTemplate.name,
+    controller: 'UsersController',
+    parent: 'admin'
+  });
+})
 
 class UsersController{
   constructor($scope){

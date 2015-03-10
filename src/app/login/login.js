@@ -3,8 +3,8 @@ import SelectModule from 'common/components/select';
 import DateModule from 'common/components/date';
 import ModalModule from 'common/components/modal';
 import UserModule from 'common/services/user';
-import './login.tpl';
-import './signup.tpl';
+import LoginTemplate from './login.tpl';
+import SignupTemplate from './signup.tpl';
 import './login.css!';
 
 
@@ -13,12 +13,12 @@ var loginModule = angular.module('login', [
   DateModule.name, 
   ModalModule.name, 
   UserModule.name,
-  'app/login/login.tpl.html', 
-  'app/login/signup.tpl.html'])
+  LoginTemplate.name, 
+  SignupTemplate.name])
 .config(function($stateProvider){
   $stateProvider.state('login', {
     url: '/login',
-    templateUrl: 'app/login/login.tpl.html',
+    templateUrl: LoginTemplate.name,
     controller: 'LoginController'
   });
 

@@ -1,5 +1,5 @@
 /**
- * Demonstrates AMD.
+ * Demonstrates AMD.  THIS IS JUST FOR TESTING!
  */
 define(['angular', 'common/components/modal', './forms.tpl'], function(angular){
 

@@ -2,17 +2,17 @@ import angular from 'angular';
 import ModalModule from 'common/components/modal';
 import PopupModule from 'common/components/popup';
 import TimeModule from 'common/components/time';
-import './dashboards.tpl';
+import DashboardTemplate from './dashboards.tpl';
 
 var dashboardModule = angular.module('dashboard', [
   ModalModule.name, 
   PopupModule.name, 
   TimeModule.name, 
-  'app/dashboard/dashboards.tpl.html'])
+  DashboardTemplate.name])
 .config(function($stateProvider){
   $stateProvider.state('dashboards', {
     url: '/dashboards',
-    templateUrl: 'app/dashboard/dashboards.tpl.html',
+    templateUrl: DashboardTemplate.name,
     controller: 'DashboardCtrl'
   });
 });

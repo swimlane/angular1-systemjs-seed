@@ -89,12 +89,13 @@ gulp.task('html', function () {
       spare: true,
       quotes: true
     }))
-    .pipe(ngHtml2Js())
-
-    // not entirely sure this is needed....
-    .pipe(insert.prepend("import angular from 'angular';\n"))
+    .pipe(ngHtml2Js({
+      template: "import angular from 'angular';\n" +
+        "export default angular.module('<%= moduleName %>', []).run(['$templateCache', function($templateCache) {\n" +
+        "   $templateCache.put('<%= template.url %>',\n    '<%= template.prettyEscapedContent %>');\n" +
+        "}]);\n"
+    }))
     .pipe(to5(compilerOptions))
-
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
