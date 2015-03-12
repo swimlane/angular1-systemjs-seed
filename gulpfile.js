@@ -39,7 +39,7 @@ var compilerOptions = {
   sourceRoot: '',
   moduleRoot: '',
   moduleIds: false,
-  externalHelpers: false,
+  externalHelpers: true,
   experimental: false,
   format: {
     comments: false,

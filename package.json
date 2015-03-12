@@ -45,8 +45,8 @@
     },
     "configFile": "system.config.js",
     "dependencies": {
-      "css": "^0.1.5",
-      "json": "^0.1.0"
+      "css": "github:systemjs/plugin-css@^0.1.5",
+      "json": "github:systemjs/plugin-json@^0.1.0"
     }
   },
   "scripts": {
