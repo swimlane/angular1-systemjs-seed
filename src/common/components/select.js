@@ -1,6 +1,4 @@
 import angular from 'angular';
 import './select.css!';
 
-var selectModule = angular.module('common.components.select', []);
-
-export default selectModule;
+export default angular.module('common.components.select', []);

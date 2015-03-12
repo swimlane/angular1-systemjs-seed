@@ -1,9 +1,7 @@
 import angular from 'angular';
 
-var userModule = angular.module('user', [])
-.factory('CurrentUser', CurrentUser);
-
 class CurrentUser{
+  /*@ngInject*/
   constructor($q){
     this.$q = $q;
   }
@@ -19,6 +17,6 @@ class CurrentUser{
   }
 };
 
-CurrentUser.$inject = ['$q'];
-
-export default userModule;
+export default angular
+  .module('user', [])
+  .factory('CurrentUser', CurrentUser);

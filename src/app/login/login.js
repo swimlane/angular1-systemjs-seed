@@ -7,28 +7,8 @@ import LoginTemplate from './login.tpl';
 import SignupTemplate from './signup.tpl';
 import './login.css!';
 
-
-var loginModule = angular.module('login', [
-  SelectModule.name, 
-  DateModule.name, 
-  ModalModule.name, 
-  UserModule.name,
-  LoginTemplate.name, 
-  SignupTemplate.name])
-.config(function($stateProvider){
-  $stateProvider.state('login', {
-    url: '/login',
-    templateUrl: LoginTemplate.name,
-    controller: 'LoginController'
-  });
-
-  $stateProvider.state('login.signup', {
-    url: '/login/signup',
-    templateUrl: 'app/login/signup.tpl.html'
-  });
-})
-
 class LoginController{
+  /*@ngInject*/
   constructor($scope){
     $scope.loggedin = false;
     $scope.$watch('theme', function(newVal, oldVal, ev){
@@ -40,8 +20,25 @@ class LoginController{
   }
 }
 
-LoginController.$inject = ['$scope'];
+export default angular
+  .module('login', [
+    SelectModule.name, 
+    DateModule.name, 
+    ModalModule.name, 
+    UserModule.name,
+    LoginTemplate.name, 
+    SignupTemplate.name])
+  .config(function($stateProvider){
+    $stateProvider.state('login', {
+      url: '/login',
+      templateUrl: LoginTemplate.name,
+      controller: 'LoginController',
+      controllerAs: 'loginCtrl'
+    });
 
-loginModule.controller('LoginController', LoginController);
-
-export default loginModule;
+    $stateProvider.state('login.signup', {
+      url: '/login/signup',
+      templateUrl: 'app/login/signup.tpl.html'
+    });
+  })
+  .controller('LoginController', LoginController);

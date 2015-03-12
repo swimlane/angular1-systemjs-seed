@@ -11,11 +11,13 @@ var adminModule = angular.module('admin', [
   $stateProvider.state('admin', {
     url: '/admin',
     templateUrl: AdminTemplate.name,
-    controller: 'AdminController'
+    controller: 'AdminController',
+    controllerAs: 'adminCtrl'
   });
 })
 
 class AdminController{
+  /*@ngInject*/
   constructor(){
     console.log('admin!');
   }
