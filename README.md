@@ -55,6 +55,7 @@ The project has been tested with the following environment:
 
 ### Research & Resources
 
+- https://github.com/angular/material-start/tree/es6
 - https://github.com/systemjs/systemjs
 - https://github.com/gocardless/es6-angularjs
 - http://glenmaddern.com/articles/javascript-in-2015
