@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
-var to5 = require('gulp-6to5');
+var babel = require('gulp-babel');
 var changed = require('gulp-changed');
 var browserSync = require('browser-sync');
 var jshint = require('gulp-jshint');
@@ -39,7 +39,7 @@ var compilerOptions = {
   sourceRoot: '',
   moduleRoot: '',
   moduleIds: false,
-  runtime: false,
+  externalHelpers: false,
   experimental: false,
   format: {
     comments: false,
@@ -95,7 +95,7 @@ gulp.task('html', function () {
         "   $templateCache.put('<%= template.url %>',\n    '<%= template.prettyEscapedContent %>');\n" +
         "}]);\n"
     }))
-    .pipe(to5(compilerOptions))
+    .pipe(babel(compilerOptions))
     .pipe(gulp.dest(path.output))
     .pipe(browserSync.reload({ stream: true }));
 });
@@ -188,7 +188,7 @@ gulp.task('es6', function () {
     .pipe(plumber())
     .pipe(changed(path.output, { extension: '.js' }))
     .pipe(sourcemaps.init())
-    .pipe(to5(compilerOptions))
+    .pipe(babel(compilerOptions))
     .pipe(ngAnnotate({
       sourceMap: true,
       gulpWarnings: false
