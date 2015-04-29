@@ -22,13 +22,13 @@ class LoginController{
 
 export default angular
   .module('login', [
-    SelectModule.name, 
-    DateModule.name, 
-    ModalModule.name, 
+    SelectModule.name,
+    DateModule.name,
+    ModalModule.name,
     UserModule.name,
-    LoginTemplate.name, 
+    LoginTemplate.name,
     SignupTemplate.name])
-  .config(function($stateProvider){
+  .config(['$stateProvider', function($stateProvider){
     $stateProvider.state('login', {
       url: '/login',
       templateUrl: LoginTemplate.name,
@@ -40,5 +40,5 @@ export default angular
       url: '/login/signup',
       templateUrl: 'app/login/signup.tpl.html'
     });
-  })
+  }])
   .controller('LoginController', LoginController);

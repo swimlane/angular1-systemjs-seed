@@ -4,7 +4,7 @@ import futureRoutes from 'app/routes.json!';
 var routing = function(module) {
 
   module.requires.push('ct.ui.router.extras.future');
-  
+
   var RouterConfig = ['$stateProvider', '$futureStateProvider', function ($stateProvider, $futureStateProvider) {
 
     $futureStateProvider.stateFactory('load', ['$q', '$ocLazyLoad', 'futureState', function($q, $ocLazyLoad, futureState) {
@@ -16,7 +16,7 @@ var routing = function(module) {
           var key = Object.keys(loaded);
           newModule = loaded[key[0]];
         }
-        
+
         $ocLazyLoad.load(newModule).then(function() {
           def.resolve();
         });

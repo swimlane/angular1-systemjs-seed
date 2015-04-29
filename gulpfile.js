@@ -12,7 +12,6 @@ var assign = Object.assign || require('object.assign');
 var sourcemaps = require("gulp-sourcemaps");
 var ngHtml2Js = require("gulp-ng-html2js");
 var htmlMin = require('gulp-minify-html');
-var builder = require('systemjs-builder');
 var RSVP = require('rsvp');
 var less = require('gulp-less');
 var karma = require('karma').server;
@@ -28,29 +27,11 @@ var adjustUrls = require('gulp-css-url-adjuster');
 var routeBundler = require('systemjs-route-bundler')
 
 var compilerOptions = {
-  filename: '',
-  filenameRelative: '',
-  blacklist: [],
-  whitelist: [],
-  //modules: 'system',
-  //sourceMap: true,
-  //sourceMapName: '',
-  //sourceFileName: '',
-  sourceRoot: '',
-  moduleRoot: '',
+  modules: 'system',
   moduleIds: false,
   externalHelpers: true,
-  experimental: false,
-  format: {
-    comments: false,
-    compact: false,
-    indent: {
-      parentheses: true,
-      adjustMultilineComment: true,
-      style: "  ",
-      base: 0
-    }
-  }
+  comments: true,
+  compact: false,
 };
 
 var path = {
@@ -63,7 +44,6 @@ var path = {
   output:'dist/',
   outputCss: 'dist/**/*.css'
 };
-
 
 gulp.task('test', ['compile'], function (done) {
   karma.start({
@@ -114,17 +94,9 @@ gulp.task('less', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('rebase-css-paths', function(callback) {
-  return gulp.src(path.outputCss)
-    .pipe(adjustUrls({
-      replace:  [/(\.\.\/)+/,'dist/']
-    }))    
-    .pipe(gulp.dest(path.output))
-});
-
 gulp.task('move', function () {
   return gulp.src([
-      './src/**/*.json', 
+      './src/**/*.json',
       './src/**/*.svg',
       './src/**/*.woff',
       './src/**/*.ttf',
@@ -169,17 +141,17 @@ gulp.task('cache-bust', function(){
 });
 
 gulp.task('less-themes', function () {
-    return gulp.src(path.themes)
-      .pipe(cache('less-themes'))
-      .pipe(plumber())
-      .pipe(changed(path.output, {extension: '.css'}))
-      .pipe(sourcemaps.init())
-      .pipe(less({
-        plugins: [ cleancss ]
-      }))
-      .pipe(sourcemaps.write("."))
-      .pipe(gulp.dest(path.themesOutput))
-      .pipe(browserSync.reload({ stream: true }));
+  return gulp.src(path.themes)
+    .pipe(cache('less-themes'))
+    .pipe(plumber())
+    .pipe(changed(path.output, {extension: '.css'}))
+    .pipe(sourcemaps.init())
+    .pipe(less({
+      plugins: [ cleancss ]
+    }))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest(path.themesOutput))
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('es6', function () {
@@ -217,31 +189,14 @@ gulp.task('recompile', function (callback) {
 gulp.task('compile-production', function(callback){
   return runSequence(
     'recompile',
-    ['rebase-css-paths'],
     callback
   )
 });
 
-// Deprecated, use systemjs built-in minify and mangle instead
-gulp.task('minify', function(){
-  var condition = '**/routing.js';
-  return gulp.src([
-      'dist/**/*.js',
-      '!**/routing.js',
-      '!**/lazy-routes.js',
-      '!**/routes.js'
-    ])
-    .pipe(sourcemaps.init({loadMaps: true}))
-    .pipe(uglify(
-      {mangle: false}
-    ))
-    .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest(path.output))
-});
-
 gulp.task('release', function(callback) {
   return runSequence(
-    ['build', 'cache-bust'],
+    'build',
+    'cache-bust',
     callback
   );
 });
@@ -273,7 +228,7 @@ gulp.task('watch', ['serve'], function() {
   });
 });
 
-gulp.task('build', ['compile-production'], function () {  
+gulp.task('build', ['compile-production'], function () {
   var routes = require('./src/app/routes.json');
   // get the source paths of our routes
   routes = routes.map(function (r) { return r.src; });
