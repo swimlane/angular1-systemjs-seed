@@ -1,29 +1,28 @@
 <!doctype html>
 <html lang="en" data-framework="angularjs">
-<head>
-    <meta charset=" utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
-    <meta name="apple-mobile-web-app-title" content="Demo App">
-    <title>Demo App</title>
-    <base href="/">
-</head>
-<body ng-cloak>
-
+  <head>
+      <meta charset=" utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+      <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+      <meta name="apple-mobile-web-app-title" content="Demo App">
+      <title>Demo App</title>
+      <base href="/">
+  </head>
+  <body ng-cloak>
     <noscript>
-        <div class="deprecation-warning">
-          <h1>Please enable Javascript</h1>
-          <p>Demo requires your browser to have Javascript enabled.
-          <a href="http://enable-javascript.com" target="_blank">Learn more</a></p>
-        </div>
+      <div class="deprecation-warning">
+        <h1>Please enable Javascript</h1>
+        <p>Demo requires your browser to have Javascript enabled.
+        <a href="http://enable-javascript.com" target="_blank">Learn more</a></p>
+      </div>
     </noscript>
 
     <h1>Welcome</h1>
     <a ui-sref="login" href="#">Login</a> |
-    <a ui-sref="dashboards" href="#">Dashboard</a> | 
-    <a ui-sref="forms" href="#">Forms</a> | 
+    <a ui-sref="dashboards" href="#">Dashboard</a> |
+    <a ui-sref="forms" href="#">Forms</a> |
     <a ui-sref="admin" href="#">Admin</a>
 
     <ui-view class="content-area" ></ui-view>
@@ -31,24 +30,12 @@
     <script src="jspm_packages/system.js"></script>
     <script src="system.config.js"></script>
 
-    
-    <script>
-      var systemLocate = System.locate;
-      System.locate = function(load) {
-        var System = this;
-        return Promise.resolve(systemLocate.call(this, load)).then(function(address) {
-          if(address.indexOf('bust') > -1 || 
-            address.indexOf('css') > -1 || 
-            address.indexOf('json') > -1) return address;
-          return address + System.cacheBust;
-        });
-      }
-      System.cacheBust = '?bust=' + 1429538117;
-    </script>
-    
+    <script src="dist/app/app.js"></script>
 
     <script>
-        System.import('app/app');
+      System.import('app/app');
     </script>
-</body>
+
+
+  </body>
 </html>

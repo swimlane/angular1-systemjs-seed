@@ -8,6 +8,7 @@
     "gulp": "^3.8.10",
     "gulp-babel": "^5.1.0",
     "gulp-changed": "^1.1.0",
+    "gulp-concat": "^2.5.2",
     "gulp-css-url-adjuster": "^0.2.3",
     "gulp-insert": "^0.4.0",
     "gulp-jshint": "^1.9.0",

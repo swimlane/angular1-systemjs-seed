@@ -25,6 +25,7 @@ var cache = require('gulp-cached');
 var uglify = require('gulp-uglify');
 var adjustUrls = require('gulp-css-url-adjuster');
 var routeBundler = require('systemjs-route-bundler')
+var concatFile = require('gulp-concat');
 
 var compilerOptions = {
   modules: 'system',
@@ -170,6 +171,17 @@ gulp.task('es6', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
+gulp.task('inline-systemjs', function () {
+  return gulp.src([
+      './jspm_packages/es6-module-loader.js',
+      './jspm_packages/system.js',
+      './system.config.js',
+      'dist/app/app.js'
+    ])
+    //.pipe(uglify())
+    .pipe(concatFile('app/app.js'))
+    .pipe(gulp.dest(path.output))
+});
 
 gulp.task('compile', function (callback) {
   return runSequence(
@@ -197,6 +209,7 @@ gulp.task('release', function(callback) {
   return runSequence(
     'build',
     'cache-bust',
+    'inline-systemjs',
     callback
   );
 });
