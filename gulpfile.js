@@ -119,26 +119,11 @@ gulp.task('json', function () {
     .pipe(browserSync.reload({ stream: true }));
 });
 
-gulp.task('cache-bust', function(){
-  return gulp.src('./index.html')
-    .pipe(replace({
-      usePrefix: false,
-      patterns: [
-        {
-          match: '<!--PROD',
-          replacement: ''
-        },
-        {
-          match: 'END-->',
-          replacement: ''
-        },
-        {
-          match: '{{hash}}',
-          replacement: Math.round(new Date() / 1000)
-        }
-      ]
-    }))
-    .pipe(gulp.dest('./'));
+gulp.task('cache-bust', function () {
+  var cacheBust = "var systemLocate = System.locate; System.locate = function(load) { var System = this; return Promise.resolve(systemLocate.call(this, load)).then(function(address) { if(address.indexOf('bust') > -1 || address.indexOf('css') > -1 || address.indexOf('json') > -1) return address; return address + System.cacheBust; }); } System.cacheBust = '?bust=' + " + Math.round(new Date() / 1000) + ";";
+  return gulp.src('app/app.js')
+    .pipe(insert.prepend(cacheBust))
+    .pipe(gulp.dest(path.output));
 });
 
 gulp.task('less-themes', function () {
