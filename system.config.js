@@ -8,6 +8,8 @@ System.config({
   },
   "paths": {
     "*": "dist/*.js",
+    "*.json": "dist/*.json",
+    "*.css": "dist/*.css",
     "systemjs-test/*": "src/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js"
