@@ -1,6 +1,7 @@
 import angular from 'angular';
 import ModalModule from 'common/components/modal';
 import formsTemplate from './forms.tpl';
+import countUp from 'countUp';
 
 export default angular
   .module('forms', ['app/forms/forms.tpl.html', 'common.components.modal'])

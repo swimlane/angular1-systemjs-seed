@@ -11,6 +11,7 @@ System.config({
     "*.json": "dist/*.json",
     "*.css": "dist/*.css",
     "systemjs-test/*": "src/*.js",
+    "lib/*": "lib/*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js"
   },
@@ -51,6 +52,10 @@ System.config({
       "deps": [
         "npm:ui-router-extras@0.0.13/release/modular/ct-ui-router-extras.core"
       ]
+    },
+    "lib/countUp/countUp": {
+      "format": "amd",
+      "exports": "countUp"
     }
   }
 });
@@ -63,6 +68,7 @@ System.config({
     "babel": "npm:babel-core@5.6.15",
     "babel-runtime": "npm:babel-runtime@5.6.15",
     "core-js": "npm:core-js@0.9.18",
+    "countUp": "lib/countUp/countUp",
     "css": "github:systemjs/plugin-css@0.1.10",
     "json": "github:systemjs/plugin-json@0.1.0",
     "ocLazyLoad": "github:ocombe/ocLazyLoad@0.5.2/dist/ocLazyLoad",
