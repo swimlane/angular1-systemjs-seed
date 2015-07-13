@@ -7,13 +7,11 @@ System.config({
     ]
   },
   "paths": {
-    "*": "dist/*.js",
-    "*.json": "dist/*.json",
-    "*.css": "dist/*.css",
-    "systemjs-test/*": "src/*.js",
-    "lib/*": "lib/*.js",
-    "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js"
+    "*": "dist/*",
+    "systemjs-test/*": "src/*",
+    "lib/*": "lib/*",
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*"
   },
   "defaultJSExtensions": true,
   "buildCSS": true,
