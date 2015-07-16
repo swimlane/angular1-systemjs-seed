@@ -1,13 +1,13 @@
 # SystemJS + AngularJS
 
-Seed project for ES6 modules via SystemJS with ES6 syntax using 6to5 that lazy-load and bundle build with AngularJS.
+Seed project for ES6 modules via SystemJS with ES6 syntax using Babel that lazy-load and bundle build with AngularJS.
 
 ![](http://media.giphy.com/media/EldfH1VJdbrwY/giphy.gif)
 
 
 This project does:
 
-- ES6 Syntax via 6to5 with source maps
+- ES6 Syntax via Babel with source maps
 - ES6 Modules via SystemJS
 - Karma / Jasmine unit tests with coverage report
 - Lazy-loading modules via routes with AngularJS
