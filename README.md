@@ -62,3 +62,7 @@ The project has been tested with the following environment:
 - https://github.com/marcj/angular-es6-annotations
 - https://github.com/robianmcd/angular-next
 - https://github.com/ng-next/ng-next-example
+
+## Credits
+
+`angular-systemjs-seed` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
