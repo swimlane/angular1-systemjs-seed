@@ -33,7 +33,7 @@
     "object.assign": "^1.1.1",
     "rsvp": "^3.0.16",
     "run-sequence": "^1.0.2",
-    "systemjs-route-bundler": "^1.2.0",
+    "systemjs-route-bundler": "^1.2.1",
     "vinyl-paths": "^1.0.0",
     "node-v8-clone": "^0.6.2",
     "gulp-cached": "^1.0.2"

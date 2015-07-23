@@ -1,5 +1,6 @@
 System.config({
   "baseURL": "",
+  "defaultJSExtensions": true,
   "transpiler": "babel",
   "babelOptions": {
     "optional": [
@@ -7,14 +8,12 @@ System.config({
     ]
   },
   "paths": {
-    "*": "dist/*.js",
-    "*.json": "dist/*.json",
-    "*.css": "dist/*.css",
-    "systemjs-test/*": "src/*.js",
-    "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js"
+    "*": "dist/*",
+    "systemjs-test/*": "src/*",
+    "lib/*": "lib/*",
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*"
   },
-  "defaultJSExtensions": true,
   "buildCSS": true,
   "separateCSS": false
 });
@@ -51,6 +50,10 @@ System.config({
       "deps": [
         "npm:ui-router-extras@0.0.13/release/modular/ct-ui-router-extras.core"
       ]
+    },
+    "lib/countUp/countUp": {
+      "format": "amd",
+      "exports": "countUp"
     }
   }
 });
@@ -63,6 +66,7 @@ System.config({
     "babel": "npm:babel-core@5.6.15",
     "babel-runtime": "npm:babel-runtime@5.6.15",
     "core-js": "npm:core-js@0.9.18",
+    "countUp": "lib/countUp/countUp",
     "css": "github:systemjs/plugin-css@0.1.10",
     "json": "github:systemjs/plugin-json@0.1.0",
     "ocLazyLoad": "github:ocombe/ocLazyLoad@0.5.2/dist/ocLazyLoad",
@@ -153,9 +157,6 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:core-js@0.8.4": {
-      "process": "github:jspm/nodelibs-process@0.1.1"
-    },
     "npm:core-js@0.9.18": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
@@ -189,10 +190,8 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "isarray": "npm:isarray@0.0.1",
       "process": "github:jspm/nodelibs-process@0.1.1",
-      "stream": "github:jspm/nodelibs-stream@0.1.0",
       "stream-browserify": "npm:stream-browserify@1.0.0",
-      "string_decoder": "npm:string_decoder@0.10.31",
-      "util": "github:jspm/nodelibs-util@0.1.0"
+      "string_decoder": "npm:string_decoder@0.10.31"
     },
     "npm:source-map@0.1.43": {
       "amdefine": "npm:amdefine@0.1.0",
