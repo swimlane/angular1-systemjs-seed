@@ -233,15 +233,22 @@ gulp.task('build', ['compile-production'], function () {
   routes = routes.map(function (r) { return r.src; });
 
   var config = {
-    main: 'app/app',
+    dest: 'dist',
+    main: 'app/app.js',
+    destMain: 'dist/app',
     routes: routes,
     bundleThreshold: 0.6,
-    config: './system.config.js',
-    sourceMaps: true,
+    systemConfig: './system.config.js',
+    sourceMaps: false,
     minify: true,
     mangle: true,
-    dest: 'dist/app',
-    destJs: 'dist/app/app.js'
+    verboseOutput: true,
+    ignoredPaths: [
+      'jspm_packages',
+      'bower_components',
+      'npm:',
+      'github:'
+    ]
   };
 
   return routeBundler.build(config);

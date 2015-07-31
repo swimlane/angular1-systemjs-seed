@@ -1,5 +1,6 @@
 System.config({
   "baseURL": "",
+  "defaultJSExtensions": true,
   "transpiler": "babel",
   "babelOptions": {
     "optional": [
@@ -7,14 +8,16 @@ System.config({
     ]
   },
   "paths": {
-    "*": "dist/*.js",
-    "*.json": "dist/*.json",
-    "*.css": "dist/*.css",
-    "systemjs-test/*": "src/*.js",
-    "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js"
+    "systemjs-test/*": "src/*",
+    "app/*": "dist/app/*",
+    "common/*": "dist/common/*",
+    "assets/*": "dist/assets/*",
+    "bundles/*": "dist/bundles/*",
+    "lib/*": "lib/*",
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*",
+    "jspm_packages/*": "jspm_packages/*"
   },
-  "defaultJSExtensions": true,
   "buildCSS": true,
   "separateCSS": false
 });
@@ -153,9 +156,6 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:core-js@0.8.4": {
-      "process": "github:jspm/nodelibs-process@0.1.1"
-    },
     "npm:core-js@0.9.18": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
@@ -189,10 +189,8 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "isarray": "npm:isarray@0.0.1",
       "process": "github:jspm/nodelibs-process@0.1.1",
-      "stream": "github:jspm/nodelibs-stream@0.1.0",
       "stream-browserify": "npm:stream-browserify@1.0.0",
-      "string_decoder": "npm:string_decoder@0.10.31",
-      "util": "github:jspm/nodelibs-util@0.1.0"
+      "string_decoder": "npm:string_decoder@0.10.31"
     },
     "npm:source-map@0.1.43": {
       "amdefine": "npm:amdefine@0.1.0",
