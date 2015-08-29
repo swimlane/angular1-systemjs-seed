@@ -11,6 +11,7 @@
       <base href="/">
   </head>
   <body ng-cloak>
+  
     <noscript>
       <div class="deprecation-warning">
         <h1>Please enable Javascript</h1>
@@ -27,15 +28,18 @@
 
     <ui-view class="content-area" ></ui-view>
 
+     <!-- build:dev -->
     <script src="jspm_packages/system.js"></script>
     <script src="system.config.js"></script>
+    <!-- endbuild -->
 
-    <script src="dist/app/app.js"></script>
+    <!-- build:prod -->
+    <!-- <script src="dist/app/app.js?bust={{date}}"></script> -->
+    <!-- endbuild -->
 
     <script>
       System.import('app/app');
     </script>
-
 
   </body>
 </html>
