@@ -1,30 +1,28 @@
 import angular from 'angular';
-import ModalModule from 'common/components/modal';
-import SelectModule from 'common/components/select';
-import DateModule from 'common/components/date';
-import TimeModule from 'common/components/time';
-import UsersTemplate from './users.tpl';
 
-class UsersController{
-  /*@ngInject*/
-  constructor($scope){
-    console.log('users!')
-  }
+import modalModule from 'common/components/modal';
+import selectModule from 'common/components/select';
+import dateModule from 'common/components/date';
+import timeModule from 'common/components/time';
+
+import { UsersController } from '/UsersController';
+import usersTemplate from './users.tpl';
+
+function ConfigureModule(){
+  $stateProvider.state('admin.users', {
+    url: '/users',
+    templateUrl: usersTemplate.name,
+    controller: UsersController,
+    controllerAs: 'userCtrl'
+  });
 }
 
 export default angular
   .module('admin.users', [
-    ModalModule.name, 
-    DateModule.name, 
-    TimeModule.name, 
-    SelectModule.name,
-    UsersTemplate.name])
-  .config(function($stateProvider){
-    $stateProvider.state('admin.users', {
-      url: '/users',
-      templateUrl: UsersTemplate.name,
-      controller: 'UsersController',
-      controllerAs: 'userCtrl'
-    });
-  })
-  .controller('UsersController', UsersController);
+    modalModule.name, 
+    dateModule.name, 
+    timeModule.name, 
+    selectModule.name,
+    usersTemplate.name
+  ])
+  .config(ConfigureModule);

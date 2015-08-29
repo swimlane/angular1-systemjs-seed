@@ -1,33 +1,26 @@
 import angular from 'angular';
-import 'common/core';
-import ModalModule from 'common/components/modal';
-import PopupModule from 'common/components/popup';
-import TimeModule from 'common/components/time';
-import DashboardTemplate from './dashboards.tpl';
 
-class DashboardCtrl{
-  /*@ngInject*/
-  constructor($scope){
-    console.log('dashboard!');
-  }
+import { modalModule } from 'common/core';
+import popupModule from 'common/components/popup';
+import timeModule from 'common/components/time';
+
+import { DashboardController } from './DashboardController';
+import dashboardTemplate from './dashboards.tpl';
+
+function ConfigureModule($stateProvider){
+  $stateProvider.state('dashboards', {
+    url: '/dashboards',
+    templateUrl: dashboardTemplate.name,
+    controller: DashboardController,
+    controllerAs: 'dashboardCtrl'
+  });
 }
 
 export default angular
   .module('dashboard', [
-    ModalModule.name,
-    PopupModule.name,
-    TimeModule.name,
-    DashboardTemplate.name,
-    'access-module'])
-  .config(function($stateProvider, PERMISSIONS){
-    $stateProvider.state('dashboards', {
-      url: '/dashboards',
-      templateUrl: DashboardTemplate.name,
-      controller: 'DashboardCtrl',
-      controllerAs: 'dashboardCtrl',
-      access: {
-        permissions: PERMISSIONS.viewDashboard
-      }
-    });
-  })
-  .controller('DashboardCtrl', DashboardCtrl);
+    modalModule.name,
+    popupModule.name,
+    timeModule.name,
+    dashboardTemplate.name
+  ])
+  .config(ConfigureModule);

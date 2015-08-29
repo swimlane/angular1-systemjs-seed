@@ -1,32 +1,23 @@
 import angular from 'angular';
-import BuilderModule from './builder/builder'
-import UsersModule from './users/users'
-import AdminTemplate from './admin.tpl';
+import builderModule from './builder/builder'
+import usersModule from './users/users'
 
-var adminModule = angular.module('admin', [
-  BuilderModule.name,
-  UsersModule.name,
-  AdminTemplate.name,
-  'access-module'])
-.config(function($stateProvider, PERMISSIONS){
+import { AdminController } from './AdminController';
+import adminTemplate from './admin.tpl';
+
+function ConfigureModule($stateProvider){
   $stateProvider.state('admin', {
     url: '/admin',
-    templateUrl: AdminTemplate.name,
-    controller: 'AdminController',
-    controllerAs: 'adminCtrl',
-    access:{
-      permissions: PERMISSIONS.viewAdmin
-    }
+    templateUrl: adminTemplate.name,
+    controller: AdminController,
+    controllerAs: 'adminCtrl'
   });
-})
-
-class AdminController{
-  /*@ngInject*/
-  constructor(){
-    console.log('admin!');
-  }
 }
 
-adminModule.controller('AdminController', AdminController);
-
-export default adminModule;
+export default angular
+  .module('admin', [
+    builderModule.name,
+    usersModule.name,
+    adminTemplate.name 
+  ])
+  .config(ConfigureModule);

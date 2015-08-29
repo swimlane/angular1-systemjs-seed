@@ -1,3 +1,7 @@
-import './components/date';
-import './components/modal';
-import './services/access';
+import dateModule from './components/date';
+import modalModule from './components/modal';
+
+export {
+  dateModule,
+  modalModule
+}

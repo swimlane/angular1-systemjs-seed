@@ -1,26 +1,24 @@
 import angular from 'angular';
-import ModalModule from 'common/components/modal';
-import SelectModule from 'common/components/select';
-import BuilderTemplate from './builder.tpl';
 
-class BuilderController{
-  /*@ngInject*/
-  constructor($scope){
-    console.log('builder!')
-  }
+import modalModule from 'common/components/modal';
+import selectModule from 'common/components/select';
+
+import { BuilderController } from './BuilderController';
+import builderTemplate from './builder.tpl';
+
+function ConfigureModule($stateProvider){
+  $stateProvider.state('admin.builder', {
+    url: '/builder',
+    templateUrl: builderTemplate.name,
+    controller: BuilderController,
+    controllerAs: 'builderCtrl'
+  });
 }
 
 export default angular
   .module('admin.builder', [
-    ModalModule.name, 
-    SelectModule.name,
-    BuilderTemplate.name])
-  .config(function($stateProvider){
-    $stateProvider.state('admin.builder', {
-      url: '/builder',
-      templateUrl: BuilderTemplate.name,
-      controller: 'BuilderController',
-      controllerAs: 'builderCtrl'
-    });
-  })
-  .controller('BuilderController', BuilderController);
+    modalModule.name, 
+    selectModule.name,
+    builderTemplate.name
+  ])
+  .config(ConfigureModule);
