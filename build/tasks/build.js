@@ -13,7 +13,7 @@ var browserSync = require('browser-sync');
 var path = require('path')
 
 var paths = require('../paths');
-var compilerOptions = require('../babel-options');
+var compilerOptions = require('../babelOptions');
 
 var cleancss = new lessPluginCleanCSS({
   advanced: true,
