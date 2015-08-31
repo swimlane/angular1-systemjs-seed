@@ -63,14 +63,14 @@ gulp.task('html', function () {
 });
 
 gulp.task('less', function () {
-  return gulp.src(path.less)
+  return gulp.src(paths.less)
     .pipe(plumber())
-    .pipe(changed(path.output, {extension: '.css'}))
+    .pipe(changed(paths.output, {extension: '.css'}))
     .pipe(sourcemaps.init())
     .pipe(less({
       plugins: [ cleancss ]
     }))
     .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest(path.output))
+    .pipe(gulp.dest(paths.output))
     .pipe(browserSync.reload({ stream: true }));
 });
