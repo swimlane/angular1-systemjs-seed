@@ -3,9 +3,9 @@ var karma = require('karma').server;
 var protractor = require("gulp-protractor").protractor;
 var paths = require('../paths');
 
-gulp.task('test', ['compile'], function(done) {
+gulp.task('test', ['build'], function(done) {
   karma.start({
-    configFile: __dirname + '/karma.conf.js',
+    configFile: __dirname + '/../../karma.conf.js',
     singleRun: true
   }, function () {
     done();
