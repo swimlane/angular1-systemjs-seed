@@ -5,10 +5,10 @@ import selectModule from 'common/components/select';
 import dateModule from 'common/components/date';
 import timeModule from 'common/components/time';
 
-import { UsersController } from 'UsersController';
+import { UsersController } from './UsersController';
 import usersTemplate from './users.tpl';
 
-function ConfigureModule(){
+function ConfigureModule($stateProvider){
   $stateProvider.state('admin.users', {
     url: '/users',
     templateUrl: usersTemplate.name,

@@ -22,7 +22,7 @@ app.config(['$urlRouterProvider', '$locationProvider', '$compileProvider', '$log
   }
   
   $ocLazyLoadProvider.config({
-    //debug: true
+    debug: true
   });
 }]);
 
