@@ -4,6 +4,7 @@
   "devDependencies": {
     "browser-sync": "^2.0.1",
     "chai": "^1.1.0",
+    "connect-history-api-fallback": "^1.1.0",
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-babel": "^5.1.0",
@@ -33,12 +34,11 @@
     "less-plugin-clean-css": "^1.5.0",
     "ng-annotate": "^0.14.1",
     "object.assign": "^1.1.1",
+    "require-dir": "^0.1.0",
     "rsvp": "^3.0.16",
     "run-sequence": "^1.0.2",
     "systemjs-route-bundler": "^1.4.1",
-    "vinyl-paths": "^1.0.0",
-    "require-dir": "^0.1.0",
-    "connect-history-api-fallback": "^1.1.0"
+    "vinyl-paths": "^1.0.0"
   },
   "dependencies": {},
   "jspm": {
