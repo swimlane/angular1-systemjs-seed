@@ -1,13 +1,13 @@
 System.config({
-  "baseURL": "",
-  "defaultJSExtensions": true,
-  "transpiler": "babel",
-  "babelOptions": {
+  baseURL: "",
+  defaultJSExtensions: true,
+  transpiler: "babel",
+  babelOptions: {
     "optional": [
       "runtime"
     ]
   },
-  "paths": {
+  paths: {
     "systemjs-test/*": "src/*",
     "app/*": "dist/app/*",
     "common/*": "dist/common/*",
@@ -18,12 +18,10 @@ System.config({
     "npm:*": "jspm_packages/npm/*",
     "jspm_packages/*": "jspm_packages/*"
   },
-  "buildCSS": true,
-  "separateCSS": false
-});
+  buildCSS: true,
+  separateCSS: false,
 
-System.config({
-  "meta": {
+  meta: {
     "github:angular/bower-angular@1.3.15/angular": {
       "format": "global",
       "exports": "angular"
@@ -55,17 +53,15 @@ System.config({
         "npm:ui-router-extras@0.0.13/release/modular/ct-ui-router-extras.core"
       ]
     }
-  }
-});
+  },
 
-System.config({
-  "map": {
+  map: {
     "angular": "github:angular/bower-angular@1.3.15",
     "angular-mocks": "github:angular/bower-angular-mocks@1.3.15",
     "angular-ui-router": "github:angular-ui/ui-router@0.2.13",
-    "babel": "npm:babel-core@5.6.15",
-    "babel-runtime": "npm:babel-runtime@5.6.15",
-    "core-js": "npm:core-js@0.9.18",
+    "babel": "npm:babel-core@5.8.25",
+    "babel-runtime": "npm:babel-runtime@5.8.25",
+    "core-js": "npm:core-js@1.1.4",
     "css": "github:systemjs/plugin-css@0.1.10",
     "json": "github:systemjs/plugin-json@0.1.0",
     "ocLazyLoad": "github:ocombe/ocLazyLoad@0.5.2/dist/ocLazyLoad",
@@ -129,7 +125,7 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.6.15": {
+    "npm:babel-runtime@5.8.25": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:buffer@3.2.1": {
@@ -156,7 +152,7 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
-    "npm:core-js@0.9.18": {
+    "npm:core-js@1.1.4": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
@@ -221,4 +217,3 @@ System.config({
     }
   }
 });
-
