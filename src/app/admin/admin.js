@@ -1,6 +1,6 @@
 import angular from 'angular';
-import builderModule from './builder/builder'
-import usersModule from './users/users'
+import BuilderModule from 'app/admin/builder/builder'
+import UsersModule from 'app/admin/users/users'
 
 import { AdminController } from './AdminController';
 import adminTemplate from './admin.tpl';
@@ -16,8 +16,8 @@ function ConfigureModule($stateProvider){
 
 export default angular
   .module('admin', [
-    builderModule.name,
-    usersModule.name,
-    adminTemplate.name 
+    BuilderModule.name,
+    UsersModule.name,
+    adminTemplate.name
   ])
   .config(ConfigureModule);

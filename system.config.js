@@ -1,13 +1,13 @@
 System.config({
-  "baseURL": "",
-  "defaultJSExtensions": true,
-  "transpiler": "babel",
-  "babelOptions": {
+  baseURL: "",
+  defaultJSExtensions: true,
+  transpiler: "babel",
+  babelOptions: {
     "optional": [
       "runtime"
     ]
   },
-  "paths": {
+  paths: {
     "systemjs-test/*": "src/*",
     "app/*": "dist/app/*",
     "common/*": "dist/common/*",
@@ -18,12 +18,10 @@ System.config({
     "npm:*": "jspm_packages/npm/*",
     "jspm_packages/*": "jspm_packages/*"
   },
-  "buildCSS": true,
-  "separateCSS": false
-});
+  buildCSS: true,
+  separateCSS: false,
 
-System.config({
-  "meta": {
+  meta: {
     "github:angular/bower-angular@1.3.15/angular": {
       "format": "global",
       "exports": "angular"
@@ -55,11 +53,9 @@ System.config({
         "npm:ui-router-extras@0.0.13/release/modular/ct-ui-router-extras.core"
       ]
     }
-  }
-});
+  },
 
-System.config({
-  "map": {
+  map: {
     "angular": "github:angular/bower-angular@1.3.15",
     "angular-mocks": "github:angular/bower-angular-mocks@1.3.15",
     "angular-ui-router": "github:angular-ui/ui-router@0.2.13",
@@ -221,4 +217,3 @@ System.config({
     }
   }
 });
-
