@@ -5,6 +5,7 @@ module.exports = function(config) {
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
+    
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jspm', 'jasmine'],
@@ -26,26 +27,26 @@ module.exports = function(config) {
     colors: true,
 
     // list of files / patterns to load in the browser
-    files: [],
+    files: [ ],
 
     jspm: {
       config: './system.config.js',
-      loadFiles: ['test/**/*.spec.js'],
+      packages: './jspm_packages',
+      loadFiles: [
+        'node_modules/chai/chai.js',
+        'test/**/*.spec.js'
+      ],
       serveFiles: [
         'dist/**/*.js',
         'dist/**/*.css',
-        'bower_components/**/*.js',
-        'bower_components/**/*.css',
-        'node_modules/chai/**/*.js'
       ]
     },
 
     proxies: {
-      '/base/app/': '/base/dist/app/',
-      '/base/common/': '/base/dist/common/',
-      '/bower_components/': '/base/bower_components/',
-      '/base/dist/test/': '/base/test/',
-      '/base/dist/node_modules/': '/base/node_modules/'
+      '/app/': '/dist/app/',
+      '/common/': '/dist/common/',
+      '/dist/test/': '/test/',
+      '/dist/node_modules/': '/node_modules/'
     },
 
     // list of files to exclude
