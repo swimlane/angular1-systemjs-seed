@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "devDependencies": {
     "browser-sync": "^2.9.6",
-    "chai": "^3.3.0",
     "connect-history-api-fallback": "^1.1.0",
     "del": "^2.0.2",
     "gulp": "^3.8.10",

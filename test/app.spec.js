@@ -1,12 +1,11 @@
-var assert = require('chai').assert;
-var app = require('app/app');
+import app from "app/app";
 
 describe('app', function() {
   it('passes a test', function() {
-    assert(true == true);
+    expect(true).toBe(true);
   })
 
   it('fails a test', function() {
-    assert(1 == 0, 'intentionally failing test');
+    expect(1).toBe(0, 'intentionally failing test');
   })
 });
