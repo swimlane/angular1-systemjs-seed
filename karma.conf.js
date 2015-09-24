@@ -8,7 +8,15 @@ module.exports = function(config) {
     
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jspm', 'jasmine'],
+    frameworks: ['systemjs', 'jasmine'],
+    
+    plugins: [
+      'karma-systemjs',
+      'karma-chrome-launcher',
+      'karma-jasmine',
+      'karma-junit-reporter',
+      'karma-coverage'
+    ],
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
@@ -27,25 +35,37 @@ module.exports = function(config) {
     colors: true,
 
     // list of files / patterns to load in the browser
-    files: [ ],
+    files: [
+      'test/*.spec.js'
+    ],
 
-    jspm: {
-      config: 'system.config.js',
-      packages: 'jspm_packages',
-      loadFiles: ['test/**/*.spec.js'],
+    systemjs: {
+      configFile: 'system.config.js',
+      config: {
+        transpiler: 'babel',
+        packages: 'jspm_packages',
+        paths: {
+          "github:*": "/base/jspm_packages/github/*",
+          "npm:*": "/base/jspm_packages/npm/*",
+          'es6-module-loader': 'node_modules/es6-module-loader/dist/es6-module-loader.js',
+          'systemjs': 'node_modules/systemjs/dist/system.js',
+          'system-polyfills': 'node_modules/systemjs/dist/system-polyfills.js',
+          'babel': 'node_modules/babel-core/browser.js'
+        }
+      },
+      
       serveFiles: [
+        'jspm_packages/**/*',
         'dist/**/*.js',
         'dist/**/*.css',
-      ],
-      paths: {
-        "github:*": "/base/jspm_packages/github/*",
-        "npm:*": "/base/jspm_packages/npm/*"
-      }
+        'dist/**/*.json',
+      ],      
     },
     
     proxies: {
       '/test': '/base/test',
-      '/dist': '/base/dist'
+      '/dist': '/base/dist',
+      '/node_modules': '/base/node_modules'
     },
 
     // list of files to exclude
@@ -58,17 +78,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'dist/**/*.js': ['coverage']
-      //'src/**/*.js': ['6to5']
+      //'dist/**/*.js': ['coverage']
     },
-
-    /*'6to5Preprocessor': {
-      options: {
-        sourceMap: 'inline',
-        modules: 'system',
-        moduleIds: false
-      }
-    }*/
 
     // optionally, configure the reporter
     coverageReporter: {
