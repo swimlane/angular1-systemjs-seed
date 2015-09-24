@@ -10,6 +10,7 @@ gulp.task('move', function () {
     './src/**/*.png',
     './src/**/*.ico',
     './src/**/*.jpg',
+    './src/**/*.gif',
     './src/**/*.eot'
   ];
 
