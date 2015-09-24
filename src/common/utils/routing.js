@@ -19,6 +19,8 @@ var routing = function(module) {
 
         $ocLazyLoad.load(newModule).then(function() {
           def.resolve();
+        }, function() {
+          console.log('error loading: ' + loaded.name);
         });
       });
 

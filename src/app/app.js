@@ -10,7 +10,7 @@ let app = angular.module('demo', ['ui.router', 'oc.lazyLoad']);
 
 app.config(routing(app));
 
-app.config(function ($urlRouterProvider, $locationProvider, $compileProvider, $logProvider, $httpProvider) {
+app.config(['$urlRouterProvider', '$locationProvider', '$compileProvider', '$logProvider', '$httpProvider', '$ocLazyLoadProvider', function ($urlRouterProvider, $locationProvider, $compileProvider, $logProvider, $httpProvider, $ocLazyLoadProvider) {
   $locationProvider.html5Mode(true);
   $httpProvider.useApplyAsync(true);
   $urlRouterProvider.otherwise('/login');
@@ -20,7 +20,11 @@ app.config(function ($urlRouterProvider, $locationProvider, $compileProvider, $l
     // http://ng-perf.com/2014/10/24/simple-trick-to-speed-up-your-angularjs-app-load-time/
     $compileProvider.debugInfoEnabled(false);
   }
-});
+  
+  $ocLazyLoadProvider.config({
+    //debug: true
+  });
+}]);
 
 angular.element(document).ready(function() {
   angular.bootstrap(document.body, [ app.name ], {
