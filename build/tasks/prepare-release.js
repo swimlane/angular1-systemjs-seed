@@ -22,7 +22,7 @@ gulp.task('inline-systemjs', function () {
   ])
   //.pipe(uglify())
   .pipe(concatFile('app/app.js'))
-  .pipe(gulp.dest(path.output));
+  .pipe(gulp.dest(paths.output));
 });
 
 gulp.task('release', function (callback) {
