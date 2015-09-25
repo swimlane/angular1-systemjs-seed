@@ -12,7 +12,7 @@ module.exports = function(config) {
     
     plugins: [
       'karma-systemjs',
-      'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
       'karma-jasmine',
       'karma-junit-reporter',
       'karma-coverage'
@@ -20,7 +20,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -50,7 +50,8 @@ module.exports = function(config) {
           'es6-module-loader': 'node_modules/es6-module-loader/dist/es6-module-loader.js',
           'systemjs': 'node_modules/systemjs/dist/system.js',
           'system-polyfills': 'node_modules/systemjs/dist/system-polyfills.js',
-          'babel': 'node_modules/babel-core/browser.js'
+          'babel': 'node_modules/babel-core/browser.js',
+          'phantomjs-polyfill': 'node_modules/phantomjs-polyfill/bind-polyfill.js'
         }
       },
       
