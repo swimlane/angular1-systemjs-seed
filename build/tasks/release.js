@@ -56,7 +56,6 @@ gulp.task('bundle', function () {
     verboseOutput: true,
     ignoredPaths: [
       'jspm_packages',
-      'bower_components',
       'npm:',
       'github:'
     ]
