@@ -1,24 +1,24 @@
 var gulp = require('gulp');
 var karma = require('karma').server;
-var protractor = require("gulp-protractor").protractor;
+var gulp_protractor = require("gulp-protractor");
+var protractor = gulp_protractor.protractor;
 var paths = require('../paths');
 
 gulp.task('test', ['build'], function(done) {
   karma.start({
     configFile: __dirname + '/../../karma.conf.js',
     singleRun: true
-  }, function () {
-    done();
-  });
+  }, done);
 });
 
-gulp.task('sauce-test', function() {
+gulp.task('sauce-test', function(done) {
   gulp.src(paths.tests)
   .pipe((protractor({
-    configFile: 'test/protractor.conf.js'
+    configFile: __dirname + '/../../protractor.conf.js'
   }))
   .on('error', function (e) { throw e; })
-  .on('end', function() {
-    // anything you want to run after the Sauce tests finish
-  }));
+  .on('end', done));
 });
+
+gulp.task('webdriver-update', gulp_protractor.webdriver_update);
+gulp.task('webdriver-standalone', ['webdriver-update'], gulp_protractor.webdriver_standalone);

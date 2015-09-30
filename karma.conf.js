@@ -43,6 +43,11 @@ module.exports = function(config) {
     files: [
       'test/*.spec.js'
     ],
+    
+    // list of files to exclude
+    exclude: [
+      'test/e2e/*'
+    ],
 
     systemjs: {
       configFile: 'system.config.js',
@@ -73,9 +78,6 @@ module.exports = function(config) {
       '/dist': '/base/dist',
       '/node_modules': '/base/node_modules'
     },
-
-    // list of files to exclude
-    exclude: [],
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
