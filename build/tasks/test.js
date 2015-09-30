@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var karma = require('karma').server;
 var gulp_protractor = require("gulp-protractor");
-var protractor = gulp_protractor.protractor;
 var paths = require('../paths');
 
 gulp.task('test', ['build'], function(done) {
@@ -13,7 +12,7 @@ gulp.task('test', ['build'], function(done) {
 
 gulp.task('sauce-test', function(done) {
   gulp.src(paths.tests)
-  .pipe((protractor({
+  .pipe((gulp_protractor.protractor({
     configFile: __dirname + '/../../protractor.conf.js'
   }))
   .on('error', function (e) { throw e; })
