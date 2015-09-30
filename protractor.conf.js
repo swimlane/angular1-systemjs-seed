@@ -5,7 +5,7 @@ exports.config = {
   capabilities: {
     'browserName': 'chrome',
     'chromeOptions': {
-      'args': ['no-sandbox']
+      'args': ['no-sandbox'] // workaround: https://code.google.com/p/chromedriver/issues/detail?id=539
     }
   },
 
