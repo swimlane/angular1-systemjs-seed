@@ -24,5 +24,5 @@ gulp.task('replace', function(){
         }
       ]
     }))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./'));
 });
