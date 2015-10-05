@@ -31,15 +31,16 @@ This seed project demonstrates the [systemjs-route-bundler](https://github.com/S
 ### Gulp Tasks
 
 - `gulp test` to run karma tests
+- `gulp webdriver-standalone` and `gulp sauce-test` to run e2e test
 - `gulp lint` to run jshint
 - `gulp release` to bundle, cache busting, and minify
 
 ### Versions
 The project has been tested with the following environment:
 
-- node v0.12.0
-- npm v2.5.1
-- jspm v0.15.3
+- node v4.1.0
+- npm v2.14.3
+- jspm v0.19.3
 
 ### Tooling
 

@@ -10,7 +10,6 @@ var htmlMin = require('gulp-minify-html');
 var ngHtml2Js = require("gulp-ng-html2js");
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
-var path = require('path')
 
 var paths = require('../paths');
 var compilerOptions = require('../babelOptions');
