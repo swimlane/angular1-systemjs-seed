@@ -28,9 +28,13 @@
 
     <ui-view class="content-area" ></ui-view>
 
-
+    <!-- build:dev -->
+    <script src="jspm_packages/system.js"></script>
+    <script src="system.config.js"></script>
+    <!-- endbuild -->
+ 
     <!-- build:prod -->
-    <script src="dist/app/app.js?bust=1443103426"></script>
+    <!-- <script src="dist/app/app.js?bust={{date}}"></script> -->
     <!-- endbuild -->
 
     <script>
