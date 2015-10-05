@@ -44,7 +44,7 @@
     "rsvp": "^3.0.16",
     "run-sequence": "^1.0.2",
     "systemjs": "^0.19.3",
-    "systemjs-route-bundler": "^1.4.1",
+    "systemjs-route-bundler": "^1.4.2",
     "vinyl-paths": "^2.0.0"
   },
   "dependencies": {},
