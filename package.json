@@ -72,6 +72,8 @@
     }
   },
   "scripts": {
-    "postinstall": "jspm install"
+    "postinstall": "jspm install",
+    "prestart": "npm install",
+    "start": "gulp watch serve"
   }
 }

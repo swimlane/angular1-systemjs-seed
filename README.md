@@ -23,10 +23,8 @@ This seed project demonstrates the [systemjs-route-bundler](https://github.com/S
 
 ### Install & Run
 
-1. `npm install -g gulp jspm`
-2. `npm install`
-3. `gulp watch serve`
-4. Browse to `http://localhost:9000`
+1. `npm start`
+2. Browse to `http://localhost:9000`
 
 ### Gulp Tasks
 
