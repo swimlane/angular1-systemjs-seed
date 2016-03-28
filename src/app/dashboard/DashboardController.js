@@ -1,7 +1,7 @@
 export class DashboardController {
 
-  /*@ngInject*/
   constructor($scope){
+    "ngInject";
     console.log('dashboard!');
   }
 

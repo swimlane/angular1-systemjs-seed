@@ -1,7 +1,7 @@
 export class LoginController{
 
-  /*@ngInject*/
   constructor($scope){
+    "ngInject";
     $scope.loggedin = false;
 
     $scope.$watch('theme', function(newVal, oldVal, ev){

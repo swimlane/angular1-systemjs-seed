@@ -1,7 +1,7 @@
 var gulp = require('gulp');
-var paths = require('../paths');
+var paths = require('./paths');
 
-gulp.task('move', function () {
+gulp.task('move', function() {
   var srcPaths = [
     './src/**/*.json',
     './src/**/*.svg',
@@ -10,10 +10,10 @@ gulp.task('move', function () {
     './src/**/*.png',
     './src/**/*.ico',
     './src/**/*.jpg',
-    './src/**/*.gif',
+    './src/**/*.jpeg',
     './src/**/*.eot'
   ];
 
   return gulp.src(srcPaths)
-    .pipe(gulp.dest(paths.output))
+    .pipe(gulp.dest(paths.output));
 });

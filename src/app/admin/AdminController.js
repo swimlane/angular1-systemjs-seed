@@ -1,8 +1,9 @@
 export class AdminController{
 
-  /*@ngInject*/
   constructor(){
+    "ngInject";
+
     console.log('admin!');
   }
-  
+
 }

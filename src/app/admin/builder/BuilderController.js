@@ -1,8 +1,9 @@
 export class BuilderController{
 
-  /*@ngInject*/
   constructor($scope){
+    "ngInject";
+
     console.log('builder!')
   }
-  
+
 }

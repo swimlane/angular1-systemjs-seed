@@ -1,8 +1,9 @@
 export class UsersController{
 
-  /*@ngInject*/
   constructor($scope){
+    "ngInject";
+
     console.log('users!')
   }
-  
+
 }

@@ -1,8 +1,9 @@
 import angular from 'angular';
 
 class CurrentUser{
-  /*@ngInject*/
   constructor($q){
+    "ngInject";
+
     this.$q = $q;
   }
 

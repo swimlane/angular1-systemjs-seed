@@ -1,8 +1,10 @@
 import angular from 'angular';
-import modalModule from 'common/components/modal';
-import formsTemplate from './forms.tpl';
+import modalModule from 'common/components/modal.js';
+import formsTemplate from './forms.tpl.js';
 
 function ConfigureModule($stateProvider){
+  "ngInject";
+
   $stateProvider.state('forms', {
     url: '/forms',
     templateUrl: formsTemplate.name
@@ -11,7 +13,7 @@ function ConfigureModule($stateProvider){
 
 export default angular
   .module('forms', [
-    formsTemplate.name, 
-    modalModule.name 
+    formsTemplate.name,
+    modalModule.name
   ])
   .config(ConfigureModule);

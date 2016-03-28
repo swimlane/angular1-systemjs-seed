@@ -1,12 +1,14 @@
 import angular from 'angular';
 
-import modalModule from 'common/components/modal';
-import selectModule from 'common/components/select';
+import modalModule from 'common/components/modal.js';
+import selectModule from 'common/components/select.js';
 
-import { BuilderController } from './BuilderController';
-import builderTemplate from './builder.tpl';
+import { BuilderController } from './BuilderController.js';
+import builderTemplate from './builder.tpl.js';
 
 function ConfigureModule($stateProvider){
+  "ngInject";
+
   $stateProvider.state('admin.builder', {
     url: '/builder',
     templateUrl: builderTemplate.name,
@@ -17,7 +19,7 @@ function ConfigureModule($stateProvider){
 
 export default angular
   .module('admin.builder', [
-    modalModule.name, 
+    modalModule.name,
     selectModule.name,
     builderTemplate.name
   ])

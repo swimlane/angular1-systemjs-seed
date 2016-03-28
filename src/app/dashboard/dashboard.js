@@ -1,13 +1,15 @@
 import angular from 'angular';
 
-import { modalModule } from 'common/core';
-import popupModule from 'common/components/popup';
-import timeModule from 'common/components/time';
+import { modalModule } from 'common/core.js';
+import popupModule from 'common/components/popup.js';
+import timeModule from 'common/components/time.js';
 
-import { DashboardController } from './DashboardController';
-import dashboardTemplate from './dashboards.tpl';
+import { DashboardController } from './DashboardController.js';
+import dashboardTemplate from './dashboards.tpl.js';
 
 function ConfigureModule($stateProvider){
+  "ngInject";
+
   $stateProvider.state('dashboards', {
     url: '/dashboards',
     templateUrl: dashboardTemplate.name,

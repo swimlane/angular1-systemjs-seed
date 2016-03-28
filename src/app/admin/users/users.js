@@ -5,10 +5,12 @@ import angular from 'angular';
 // import dateModule from 'common/components/date';
 // import timeModule from 'common/components/time';
 
-import { UsersController } from './UsersController';
-import usersTemplate from './users.tpl';
+import { UsersController } from './UsersController.js';
+import usersTemplate from './users.tpl.js';
 
 function ConfigureModule($stateProvider){
+  "ngInject";
+
   $stateProvider.state('admin.users', {
     url: '/users',
     templateUrl: usersTemplate.name,

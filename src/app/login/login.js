@@ -1,16 +1,18 @@
 import angular from 'angular';
 
-import SelectModule from 'common/components/select';
-import DateModule from 'common/components/date';
-import ModalModule from 'common/components/modal';
-import UserModule from 'common/services/user';
+import SelectModule from 'common/components/select.js';
+import DateModule from 'common/components/date.js';
+import ModalModule from 'common/components/modal.js';
+import UserModule from 'common/services/user.js';
 
-import { LoginController } from './LoginController';
-import loginTemplate from './login.tpl';
-import signupTemplate from './signup.tpl';
+import { LoginController } from './LoginController.js';
+import loginTemplate from './login.tpl.js';
+import signupTemplate from './signup.tpl.js';
 import './login.css!';
 
 function ConfigureModule($stateProvider){
+  'ngInject';
+
   $stateProvider.state('login', {
     url: '/login',
     templateUrl: loginTemplate.name,

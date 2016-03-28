@@ -1,10 +1,11 @@
-import 'babel/external-helpers';
+import 'babelHelpers.js';
+import 'babel-polyfill';
 
 import angular from 'angular';
 import 'angular-ui-router';
 import 'ocLazyLoad';
-import 'common/core';
-import routing from 'common/utils/routing';
+import 'common/core.js';
+import routing from 'common/utils/routing.js';
 
 let app = angular.module('demo', ['ui.router', 'oc.lazyLoad']);
 
@@ -20,7 +21,7 @@ app.config(['$urlRouterProvider', '$locationProvider', '$compileProvider', '$log
     // http://ng-perf.com/2014/10/24/simple-trick-to-speed-up-your-angularjs-app-load-time/
     $compileProvider.debugInfoEnabled(false);
   }
-  
+
   $ocLazyLoadProvider.config({
     debug: true
   });

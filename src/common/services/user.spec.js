@@ -1,6 +1,6 @@
 import angular from 'angular';
 import 'angular-mocks';
-import userModule from './user';
+import userModule from './user.js';
 
 describe('CurrentUser', function() {
   beforeEach(angular.mock.module(userModule.name));
@@ -18,7 +18,7 @@ describe('CurrentUser', function() {
       CurrentUser.getUser().then(function(data) {
         user = data;
       });
-      
+
       scope.$digest();
 
       expect(user).toEqual({ name: 'Panda' });

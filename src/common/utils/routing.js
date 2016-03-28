@@ -1,39 +1,36 @@
-import 'ui-router-extras';
+import angular from 'angular';
 import futureRoutes from 'app/routes.json!';
+import 'ui-router-extras';
 
-var routing = function(module) {
-
+export default function(module){
   module.requires.push('ct.ui.router.extras.future');
 
-  var RouterConfig = ['$stateProvider', '$futureStateProvider', function ($stateProvider, $futureStateProvider) {
+  let RouterConfig = ['$stateProvider', '$futureStateProvider', function ($stateProvider, $futureStateProvider) {
+    $futureStateProvider.stateFactory('load', ['$q', '$ocLazyLoad', 'futureState',
+      function($q, $ocLazyLoad, futureState){
 
-    $futureStateProvider.stateFactory('load', ['$q', '$ocLazyLoad', 'futureState', function($q, $ocLazyLoad, futureState) {
-      var def = $q.defer();
+      let def = $q.defer();
 
-      System.import(futureState.src).then(loaded => {
-        var newModule = loaded;
-        if (!loaded.name) {
-          var key = Object.keys(loaded);
-          newModule = loaded[key[0]];
+      System.import(futureState.src).then(function(loaded){
+        let newModule = loaded;
+        if(!loaded.name){
+          newModule = loaded.default;
         }
 
-        $ocLazyLoad.load(newModule).then(function() {
+        $ocLazyLoad.load(newModule).then(function(){
           def.resolve();
-        }, function() {
-          console.log('error loading: ' + loaded.name);
+        }, function(err) {
+          throw err;
         });
       });
 
       return def.promise;
     }]);
 
-    futureRoutes.forEach(function(r) {
+    futureRoutes.forEach(function(r){
       $futureStateProvider.futureState(r);
     });
-
   }];
 
   return RouterConfig;
 };
-
-export default routing;

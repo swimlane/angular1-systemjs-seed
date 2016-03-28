@@ -30,7 +30,8 @@
 
     <!-- build:dev -->
     <script src="jspm_packages/system.js"></script>
-    <script src="system.config.js"></script>
+    <script src="jspm.config.js"></script>
+    <script src="jspm.browser.js"></script>
     <!-- endbuild -->
 
     <!-- build:prod -->
@@ -38,7 +39,7 @@
     <!-- endbuild -->
 
     <script>
-      System.import('app/app');
+      System.import('app/app.js');
     </script>
 
   </body>
