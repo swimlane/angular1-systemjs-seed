@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var replace = require('gulp-replace-task');
 
 gulp.task('replace', function() {
-  return gulp.src('wwwroot/index.html')
+  return gulp.src('index.html')
     .pipe(replace({
       usePrefix: false,
       patterns: [
@@ -28,5 +28,5 @@ gulp.task('replace', function() {
         },
       ],
     }))
-    .pipe(gulp.dest());
+    .pipe(gulp.dest('.'));
 });

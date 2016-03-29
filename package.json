@@ -38,7 +38,7 @@
     "require-dir": "^0.1.0",
     "rsvp": "^3.0.16",
     "run-sequence": "^1.0.2",
-    "systemjs-route-bundler": "1.6.0",
+    "systemjs-route-bundler": "1.6.1",
     "vinyl-paths": "^2.0.0"
   },
   "optionalDependencies": {
