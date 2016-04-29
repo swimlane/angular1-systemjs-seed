@@ -1,12 +1,13 @@
 module.exports = {
-  modules: 'system',
+  presets: [
+    'es2015',
+    'stage-3'
+  ],
+  plugins: [
+    'transform-decorators-legacy',
+    'transform-class-properties'
+  ],
   moduleIds: false,
   comments: true,
-  compact: false,
-  stage:2,
-  externalHelpers: true,
-  optional: [
-    "es7.decorators",
-    "es7.classProperties"
-  ]
+  compact: false
 };
