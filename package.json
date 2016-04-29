@@ -61,9 +61,9 @@
       "angular": "github:angular/bower-angular@^1.5.3",
       "angular-ui-router": "github:angular-ui/ui-router@^0.2.15",
       "clean-css": "npm:clean-css@^3.4.12",
+      "css": "github:systemjs/plugin-css@^0.1.21",
       "json": "github:systemjs/plugin-json@^0.1.2",
-      "ocombe/oclazyload": "github:ocombe/oclazyload@^1.0.5",
-      "systemjs/plugin-css": "github:systemjs/plugin-css@^0.1.21",
+      "ocLazyLoad": "github:ocombe/oclazyload@^1.0.5",
       "ui-router-extras": "npm:ui-router-extras@^0.0.14"
     },
     "devDependencies": {
