@@ -1,4 +1,4 @@
-export class UsersController{
+export default class UsersController{
 
   /*@ngInject*/
   constructor($scope){

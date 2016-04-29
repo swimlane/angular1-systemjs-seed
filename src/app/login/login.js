@@ -10,6 +10,7 @@ import loginTemplate from './login.tpl';
 import signupTemplate from './signup.tpl';
 import './login.css!';
 
+/* @ngInject */
 function ConfigureModule($stateProvider){
   $stateProvider.state('login', {
     url: '/login',

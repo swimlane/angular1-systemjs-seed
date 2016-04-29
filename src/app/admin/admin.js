@@ -5,6 +5,7 @@ import UsersModule from 'app/admin/users/users'
 import { AdminController } from './AdminController';
 import adminTemplate from './admin.tpl';
 
+/* @ngInject */
 function ConfigureModule($stateProvider){
   $stateProvider.state('admin', {
     url: '/admin',

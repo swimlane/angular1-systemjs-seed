@@ -7,6 +7,7 @@ import timeModule from 'common/components/time';
 import { DashboardController } from './DashboardController';
 import dashboardTemplate from './dashboards.tpl';
 
+/* @ngInject */
 function ConfigureModule($stateProvider){
   $stateProvider.state('dashboards', {
     url: '/dashboards',
