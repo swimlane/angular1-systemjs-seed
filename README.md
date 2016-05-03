@@ -36,9 +36,9 @@ This seed project demonstrates the [systemjs-route-bundler](https://github.com/S
 ### Versions
 The project has been tested with the following environment:
 
-- node v4.1.0
-- npm v2.14.3
-- jspm v0.19.3
+- node v5.4.0
+- npm v3.5.3
+- jspm v0.16.33
 
 ### Tooling
 
