@@ -49,7 +49,7 @@ gulp.task('bundle', function () {
     destMain: 'dist/app',
     routes: routes,
     bundleThreshold: 0.6,
-    systemConfig: './system.config.js',
+    jspmConfigPath: './system.config.js',
     sourceMaps: false,
     minify: true,
     mangle: true,

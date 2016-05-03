@@ -1,6 +1,6 @@
-export class LoginController{
+export default class LoginController{
 
-  /*@ngInject*/
+  /* @ngInject */
   constructor($scope){
     $scope.loggedin = false;
 

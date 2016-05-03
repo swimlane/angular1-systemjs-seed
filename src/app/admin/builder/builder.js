@@ -6,6 +6,7 @@ import selectModule from 'common/components/select';
 import { BuilderController } from './BuilderController';
 import builderTemplate from './builder.tpl';
 
+/* @ngInject */
 function ConfigureModule($stateProvider){
   $stateProvider.state('admin.builder', {
     url: '/builder',
@@ -17,7 +18,7 @@ function ConfigureModule($stateProvider){
 
 export default angular
   .module('admin.builder', [
-    modalModule.name, 
+    modalModule.name,
     selectModule.name,
     builderTemplate.name
   ])

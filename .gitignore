@@ -5,3 +5,6 @@ dist
 .DS_STORE
 coverage
 jspm_packages
+
+*.log
+*.back.*

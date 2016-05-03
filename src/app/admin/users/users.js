@@ -8,6 +8,7 @@ import angular from 'angular';
 import { UsersController } from './UsersController';
 import usersTemplate from './users.tpl';
 
+/* @ngInject */
 function ConfigureModule($stateProvider){
   $stateProvider.state('admin.users', {
     url: '/users',

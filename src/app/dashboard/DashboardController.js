@@ -1,4 +1,4 @@
-export class DashboardController {
+export default class DashboardController {
 
   /*@ngInject*/
   constructor($scope){

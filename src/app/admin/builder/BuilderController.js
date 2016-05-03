@@ -1,4 +1,4 @@
-export class BuilderController{
+export default class BuilderController{
 
   /*@ngInject*/
   constructor($scope){
