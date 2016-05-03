@@ -1,13 +1,16 @@
 var gulp = require('gulp');
-var karma = require('karma').server;
+var karma = require('karma');
 var gulp_protractor = require("gulp-protractor");
 var paths = require('../paths');
 
 gulp.task('test', ['build'], function(done) {
-  karma.start({
+  new karma.Server({
     configFile: __dirname + '/../../karma.conf.js',
     singleRun: true
-  }, done);
+  }, (exitCode) => {
+        console.log(exitCode);
+        done();
+  }).start();
 });
 
 gulp.task('sauce-test', function(done) {
