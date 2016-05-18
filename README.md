@@ -19,7 +19,7 @@ This project does:
 - Cache Busting with SystemJS
 - Demonstrates on-demand theme loading
 
-This seed project demonstrates the [systemjs-route-bundler](https://github.com/Swimlane/systemjs-route-bundler) build tool.
+This seed project demonstrates the [systemjs-route-bundler](https://github.com/swimlane/systemjs-route-bundler) build tool.
 
 ### Install & Run
 
