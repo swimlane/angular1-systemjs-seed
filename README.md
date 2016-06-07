@@ -23,6 +23,7 @@ This seed project demonstrates the [systemjs-route-bundler](https://github.com/s
 
 ### Install & Run
 
+0. `npm install`
 1. `npm start`
 2. Browse to `http://localhost:9000`
 
