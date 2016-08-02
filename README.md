@@ -37,35 +37,6 @@ a similar demo for Angular2 soon.**
 - `gulp lint` to run jshint
 - `gulp release` to bundle, cache busting, and minify
 
-### Versions
-The project has been tested with the following environment:
-
-- node v5.4.0
-- npm v3.5.3
-- jspm v0.16.33
-
-### Tooling
-
-- [EditorConfig](http://editorconfig.org/)
-- [JSHint](http://jshint.com/install/)
-- [VS Task Launcher](https://visualstudiogallery.msdn.microsoft.com/8e1b4368-4afb-467a-bc13-9650572db708)
-
-### Best Practices
-
-- https://github.com/johnpapa/angularjs-styleguide
-- https://github.com/gocardless/angularjs-style-guide
-- http://sett.ociweb.com/sett/settApr2014.html
-
-### Research & Resources
-
-- https://github.com/angular/material-start/tree/es6
-- https://github.com/systemjs/systemjs
-- https://github.com/gocardless/es6-angularjs
-- http://glenmaddern.com/articles/javascript-in-2015
-- https://github.com/marcj/angular-es6-annotations
-- https://github.com/robianmcd/angular-next
-- https://github.com/ng-next/ng-next-example
-
 ### Credits
 
 `angular-systemjs-seed` is a [Swimlane](http://swimlane.com) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.
