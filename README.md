@@ -21,6 +21,9 @@ This project does:
 
 This seed project demonstrates the [systemjs-route-bundler](https://github.com/swimlane/systemjs-route-bundler) build tool.
 
+**Note: This project is largely out of date but its still a great starting point for anyone interested. We plan to add
+a similar demo for Angular2 soon.**
+
 ### Install & Run
 
 0. `npm install`
